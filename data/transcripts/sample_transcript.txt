@@ -1632,3 +1632,603 @@ Duration: 894.60s
   11:01-11:01:  another
   11:01-11:02:  model.
 
+[11:02 -> 11:10] Let's say, well, how can I try to see if 4.0 Mini will work the same way with 4.0 or
+  11:02-11:02:  Let's
+  11:02-11:02:  say,
+  11:03-11:03:  well,
+  11:04-11:04:  how
+  11:04-11:04:  can
+  11:04-11:05:  I
+  11:05-11:05:  try
+  11:05-11:05:  to
+  11:05-11:05:  see
+  11:05-11:06:  if
+  11:06-11:06:  4
+  11:06-11:06: .0
+  11:06-11:06:  Mini
+  11:06-11:07:  will
+  11:07-11:08:  work
+  11:08-11:08:  the
+  11:08-11:08:  same
+  11:08-11:09:  way
+  11:09-11:09:  with
+  11:09-11:09:  4
+  11:09-11:09: .0
+  11:09-11:10:  or
+
+[11:10 -> 11:17] not? Can I use the GraphRug or can I try a simpler solution? Should I have to use
+  11:10-11:10:  not?
+  11:11-11:12:  Can
+  11:12-11:12:  I
+  11:12-11:12:  use
+  11:12-11:12:  the
+  11:12-11:13:  GraphRug
+  11:13-11:13:  or
+  11:13-11:13:  can
+  11:13-11:13:  I
+  11:13-11:13:  try
+  11:13-11:14:  a
+  11:14-11:14:  simpler
+  11:14-11:14:  solution?
+  11:15-11:16:  Should
+  11:16-11:16:  I
+  11:16-11:16:  have
+  11:16-11:17:  to
+  11:17-11:17:  use
+
+[11:17 -> 11:26] the agentic approach that may be better but requires more time, more inference cost, etc.
+  11:17-11:18:  the
+  11:18-11:18:  agentic
+  11:18-11:18:  approach
+  11:18-11:19:  that
+  11:19-11:21:  may
+  11:21-11:21:  be
+  11:21-11:22:  better
+  11:22-11:22:  but
+  11:22-11:23:  requires
+  11:23-11:24:  more
+  11:24-11:24:  time,
+  11:24-11:25:  more
+  11:25-11:26:  inference
+  11:26-11:26:  cost,
+  11:26-11:26:  etc.
+
+[11:26 -> 11:31] Or should I try to simplify the logic or maybe I can simplify the logic for a specific portion
+  11:26-11:27:  Or
+  11:27-11:27:  should
+  11:27-11:27:  I
+  11:27-11:27:  try
+  11:27-11:27:  to
+  11:27-11:28:  simplify
+  11:28-11:28:  the
+  11:28-11:28:  logic
+  11:28-11:28:  or
+  11:28-11:29:  maybe
+  11:29-11:29:  I
+  11:29-11:29:  can
+  11:29-11:29:  simplify
+  11:29-11:29:  the
+  11:29-11:30:  logic
+  11:30-11:30:  for
+  11:30-11:31:  a
+  11:31-11:31:  specific
+  11:31-11:31:  portion
+
+[11:31 -> 11:38] of the application, etc., etc. Having this benchmark allows you to do all these
+  11:31-11:32:  of
+  11:32-11:32:  the
+  11:32-11:32:  application,
+  11:32-11:33:  etc.,
+  11:33-11:33:  etc.
+  11:34-11:34:  Having
+  11:34-11:35:  this
+  11:35-11:35:  benchmark
+  11:35-11:37:  allows
+  11:37-11:37:  you
+  11:37-11:37:  to
+  11:37-11:38:  do
+  11:38-11:38:  all
+  11:38-11:38:  these
+
+[11:38 -> 11:43] experimentations with confidence, but again, the most important part is how do you
+  11:38-11:39:  experimentations
+  11:39-11:40:  with
+  11:40-11:40:  confidence,
+  11:40-11:41:  but
+  11:41-11:41:  again,
+  11:41-11:41:  the
+  11:41-11:42:  most
+  11:42-11:42:  important
+  11:42-11:42:  part
+  11:42-11:42:  is
+  11:42-11:43:  how
+  11:43-11:43:  do
+  11:43-11:43:  you
+
+[11:43 -> 11:52] reach this benchmark? And while the approach is pretty much the same, the evaluations that
+  11:43-11:44:  reach
+  11:44-11:44:  this
+  11:44-11:44:  benchmark?
+  11:45-11:46:  And
+  11:46-11:47:  while
+  11:47-11:47:  the
+  11:47-11:47:  approach
+  11:47-11:48:  is
+  11:48-11:49:  pretty
+  11:49-11:49:  much
+  11:49-11:50:  the
+  11:50-11:50:  same,
+  11:50-11:51:  the
+  11:51-11:51:  evaluations
+  11:51-11:52:  that
+
+[11:52 -> 11:55] you need to build and how do you build your evaluations are completely different depending
+  11:52-11:52:  you
+  11:52-11:52:  need
+  11:52-11:52:  to
+  11:52-11:52:  build
+  11:52-11:52:  and
+  11:52-11:53:  how
+  11:53-11:53:  do
+  11:53-11:53:  you
+  11:53-11:53:  build
+  11:53-11:53:  your
+  11:53-11:54:  evaluations
+  11:54-11:54:  are
+  11:54-11:54:  completely
+  11:54-11:55:  different
+  11:55-11:55:  depending
+
+[11:55 -> 12:02] on the solution that you need to build because the models are super capable right now, so
+  11:55-11:55:  on
+  11:55-11:56:  the
+  11:56-11:57:  solution
+  11:57-11:57:  that
+  11:57-11:57:  you
+  11:57-11:57:  need
+  11:57-11:57:  to
+  11:57-11:58:  build
+  11:58-11:59:  because
+  11:59-11:59:  the
+  11:59-11:59:  models
+  11:59-12:00:  are
+  12:00-12:00:  super
+  12:00-12:01:  capable
+  12:01-12:01:  right
+  12:01-12:01:  now,
+  12:02-12:02:  so
+
+[12:02 -> 12:07] they allow you to build a huge variety of solutions, but each and every solution
+  12:02-12:02:  they
+  12:02-12:03:  allow
+  12:03-12:03:  you
+  12:03-12:03:  to
+  12:03-12:03:  build
+  12:03-12:04:  a
+  12:04-12:04:  huge
+  12:04-12:04:  variety
+  12:04-12:05:  of
+  12:05-12:05:  solutions,
+  12:06-12:06:  but
+  12:06-12:07:  each
+  12:07-12:07:  and
+  12:07-12:07:  every
+  12:07-12:07:  solution
+
+[12:07 -> 12:14] is quite different in terms of how do you evaluate it. For support bot, you usually typically
+  12:07-12:08:  is
+  12:08-12:08:  quite
+  12:08-12:09:  different
+  12:09-12:09:  in
+  12:09-12:09:  terms
+  12:09-12:09:  of
+  12:09-12:10:  how
+  12:10-12:10:  do
+  12:10-12:10:  you
+  12:10-12:11:  evaluate
+  12:11-12:11:  it.
+  12:12-12:12:  For
+  12:12-12:12:  support
+  12:12-12:13:  bot,
+  12:13-12:13:  you
+  12:13-12:14:  usually
+  12:14-12:14:  typically
+
+[12:14 -> 12:21] use LLM as a judge as an example. If you're building text to SQL or text to graph database,
+  12:14-12:15:  use
+  12:15-12:15:  LLM
+  12:15-12:15:  as
+  12:15-12:15:  a
+  12:15-12:15:  judge
+  12:15-12:16:  as
+  12:16-12:16:  an
+  12:16-12:17:  example.
+  12:18-12:18:  If
+  12:18-12:19:  you're
+  12:19-12:19:  building
+  12:19-12:19:  text
+  12:19-12:19:  to
+  12:19-12:20:  SQL
+  12:20-12:20:  or
+  12:20-12:20:  text
+  12:20-12:21:  to
+  12:21-12:21:  graph
+  12:21-12:21:  database,
+
+[12:22 -> 12:29] then to my experience, the best way is to create a mock database that represents whatever
+  12:22-12:22:  then
+  12:22-12:23:  to
+  12:23-12:23:  my
+  12:23-12:23:  experience,
+  12:23-12:23:  the
+  12:23-12:24:  best
+  12:24-12:24:  way
+  12:24-12:25:  is
+  12:25-12:25:  to
+  12:25-12:25:  create
+  12:25-12:25:  a
+  12:25-12:25:  mock
+  12:25-12:26:  database
+  12:26-12:26:  that
+  12:26-12:27:  represents
+  12:27-12:29:  whatever
+
+[12:31 -> 12:36] database or databases that you need your solution to work with. They represent the
+  12:31-12:31:  database
+  12:31-12:31:  or
+  12:31-12:32:  databases
+  12:32-12:32:  that
+  12:32-12:33:  you
+  12:33-12:33:  need
+  12:33-12:34:  your
+  12:34-12:34:  solution
+  12:34-12:34:  to
+  12:34-12:35:  work
+  12:35-12:35:  with.
+  12:35-12:35:  They
+  12:35-12:36:  represent
+  12:36-12:36:  the
+
+[12:36 -> 12:42] same schema and you have the mock data, so you know exactly what to expect on specific
+  12:36-12:36:  same
+  12:36-12:36:  schema
+  12:36-12:36:  and
+  12:36-12:37:  you
+  12:37-12:37:  have
+  12:37-12:37:  the
+  12:37-12:37:  mock
+  12:37-12:37:  data,
+  12:38-12:38:  so
+  12:38-12:38:  you
+  12:38-12:38:  know
+  12:38-12:39:  exactly
+  12:39-12:40:  what
+  12:40-12:40:  to
+  12:40-12:41:  expect
+  12:41-12:41:  on
+  12:41-12:42:  specific
+
+[12:42 -> 12:49] questions. If you need to build some classifier for call center conversations, then your tests
+  12:42-12:42:  questions.
+  12:43-12:44:  If
+  12:44-12:44:  you
+  12:44-12:44:  need
+  12:44-12:44:  to
+  12:44-12:45:  build
+  12:45-12:45:  some
+  12:45-12:45:  classifier
+  12:45-12:46:  for
+  12:46-12:46:  call
+  12:46-12:46:  center
+  12:46-12:47:  conversations,
+  12:47-12:48:  then
+  12:48-12:48:  your
+  12:48-12:49:  tests
+
+[12:49 -> 12:56] are like simple match whenever this is the right rubric or not. And this approach applies
+  12:49-12:50:  are
+  12:50-12:50:  like
+  12:50-12:50:  simple
+  12:50-12:51:  match
+  12:51-12:51:  whenever
+  12:51-12:51:  this
+  12:51-12:52:  is
+  12:52-12:52:  the
+  12:52-12:52:  right
+  12:52-12:52:  rubric
+  12:52-12:52:  or
+  12:52-12:53:  not.
+  12:54-12:54:  And
+  12:54-12:54:  this
+  12:54-12:55:  approach
+  12:55-12:56:  applies
+
+[12:56 -> 13:04] to guardrails, so getting back to the example of customer support bot, guardrails, you
+  12:56-12:56:  to
+  12:56-12:57:  guardrails,
+  12:57-12:57:  so
+  12:57-12:59:  getting
+  12:59-12:59:  back
+  12:59-12:59:  to
+  12:59-13:00:  the
+  13:00-13:01:  example
+  13:01-13:01:  of
+  13:01-13:02:  customer
+  13:02-13:02:  support
+  13:02-13:02:  bot,
+  13:03-13:04:  guardrails,
+  13:04-13:04:  you
+
+[13:04 -> 13:10] need to cover questions that should not be answered or questions that should be answered in different
+  13:04-13:05:  need
+  13:05-13:05:  to
+  13:05-13:05:  cover
+  13:05-13:06:  questions
+  13:06-13:07:  that
+  13:07-13:07:  should
+  13:07-13:07:  not
+  13:07-13:08:  be
+  13:08-13:08:  answered
+  13:08-13:08:  or
+  13:08-13:09:  questions
+  13:09-13:09:  that
+  13:09-13:09:  should
+  13:09-13:09:  be
+  13:09-13:10:  answered
+  13:10-13:10:  in
+  13:10-13:10:  different
+
+[13:10 -> 13:16] ways or questions that the answers are not in the material, so all of this you can put
+  13:10-13:11:  ways
+  13:11-13:11:  or
+  13:11-13:11:  questions
+  13:11-13:12:  that
+  13:12-13:13:  the
+  13:13-13:13:  answers
+  13:13-13:13:  are
+  13:13-13:14:  not
+  13:14-13:14:  in
+  13:14-13:14:  the
+  13:14-13:14:  material,
+  13:15-13:15:  so
+  13:15-13:15:  all
+  13:15-13:15:  of
+  13:15-13:16:  this
+  13:16-13:16:  you
+  13:16-13:16:  can
+  13:16-13:16:  put
+
+[13:16 -> 13:20] into your benchmark, just different type of benchmark, but it's pretty much the same
+  13:16-13:17:  into
+  13:17-13:17:  your
+  13:17-13:17:  benchmark,
+  13:17-13:18:  just
+  13:18-13:18:  different
+  13:18-13:18:  type
+  13:18-13:19:  of
+  13:19-13:19:  benchmark,
+  13:19-13:19:  but
+  13:19-13:19:  it's
+  13:19-13:20:  pretty
+  13:20-13:20:  much
+  13:20-13:20:  the
+  13:20-13:20:  same
+
+[13:20 -> 13:28] approach. So just to reiterate the key takeaways, you need to evaluate your apps the way
+  13:20-13:21:  approach.
+  13:23-13:24:  So
+  13:24-13:24:  just
+  13:24-13:24:  to
+  13:24-13:25:  reiterate
+  13:25-13:26:  the
+  13:26-13:26:  key
+  13:26-13:26:  takeaways,
+  13:27-13:27:  you
+  13:27-13:27:  need
+  13:27-13:27:  to
+  13:27-13:28:  evaluate
+  13:28-13:28:  your
+  13:28-13:28:  apps
+  13:28-13:28:  the
+  13:28-13:28:  way
+
+[13:28 -> 13:37] your users actually use them and avoid abstract metrics because these abstract metrics don't
+  13:28-13:29:  your
+  13:29-13:29:  users
+  13:29-13:30:  actually
+  13:30-13:30:  use
+  13:30-13:30:  them
+  13:30-13:32:  and
+  13:32-13:33:  avoid
+  13:33-13:33:  abstract
+  13:33-13:34:  metrics
+  13:34-13:35:  because
+  13:35-13:36:  these
+  13:36-13:36:  abstract
+  13:36-13:36:  metrics
+  13:36-13:37:  don't
+
+[13:37 -> 13:42] really measure anything important. And the approach is for experimentation, so you run
+  13:37-13:37:  really
+  13:37-13:37:  measure
+  13:37-13:38:  anything
+  13:38-13:38:  important.
+  13:40-13:40:  And
+  13:40-13:40:  the
+  13:40-13:40:  approach
+  13:40-13:41:  is
+  13:41-13:41:  for
+  13:41-13:42:  experimentation,
+  13:42-13:42:  so
+  13:42-13:42:  you
+  13:42-13:42:  run
+
+[13:42 -> 13:49] these evaluations frequently, that allows you to have rapid progress with less regressions
+  13:42-13:43:  these
+  13:43-13:43:  evaluations
+  13:43-13:44:  frequently,
+  13:44-13:45:  that
+  13:45-13:45:  allows
+  13:45-13:45:  you
+  13:45-13:46:  to
+  13:46-13:46:  have
+  13:46-13:47:  rapid
+  13:47-13:47:  progress
+  13:47-13:48:  with
+  13:48-13:48:  less
+  13:48-13:49:  regressions
+
+[13:50 -> 13:56] because testing frequently help you to catch these surprises, but most importantly, what
+  13:50-13:50:  because
+  13:50-13:51:  testing
+  13:51-13:52:  frequently
+  13:52-13:52:  help
+  13:52-13:52:  you
+  13:52-13:53:  to
+  13:53-13:53:  catch
+  13:53-13:53:  these
+  13:53-13:54:  surprises,
+  13:54-13:55:  but
+  13:55-13:55:  most
+  13:55-13:56:  importantly,
+  13:56-13:56:  what
+
+[13:56 -> 14:04] you get if you define your evaluations correctly, you get your solution pretty much as kind of
+  13:56-13:56:  you
+  13:56-13:57:  get
+  13:57-13:58:  if
+  13:58-13:58:  you
+  13:58-13:59:  define
+  13:59-13:59:  your
+  13:59-13:59:  evaluations
+  13:59-14:00:  correctly,
+  14:00-14:00:  you
+  14:00-14:01:  get
+  14:01-14:01:  your
+  14:01-14:02:  solution
+  14:02-14:02:  pretty
+  14:02-14:02:  much
+  14:02-14:03:  as
+  14:03-14:04:  kind
+  14:04-14:04:  of
+
+[14:04 -> 14:09] explainable AI because you know exactly what it does, you know exactly how it does it
+  14:04-14:05:  explainable
+  14:05-14:05:  AI
+  14:05-14:06:  because
+  14:06-14:06:  you
+  14:06-14:06:  know
+  14:06-14:06:  exactly
+  14:06-14:07:  what
+  14:07-14:07:  it
+  14:07-14:07:  does,
+  14:07-14:07:  you
+  14:07-14:07:  know
+  14:07-14:08:  exactly
+  14:08-14:08:  how
+  14:08-14:08:  it
+  14:08-14:08:  does
+  14:08-14:09:  it
+
+[14:09 -> 14:18] if you test it the right way. Thank you very much. Take a look at Multineer, that's
+  14:09-14:09:  if
+  14:09-14:10:  you
+  14:10-14:10:  test
+  14:10-14:10:  it
+  14:10-14:10:  the
+  14:10-14:10:  right
+  14:10-14:10:  way.
+  14:13-14:13:  Thank
+  14:13-14:13:  you
+  14:13-14:13:  very
+  14:13-14:14:  much.
+  14:15-14:16:  Take
+  14:16-14:16:  a
+  14:16-14:16:  look
+  14:16-14:16:  at
+  14:16-14:17:  Multineer,
+  14:18-14:18:  that's
+
+[14:19 -> 14:25] a platform that you can use to run these evaluations. You can totally use any other
+  14:19-14:19:  a
+  14:19-14:20:  platform
+  14:20-14:20:  that
+  14:20-14:20:  you
+  14:20-14:20:  can
+  14:20-14:21:  use
+  14:21-14:21:  to
+  14:21-14:22:  run
+  14:22-14:22:  these
+  14:22-14:22:  evaluations.
+  14:23-14:23:  You
+  14:23-14:24:  can
+  14:24-14:24:  totally
+  14:24-14:24:  use
+  14:24-14:25:  any
+  14:25-14:25:  other
+
+[14:25 -> 14:31] platform. The approach is quite simple, it doesn't require any specific platform. I've
+  14:25-14:25:  platform.
+  14:25-14:25:  The
+  14:25-14:26:  approach
+  14:26-14:26:  is
+  14:26-14:27:  quite
+  14:27-14:28:  simple,
+  14:28-14:28:  it
+  14:28-14:28:  doesn't
+  14:28-14:28:  require
+  14:28-14:29:  any
+  14:29-14:29:  specific
+  14:29-14:30:  platform.
+  14:31-14:31:  I've
+
+[14:31 -> 14:37] built Multineer just because no other platform helped me to do it this way, to help me with
+  14:31-14:31:  built
+  14:31-14:32:  Multineer
+  14:32-14:32:  just
+  14:32-14:32:  because
+  14:32-14:33:  no
+  14:33-14:34:  other
+  14:34-14:34:  platform
+  14:34-14:35:  helped
+  14:35-14:35:  me
+  14:35-14:35:  to
+  14:35-14:35:  do
+  14:35-14:35:  it
+  14:35-14:36:  this
+  14:36-14:36:  way,
+  14:36-14:37:  to
+  14:37-14:37:  help
+  14:37-14:37:  me
+  14:37-14:37:  with
+
+[14:37 -> 14:43] the process of evaluation like end to end. I'm working on a startup that does reliable
+  14:37-14:37:  the
+  14:37-14:38:  process
+  14:38-14:38:  of
+  14:38-14:38:  evaluation
+  14:38-14:39:  like
+  14:39-14:39:  end
+  14:39-14:39:  to
+  14:39-14:39:  end.
+  14:41-14:41:  I'm
+  14:41-14:42:  working
+  14:42-14:42:  on
+  14:42-14:42:  a
+  14:42-14:42:  startup
+  14:42-14:43:  that
+  14:43-14:43:  does
+  14:43-14:43:  reliable
+
+[14:43 -> 14:48] AI automation right now, and yeah, thank you very much.
+  14:43-14:44:  AI
+  14:44-14:44:  automation
+  14:44-14:44:  right
+  14:44-14:45:  now,
+  14:46-14:46:  and
+  14:46-14:47:  yeah,
+  14:47-14:48:  thank
+  14:48-14:48:  you
+  14:48-14:48:  very
+  14:48-14:48:  much.
+
