@@ -17,6 +17,37 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+def validate_openai_api_key():
+    """
+    Validate OPENAI_API_KEY is present and properly formatted.
+    
+    Returns:
+        str: The validated API key
+        
+    Raises:
+        ValueError: If API key is missing or invalid
+    """
+    api_key = os.getenv('OPENAI_API_KEY')
+    
+    if not api_key:
+        raise ValueError(
+            "OPENAI_API_KEY environment variable not set. "
+            "Please add your OpenAI API key to the .env file."
+        )
+    
+    # Basic format validation for OpenAI API keys
+    if not api_key.startswith('sk-'):
+        raise ValueError(
+            "Invalid OPENAI_API_KEY format. OpenAI API keys should start with 'sk-'"
+        )
+    
+    if len(api_key) < 20:
+        raise ValueError(
+            "OPENAI_API_KEY appears to be too short. Please check your API key."
+        )
+    
+    return api_key
+
 def load_transcript(transcript_path: str) -> str:
     """Load transcript content from file."""
     if not os.path.exists(transcript_path):
@@ -98,25 +129,32 @@ def analyze_chunk_with_gpt4(chunk: Dict[str, Any], prompt: str) -> Dict[str, Any
     """
     try:
         # Validate API key
-        api_key = os.getenv('OPENAI_API_KEY')
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY environment variable not set")
-        
+        api_key = validate_openai_api_key()
         client = openai.OpenAI(api_key=api_key)
         
         # Prepare the full prompt
         full_prompt = f"{prompt}\n\n# Transcript Chunk:\n{chunk['chunk_text']}"
         
-        # Call GPT-4
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": "You are an expert at analyzing conference talk transcripts and creating structured summaries."},
-                {"role": "user", "content": full_prompt}
-            ],
-            temperature=0.3,
-            max_tokens=2000
-        )
+        # Call GPT-4 with retry logic and better error handling
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are an expert at analyzing conference talk transcripts and creating structured summaries."},
+                    {"role": "user", "content": full_prompt}
+                ],
+                temperature=0.3,
+                max_tokens=2000,
+                timeout=60  # 60 second timeout
+            )
+        except openai.RateLimitError as e:
+            raise Exception(f"OpenAI rate limit exceeded: {e}")
+        except openai.APIError as e:
+            raise Exception(f"OpenAI API error: {e}")
+        except openai.AuthenticationError as e:
+            raise Exception(f"OpenAI authentication failed - check your API key: {e}")
+        except Exception as e:
+            raise Exception(f"OpenAI request failed: {e}")
         
         analysis = response.choices[0].message.content
         
@@ -208,6 +246,11 @@ def main():
         output_dir = f"data/partials/{base_name}"
     
     try:
+        # Validate OpenAI API key early
+        print("Validating OpenAI API key...")
+        validate_openai_api_key()
+        print("✓ OpenAI API key validated")
+        
         print(f"Loading transcript: {transcript_file}")
         transcript_content = load_transcript(transcript_file)
         
@@ -215,9 +258,15 @@ def main():
         segments = extract_segments_from_transcript(transcript_content)
         print(f"Found {len(segments)} segments")
         
+        if not segments:
+            raise ValueError("No timestamped segments found in transcript. Please check the transcript format.")
+        
         print("Creating intelligent chunks...")
         chunks = create_intelligent_chunks(segments, target_words=1200)
         print(f"Created {len(chunks)} chunks")
+        
+        if not chunks:
+            raise ValueError("No chunks created. Transcript may be too short or improperly formatted.")
         
         # Show chunk summary
         for chunk in chunks:
@@ -238,12 +287,20 @@ def main():
         print(f"\nCompleted: {successful}/{total} chunks processed successfully")
         
         if successful < total:
-            print("Some chunks failed. Check the output files for error details.")
+            print("⚠️  Some chunks failed. Check the output files for error details.")
+            failed_chunks = [r['chunk_index'] for r in results if not r['success']]
+            print(f"Failed chunks: {failed_chunks}")
         else:
-            print("All chunks processed successfully!")
+            print("✓ All chunks processed successfully!")
             
+    except ValueError as e:
+        print(f"✗ Validation Error: {e}")
+        sys.exit(1)
+    except FileNotFoundError as e:
+        print(f"✗ File Error: {e}")
+        sys.exit(1)
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"✗ Unexpected Error: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

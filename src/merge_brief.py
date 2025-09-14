@@ -12,6 +12,42 @@ from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any
 from openai import OpenAI
+import openai
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+def validate_openai_api_key():
+    """
+    Validate OPENAI_API_KEY is present and properly formatted.
+    
+    Returns:
+        str: The validated API key
+        
+    Raises:
+        ValueError: If API key is missing or invalid
+    """
+    api_key = os.getenv('OPENAI_API_KEY')
+    
+    if not api_key:
+        raise ValueError(
+            "OPENAI_API_KEY environment variable not set. "
+            "Please add your OpenAI API key to the .env file."
+        )
+    
+    # Basic format validation for OpenAI API keys
+    if not api_key.startswith('sk-'):
+        raise ValueError(
+            "Invalid OPENAI_API_KEY format. OpenAI API keys should start with 'sk-'"
+        )
+    
+    if len(api_key) < 20:
+        raise ValueError(
+            "OPENAI_API_KEY appears to be too short. Please check your API key."
+        )
+    
+    return api_key
 
 def load_partials(partials_dir: str) -> List[Dict[str, Any]]:
     """Load all partial analysis files from directory."""
@@ -132,10 +168,11 @@ def merge_partials_to_brief(partials_dir: str, output_path: str) -> bool:
 def merge_with_gpt4(analyses: List[str]) -> str:
     """Use GPT-4 to intelligently merge multiple partial analyses, with fallback to rule-based merging."""
     try:
-        # Check for OpenAI API key
-        api_key = os.getenv('OPENAI_API_KEY')
-        if not api_key:
-            print("Warning: OPENAI_API_KEY not set, falling back to rule-based merging")
+        # Validate OpenAI API key
+        try:
+            api_key = validate_openai_api_key()
+        except ValueError as e:
+            print(f"Warning: {e}, falling back to rule-based merging")
             return merge_with_rules(analyses)
         
         client = OpenAI(api_key=api_key)
@@ -169,15 +206,29 @@ You have multiple partial outputs from different segments of the same talk. Merg
         prompt = f"{merge_instructions}\n\n{combined_input}"
         
         print("Calling GPT-4 for intelligent merging...")
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": "You are an expert at synthesizing and merging content analysis. Follow the instructions precisely."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=2000,
-            temperature=0.3
-        )
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are an expert at synthesizing and merging content analysis. Follow the instructions precisely."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=2000,
+                temperature=0.3,
+                timeout=90  # 90 second timeout for merge operations
+            )
+        except openai.RateLimitError as e:
+            print(f"Warning: OpenAI rate limit exceeded ({e}), falling back to rule-based merging")
+            return merge_with_rules(analyses)
+        except openai.APIError as e:
+            print(f"Warning: OpenAI API error ({e}), falling back to rule-based merging")
+            return merge_with_rules(analyses)
+        except openai.AuthenticationError as e:
+            print(f"Warning: OpenAI authentication failed ({e}), falling back to rule-based merging")
+            return merge_with_rules(analyses)
+        except Exception as e:
+            print(f"Warning: OpenAI request failed ({e}), falling back to rule-based merging")
+            return merge_with_rules(analyses)
         
         merged_content = response.choices[0].message.content.strip()
         print("GPT-4 merging completed successfully")
@@ -322,13 +373,45 @@ def main():
     """Main entry point for brief generation."""
     if len(sys.argv) < 3:
         print("Usage: python merge_brief.py <partials_dir> <output_path>")
+        print("Example: python merge_brief.py data/partials/sample data/outputs/sample_brief.md")
         sys.exit(1)
     
     partials_dir = sys.argv[1]
     output_path = sys.argv[2]
     
-    success = merge_partials_to_brief(partials_dir, output_path)
-    sys.exit(0 if success else 1)
+    try:
+        # Validate inputs
+        if not os.path.exists(partials_dir):
+            raise FileNotFoundError(f"Partials directory not found: {partials_dir}")
+        
+        if not os.path.isdir(partials_dir):
+            raise ValueError(f"Path is not a directory: {partials_dir}")
+        
+        # Check if there are any partial files
+        partial_files = glob.glob(f"{partials_dir}/chunk_*.json")
+        if not partial_files:
+            raise ValueError(f"No chunk files found in directory: {partials_dir}")
+        
+        print(f"Found {len(partial_files)} partial files to merge")
+        
+        success = merge_partials_to_brief(partials_dir, output_path)
+        
+        if success:
+            print("✓ Brief generation completed successfully!")
+            sys.exit(0)
+        else:
+            print("✗ Brief generation failed")
+            sys.exit(1)
+            
+    except FileNotFoundError as e:
+        print(f"✗ File Error: {e}")
+        sys.exit(1)
+    except ValueError as e:
+        print(f"✗ Validation Error: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"✗ Unexpected Error: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()

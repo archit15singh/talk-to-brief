@@ -9,13 +9,21 @@ import sys
 import argparse
 from pathlib import Path
 from datetime import datetime
+import logging
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Add src to path for imports
 sys.path.insert(0, 'src')
 
-from transcribe import transcribe_audio
-from analyze_chunk import main as analyze_chunks
-from merge_brief import main as merge_brief
+from transcribe import transcribe_audio, validate_audio_file
+from analyze_chunk import validate_openai_api_key
+from merge_brief import merge_partials_to_brief
 
 class AudioBriefPipeline:
     """Main pipeline orchestrator for audio brief generation."""
