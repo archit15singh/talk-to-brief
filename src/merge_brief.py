@@ -177,12 +177,21 @@ def merge_with_gpt4(analyses: List[str]) -> str:
         
         client = OpenAI(api_key=api_key)
         
-        # Load merge prompt
-        merge_prompt_path = Path(__file__).parent.parent / "config" / "merge.md"
-        if merge_prompt_path.exists():
-            with open(merge_prompt_path, 'r', encoding='utf-8') as f:
-                merge_instructions = f.read()
-        else:
+        # Load merge prompt - try multiple paths
+        merge_prompt_paths = [
+            "config/merge.md",  # When run from src/
+            "src/config/merge.md",  # When run from root
+            Path(__file__).parent / "config" / "merge.md"  # Relative to this file
+        ]
+        
+        merge_instructions = None
+        for path in merge_prompt_paths:
+            if Path(path).exists():
+                with open(path, 'r', encoding='utf-8') as f:
+                    merge_instructions = f.read()
+                break
+        
+        if not merge_instructions:
             merge_instructions = """
 You have multiple partial outputs from different segments of the same talk. Merge them into ONE final output with the same four sections:
 

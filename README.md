@@ -4,21 +4,31 @@ A complete pipeline for converting audio files into structured, actionable brief
 
 ## Features
 
+- **Live Audio Recording**: Record talks/presentations in real-time with automatic silence detection
 - **Audio Transcription**: Fast transcription with timestamps using faster-whisper (base model)
 - **Intelligent Chunking**: Smart segmentation respecting sentence boundaries (~1200 words)
 - **Parallel Analysis**: Concurrent GPT-4 processing for optimal performance
 - **Structured Output**: Organized briefs with conversation starters, strategic questions, and key insights
+- **End-to-End Workflow**: Record → Transcribe → Analyze → Generate Brief in one command
 
 ## Project Structure
 
 ```
-├── pipeline.py              # Main orchestrator script
-├── src/                     # Core pipeline components
+├── pipeline.py              # Pipeline launcher (runs src/pipeline.py)
+├── record_and_process.py    # Recording launcher (runs src/record_and_process.py)
+├── setup_recording.py       # Setup launcher (runs src/setup_recording.py)
+├── src/                     # All source code and configuration
+│   ├── pipeline.py          # Main orchestrator script
+│   ├── record_and_process.py # Live recording + full pipeline
+│   ├── setup_recording.py   # Audio recording setup script
+│   ├── record_audio.py      # Live audio recording
 │   ├── transcribe.py        # Audio → timestamped transcript
 │   ├── analyze_chunk.py     # Transcript → parallel GPT-4 analysis
-│   └── merge_brief.py       # Partials → final brief
-├── config/                  # Configuration and prompts
-│   └── per_chunk.md         # GPT-4 analysis prompt template
+│   ├── merge_brief.py       # Partials → final brief
+│   ├── validate_setup.py    # Setup validation
+│   └── config/              # Configuration and prompts
+│       ├── per_chunk.md     # GPT-4 analysis prompt template
+│       └── merge.md         # Brief merging instructions
 ├── data/                    # All data artifacts
 │   ├── audio/               # Input audio files
 │   ├── transcripts/         # Generated transcripts
@@ -50,16 +60,54 @@ pip install -r requirements.txt
    - **Important**: Ensure you have GPT-4 access on your OpenAI account
    - **Security**: Never commit the `.env` file to version control
 
-5. Validate your setup:
+5. Set up audio recording (optional):
+```bash
+python setup_recording.py
+```
+
+6. Validate your setup:
 ```bash
 python validate_setup.py
 ```
 
 ## Usage
 
-### Complete Pipeline (Recommended)
+### Live Recording + Processing (New!)
 
-Process an audio file from start to finish:
+Record a talk/presentation and automatically process it:
+
+```bash
+# Interactive mode with device selection
+python record_and_process.py --interactive
+
+# Quick start with default settings
+python record_and_process.py
+
+# With specific settings
+python record_and_process.py --filename "my_talk.wav" --device 1
+```
+
+### Audio Recording Only
+
+Record audio without processing:
+
+```bash
+# Interactive recording setup
+python src/record_audio.py --interactive
+
+# List available microphones
+python src/record_audio.py --list-devices
+
+# Test your microphone
+python src/record_audio.py --test
+
+# Record with specific device
+python src/record_audio.py --device 1 --filename "recording.wav"
+```
+
+### Complete Pipeline (Existing Audio)
+
+Process an existing audio file from start to finish:
 
 ```bash
 python pipeline.py data/audio/your_file.mp3
@@ -87,18 +135,39 @@ python pipeline.py data/audio/your_file.mp3 --step merge
 
 ### Direct Script Usage
 
-You can also run individual scripts directly:
+You can also run individual scripts directly from the src directory:
 
 ```bash
-# Transcribe audio
+# From project root
 python src/transcribe.py data/audio/your_file.mp3 data/transcripts/output.txt
-
-# Analyze transcript
 python src/analyze_chunk.py data/transcripts/input.txt data/partials/output_dir
-
-# Generate brief
 python src/merge_brief.py data/partials/input_dir data/outputs/brief.md
+
+# Or from src directory
+cd src
+python transcribe.py ../data/audio/your_file.mp3 ../data/transcripts/output.txt
+python analyze_chunk.py ../data/transcripts/input.txt ../data/partials/output_dir
+python merge_brief.py ../data/partials/input_dir ../data/outputs/brief.md
 ```
+
+## Recording Workflow
+
+### Live Recording During a Talk
+
+1. **Setup**: Run `python setup_recording.py` to install audio dependencies
+2. **Test**: Use `python src/record_audio.py --test` to verify your microphone
+3. **Record**: Start `python record_and_process.py --interactive` before your talk
+4. **Present**: The system records automatically with silence detection
+5. **Process**: After recording stops, the full pipeline runs automatically
+6. **Review**: Your brief is ready in `data/outputs/`
+
+### Recording Features
+
+- **Auto-silence detection**: Stops recording after 30 seconds of silence
+- **Real-time monitoring**: Shows recording status and duration
+- **Device selection**: Choose from available microphones
+- **Quality validation**: Tests audio levels before recording
+- **Flexible formats**: Saves as high-quality WAV files
 
 ## Example Run Logs
 
@@ -142,6 +211,50 @@ $ python pipeline.py data/audio/sample.mp3
 
 🎉 Pipeline complete! Total time: 5.6 minutes
 📄 Final brief: data/outputs/sample_brief.md
+```
+
+### Live Recording Example
+
+```bash
+$ python record_and_process.py --interactive
+🎙️  Interactive Recording Mode
+========================================
+
+Available audio input devices:
+  0: Built-in Microphone (channels: 1)
+  1: USB Headset (channels: 1)
+  2: External Mic (channels: 2)
+
+Select device ID (or press Enter for default): 1
+Testing audio input for 2 seconds...
+Speak into your microphone...
+Audio test results:
+  Max volume: 0.1234
+  Average volume: 0.0456
+✓ Audio levels look good!
+
+Enter recording filename (or press Enter for auto): 
+Enter brief output name (or press Enter for auto): 
+Auto-stop on silence? (y/n, default: y): y
+
+Ready to record!
+Press Enter to start recording...
+
+📹 STEP 1: RECORDING AUDIO
+------------------------------
+Starting recording: data/audio/talk_20241215_143022.wav
+🔴 Recording... Press Ctrl+C to stop
+Recording... 60s (silence: 0.0s)
+Recording... 120s (silence: 0.0s)
+...
+Auto-stopping after 30s of silence
+✅ Recording completed: data/audio/talk_20241215_143022.wav
+  Duration: 1847.3 seconds
+  File size: 35.2 MB
+
+🔄 STEP 2: PROCESSING THROUGH PIPELINE
+----------------------------------------
+[Full pipeline execution follows...]
 ```
 
 ### Individual Step Examples

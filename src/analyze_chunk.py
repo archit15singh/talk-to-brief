@@ -116,12 +116,15 @@ def create_intelligent_chunks(segments: List[str], target_words: int = 1200) -> 
 
 def load_analysis_prompt() -> str:
     """Load the per-chunk analysis prompt from config."""
-    prompt_path = "config/per_chunk.md"
-    if not os.path.exists(prompt_path):
-        raise FileNotFoundError(f"Analysis prompt not found: {prompt_path}")
+    # Try relative path first (when run from src/), then absolute path
+    prompt_paths = ["config/per_chunk.md", "src/config/per_chunk.md"]
     
-    with open(prompt_path, 'r', encoding='utf-8') as f:
-        return f.read()
+    for prompt_path in prompt_paths:
+        if os.path.exists(prompt_path):
+            with open(prompt_path, 'r', encoding='utf-8') as f:
+                return f.read()
+    
+    raise FileNotFoundError(f"Analysis prompt not found in any of: {prompt_paths}")
 
 def analyze_chunk_with_gpt4(chunk: Dict[str, Any], prompt: str) -> Dict[str, Any]:
     """

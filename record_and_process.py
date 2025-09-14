@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Validation launcher - runs the setup validation from src/
+Recording launcher - runs the recording + processing workflow from src/
 """
 
 import sys
@@ -11,8 +11,8 @@ from pathlib import Path
 src_path = Path(__file__).parent / "src"
 sys.path.insert(0, str(src_path))
 
-# Import and run the validation
-from validate_setup import main
+# Import and run the recording workflow
+from record_and_process import main
 
 if __name__ == "__main__":
     main()
