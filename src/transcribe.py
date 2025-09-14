@@ -72,10 +72,10 @@ def transcribe_audio(audio_path, output_path="transcript.txt"):
         output_dir = Path(output_path).parent
         output_dir.mkdir(parents=True, exist_ok=True)
         
-        logging.info(f"Loading faster-whisper base model...")
+        logging.info(f"Loading faster-whisper small model...")
         # Initialize model with error handling
         try:
-            model = WhisperModel("base", device="auto", compute_type="auto")
+            model = WhisperModel("small", device="auto", compute_type="auto")
         except Exception as e:
             logging.error(f"Failed to load Whisper model: {e}")
             raise RuntimeError(f"Could not initialize Whisper model: {e}")

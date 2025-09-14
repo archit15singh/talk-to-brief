@@ -1,0 +1,974 @@
+# Transcript
+Audio: data/1_audio/sample.mp3
+Language: en (confidence: 1.00)
+Duration: 894.60s
+
+[00:03 -> 00:22] Welcome everyone. I'm going to talk about practical tactics to build reliable AI applications
+  00:03-00:04:  Welcome
+  00:15-00:16:  everyone.
+  00:17-00:18:  I'm
+  00:18-00:18:  going
+  00:18-00:18:  to
+  00:18-00:18:  talk
+  00:18-00:18:  about
+  00:18-00:19:  practical
+  00:19-00:19:  tactics
+  00:19-00:19:  to
+  00:19-00:20:  build
+  00:20-00:21:  reliable
+  00:21-00:22:  AI
+  00:22-00:22:  applications
+
+[00:23 -> 00:30] and why nobody does it this way yet. A little bit about myself or why you should trust me.
+  00:23-00:23:  and
+  00:23-00:23:  why
+  00:23-00:24:  nobody
+  00:24-00:24:  does
+  00:24-00:24:  it
+  00:24-00:25:  this
+  00:25-00:25:  way
+  00:25-00:25:  yet.
+  00:26-00:27:  A
+  00:27-00:27:  little
+  00:27-00:27:  bit
+  00:27-00:28:  about
+  00:28-00:28:  myself
+  00:28-00:29:  or
+  00:29-00:29:  why
+  00:29-00:29:  you
+  00:29-00:29:  should
+  00:29-00:29:  trust
+  00:29-00:30:  me.
+
+[00:31 -> 00:42] I'm about 15 years as a startup co-founder and CTO. I held executive positions for the
+  00:31-00:31:  I'm
+  00:31-00:32:  about
+  00:32-00:32:  15
+  00:32-00:32:  years
+  00:32-00:33:  as
+  00:33-00:33:  a
+  00:33-00:33:  startup
+  00:33-00:34:  co
+  00:34-00:34: -founder
+  00:34-00:34:  and
+  00:34-00:35:  CTO.
+  00:36-00:36:  I
+  00:36-00:36:  held
+  00:36-00:37:  executive
+  00:37-00:38:  positions
+  00:38-00:42:  for
+  00:42-00:42:  the
+
+[00:42 -> 00:54] last couple of years developing a lot of projects ranging from POCs to many production-level solutions
+  00:42-00:43:  last
+  00:43-00:44:  couple
+  00:44-00:44:  of
+  00:44-00:44:  years
+  00:44-00:45:  developing
+  00:45-00:46:  a
+  00:46-00:46:  lot
+  00:46-00:47:  of
+  00:47-00:48:  projects
+  00:48-00:48:  ranging
+  00:48-00:49:  from
+  00:49-00:49:  POCs
+  00:49-00:50:  to
+  00:50-00:51:  many
+  00:51-00:52:  production
+  00:52-00:52: -level
+  00:52-00:54:  solutions
+
+[00:54 -> 01:04] and helped some companies to get it done. I've learned or distilled a way to make these
+  00:54-00:55:  and
+  00:55-00:55:  helped
+  00:55-00:56:  some
+  00:56-00:57:  companies
+  00:57-00:57:  to
+  00:57-00:57:  get
+  00:57-00:57:  it
+  00:57-00:58:  done.
+  00:59-01:00:  I've
+  01:00-01:00:  learned
+  01:00-01:01:  or
+  01:01-01:02:  distilled
+  01:02-01:02:  a
+  01:02-01:02:  way
+  01:02-01:02:  to
+  01:02-01:03:  make
+  01:03-01:04:  these
+
+[01:04 -> 01:15] applications reliable. There are quite a lot of tracks this conference about evals and reliability
+  01:04-01:04:  applications
+  01:04-01:05:  reliable.
+  01:06-01:07:  There
+  01:07-01:08:  are
+  01:08-01:08:  quite
+  01:08-01:08:  a
+  01:08-01:08:  lot
+  01:08-01:09:  of
+  01:09-01:09:  tracks
+  01:09-01:10:  this
+  01:10-01:13:  conference
+  01:13-01:13:  about
+  01:13-01:14:  evals
+  01:14-01:14:  and
+  01:14-01:15:  reliability
+
+[01:15 -> 01:23] but to my surprise nobody was talking about the most important things and we're going to talk
+  01:15-01:16:  but
+  01:16-01:16:  to
+  01:16-01:16:  my
+  01:16-01:17:  surprise
+  01:17-01:17:  nobody
+  01:17-01:19:  was
+  01:19-01:19:  talking
+  01:19-01:19:  about
+  01:19-01:20:  the
+  01:20-01:20:  most
+  01:20-01:21:  important
+  01:21-01:21:  things
+  01:21-01:22:  and
+  01:22-01:23:  we're
+  01:23-01:23:  going
+  01:23-01:23:  to
+  01:23-01:23:  talk
+
+[01:23 -> 01:34] about it right now. Standard software development lifecycle is very standard, simple. You design
+  01:23-01:23:  about
+  01:23-01:24:  it
+  01:24-01:24:  right
+  01:24-01:24:  now.
+  01:26-01:27:  Standard
+  01:27-01:27:  software
+  01:27-01:28:  development
+  01:28-01:28:  lifecycle
+  01:28-01:29:  is
+  01:29-01:30:  very
+  01:30-01:31:  standard,
+  01:32-01:33:  simple.
+  01:33-01:33:  You
+  01:33-01:34:  design
+
+[01:34 -> 01:40] your solution, you develop it, you test it and then eventually you deploy it. When people start
+  01:34-01:34:  your
+  01:34-01:35:  solution,
+  01:35-01:35:  you
+  01:35-01:35:  develop
+  01:35-01:35:  it,
+  01:35-01:36:  you
+  01:36-01:36:  test
+  01:36-01:36:  it
+  01:36-01:36:  and
+  01:36-01:36:  then
+  01:36-01:37:  eventually
+  01:37-01:37:  you
+  01:37-01:37:  deploy
+  01:37-01:37:  it.
+  01:38-01:39:  When
+  01:39-01:40:  people
+  01:40-01:40:  start
+
+[01:40 -> 01:51] doing POC with AI, it sounds simple. You can very easily do some prompt and models are very
+  01:40-01:41:  doing
+  01:41-01:43:  POC
+  01:43-01:43:  with
+  01:43-01:44:  AI,
+  01:45-01:45:  it
+  01:45-01:46:  sounds
+  01:46-01:46:  simple.
+  01:47-01:47:  You
+  01:47-01:47:  can
+  01:47-01:48:  very
+  01:48-01:48:  easily
+  01:48-01:49:  do
+  01:49-01:49:  some
+  01:49-01:50:  prompt
+  01:50-01:50:  and
+  01:50-01:51:  models
+  01:51-01:51:  are
+  01:51-01:51:  very
+
+[01:51 -> 02:01] capable but then you start facing some unexpected challenges. Actually, you can easily do a POC
+  01:51-01:52:  capable
+  01:52-01:53:  but
+  01:53-01:53:  then
+  01:53-01:54:  you
+  01:54-01:54:  start
+  01:54-01:55:  facing
+  01:55-01:55:  some
+  01:55-01:56:  unexpected
+  01:56-01:57:  challenges.
+  01:59-01:59:  Actually,
+  02:00-02:00:  you
+  02:00-02:00:  can
+  02:00-02:01:  easily
+  02:01-02:01:  do
+  02:01-02:01:  a
+  02:01-02:01:  POC
+
+[02:01 -> 02:11] that works 50% of the time but making it do the same reliable work the rest of the 50% is very hard
+  02:01-02:02:  that
+  02:02-02:02:  works
+  02:02-02:02:  50
+  02:02-02:03: %
+  02:03-02:03:  of
+  02:03-02:03:  the
+  02:03-02:03:  time
+  02:03-02:04:  but
+  02:04-02:05:  making
+  02:05-02:05:  it
+  02:05-02:06:  do
+  02:06-02:06:  the
+  02:06-02:06:  same
+  02:06-02:07:  reliable
+  02:07-02:07:  work
+  02:07-02:08:  the
+  02:08-02:08:  rest
+  02:08-02:08:  of
+  02:08-02:08:  the
+  02:08-02:09:  50
+  02:09-02:09: %
+  02:09-02:09:  is
+  02:09-02:10:  very
+  02:10-02:11:  hard
+
+[02:11 -> 02:20] because models are non-deterministic and it starts requiring a data science approach, continuous
+  02:11-02:11:  because
+  02:11-02:12:  models
+  02:12-02:12:  are
+  02:12-02:13:  non
+  02:13-02:13: -deterministic
+  02:13-02:14:  and
+  02:14-02:15:  it
+  02:15-02:16:  starts
+  02:16-02:16:  requiring
+  02:16-02:17:  a
+  02:17-02:18:  data
+  02:18-02:18:  science
+  02:18-02:18:  approach,
+  02:19-02:20:  continuous
+
+[02:20 -> 02:24] experimentation. You need to try this prompt, you need to try that model, you need to try this
+  02:20-02:20:  experimentation.
+  02:21-02:21:  You
+  02:21-02:21:  need
+  02:21-02:21:  to
+  02:21-02:21:  try
+  02:21-02:21:  this
+  02:21-02:22:  prompt,
+  02:22-02:22:  you
+  02:22-02:22:  need
+  02:22-02:22:  to
+  02:22-02:22:  try
+  02:22-02:23:  that
+  02:23-02:23:  model,
+  02:23-02:23:  you
+  02:23-02:23:  need
+  02:23-02:23:  to
+  02:23-02:23:  try
+  02:23-02:24:  this
+
+[02:24 -> 02:32] approach, etc. Everything in your solution, everything that represents your solution which is your
+  02:24-02:24:  approach,
+  02:24-02:25:  etc.
+  02:26-02:27:  Everything
+  02:27-02:29:  in
+  02:29-02:29:  your
+  02:29-02:29:  solution,
+  02:29-02:30:  everything
+  02:30-02:30:  that
+  02:30-02:31:  represents
+  02:31-02:31:  your
+  02:31-02:32:  solution
+  02:32-02:32:  which
+  02:32-02:32:  is
+  02:32-02:32:  your
+
+[02:32 -> 02:38] code, your logic, the prompts that you use, the models that you use, the data that you base your
+  02:32-02:33:  code,
+  02:33-02:33:  your
+  02:33-02:33:  logic,
+  02:34-02:34:  the
+  02:34-02:35:  prompts
+  02:35-02:35:  that
+  02:35-02:35:  you
+  02:35-02:35:  use,
+  02:36-02:36:  the
+  02:36-02:36:  models
+  02:36-02:36:  that
+  02:36-02:36:  you
+  02:36-02:37:  use,
+  02:37-02:37:  the
+  02:37-02:37:  data
+  02:37-02:38:  that
+  02:38-02:38:  you
+  02:38-02:38:  base
+  02:38-02:38:  your
+
+[02:38 -> 02:51] solution on, changing anything of that impacts your solution in unexpected ways. People very
+  02:38-02:39:  solution
+  02:39-02:39:  on,
+  02:40-02:40:  changing
+  02:40-02:41:  anything
+  02:41-02:42:  of
+  02:42-02:42:  that
+  02:42-02:42:  impacts
+  02:42-02:43:  your
+  02:43-02:44:  solution
+  02:44-02:44:  in
+  02:44-02:45:  unexpected
+  02:45-02:45:  ways.
+  02:50-02:50:  People
+  02:50-02:51:  very
+
+[02:51 -> 03:00] often come to this, to try solving this with the wrong approach. They start with data science
+  02:51-02:52:  often
+  02:52-02:52:  come
+  02:52-02:52:  to
+  02:52-02:53:  this,
+  02:54-02:54:  to
+  02:54-02:55:  try
+  02:55-02:55:  solving
+  02:55-02:56:  this
+  02:56-02:56:  with
+  02:56-02:57:  the
+  02:57-02:57:  wrong
+  02:57-02:57:  approach.
+  02:58-02:58:  They
+  02:58-02:59:  start
+  02:59-02:59:  with
+  02:59-03:00:  data
+  03:00-03:00:  science
+
+[03:00 -> 03:06] metrics. It sounds reasonable, right? So it requires data science approach of the experimentation
+  03:00-03:01:  metrics.
+  03:01-03:01:  It
+  03:01-03:03:  sounds
+  03:03-03:04:  reasonable,
+  03:04-03:04:  right?
+  03:04-03:04:  So
+  03:04-03:04:  it
+  03:04-03:05:  requires
+  03:05-03:05:  data
+  03:05-03:05:  science
+  03:05-03:06:  approach
+  03:06-03:06:  of
+  03:06-03:06:  the
+  03:06-03:06:  experimentation
+
+[03:07 -> 03:16] and people start measuring groundness, factuality, bias and other metrics that don't really help
+  03:07-03:07:  and
+  03:07-03:08:  people
+  03:08-03:08:  start
+  03:08-03:09:  measuring
+  03:09-03:10:  groundness,
+  03:10-03:11:  factuality,
+  03:11-03:11:  bias
+  03:11-03:12:  and
+  03:12-03:12:  other
+  03:12-03:14:  metrics
+  03:14-03:14:  that
+  03:14-03:15:  don't
+  03:15-03:15:  really
+  03:15-03:16:  help
+
+[03:16 -> 03:24] you to understand is your solution working the right way? Does it, does your latest change
+  03:16-03:16:  you
+  03:16-03:16:  to
+  03:16-03:17:  understand
+  03:17-03:18:  is
+  03:18-03:19:  your
+  03:19-03:19:  solution
+  03:19-03:20:  working
+  03:20-03:21:  the
+  03:21-03:21:  right
+  03:21-03:21:  way?
+  03:22-03:22:  Does
+  03:22-03:22:  it,
+  03:22-03:23:  does
+  03:23-03:23:  your
+  03:23-03:24:  latest
+  03:24-03:24:  change
+
+[03:26 -> 03:31] improved your solution in the right way for your users? For example, I've been talking
+  03:26-03:26:  improved
+  03:26-03:27:  your
+  03:27-03:27:  solution
+  03:27-03:28:  in
+  03:28-03:28:  the
+  03:28-03:28:  right
+  03:28-03:28:  way
+  03:28-03:28:  for
+  03:28-03:28:  your
+  03:28-03:29:  users?
+  03:30-03:30:  For
+  03:30-03:31:  example,
+  03:31-03:31:  I've
+  03:31-03:31:  been
+  03:31-03:31:  talking
+
+[03:31 -> 03:37] to an ex-colleague that are building a customer support bot at Weeks. I asked him, how do
+  03:31-03:32:  to
+  03:32-03:32:  an
+  03:32-03:33:  ex
+  03:33-03:33: -colleague
+  03:33-03:33:  that
+  03:33-03:34:  are
+  03:34-03:34:  building
+  03:34-03:34:  a
+  03:34-03:34:  customer
+  03:34-03:35:  support
+  03:35-03:35:  bot
+  03:35-03:35:  at
+  03:35-03:36:  Weeks.
+  03:36-03:36:  I
+  03:36-03:37:  asked
+  03:37-03:37:  him,
+  03:37-03:37:  how
+  03:37-03:37:  do
+
+[03:37 -> 03:42] you know that your solution is working well? He started talking about factuality and
+  03:37-03:37:  you
+  03:37-03:38:  know
+  03:38-03:38:  that
+  03:38-03:38:  your
+  03:38-03:39:  solution
+  03:39-03:39:  is
+  03:39-03:39:  working
+  03:39-03:39:  well?
+  03:40-03:40:  He
+  03:40-03:41:  started
+  03:41-03:41:  talking
+  03:41-03:41:  about
+  03:41-03:42:  factuality
+  03:42-03:42:  and
+
+[03:42 -> 03:50] other data science metrics. That's again, I started to dig deeper and then we just together
+  03:42-03:43:  other
+  03:43-03:43:  data
+  03:43-03:43:  science
+  03:43-03:44:  metrics.
+  03:46-03:47:  That's
+  03:47-03:47:  again,
+  03:47-03:47:  I
+  03:47-03:48:  started
+  03:48-03:48:  to
+  03:48-03:48:  dig
+  03:48-03:48:  deeper
+  03:48-03:49:  and
+  03:49-03:49:  then
+  03:49-03:49:  we
+  03:49-03:50:  just
+  03:50-03:50:  together
+
+[03:51 -> 03:59] figure out that the most important metric for them is the rate of moving from AI support
+  03:51-03:51:  figure
+  03:51-03:52:  out
+  03:52-03:52:  that
+  03:52-03:52:  the
+  03:52-03:52:  most
+  03:52-03:52:  important
+  03:52-03:53:  metric
+  03:53-03:53:  for
+  03:53-03:53:  them
+  03:53-03:54:  is
+  03:54-03:56:  the
+  03:56-03:56:  rate
+  03:56-03:57:  of
+  03:57-03:57:  moving
+  03:57-03:58:  from
+  03:58-03:59:  AI
+  03:59-03:59:  support
+
+[03:59 -> 04:07] bot like escalation to a human support. If your solution hasn't able to answer the
+  03:59-04:00:  bot
+  04:00-04:00:  like
+  04:00-04:01:  escalation
+  04:01-04:01:  to
+  04:01-04:01:  a
+  04:01-04:01:  human
+  04:01-04:02:  support.
+  04:03-04:03:  If
+  04:03-04:04:  your
+  04:04-04:04:  solution
+  04:04-04:05:  hasn't
+  04:05-04:06:  able
+  04:06-04:06:  to
+  04:06-04:06:  answer
+  04:06-04:07:  the
+
+[04:07 -> 04:12] user with all this factuality, like it could be super grounded but still not provide
+  04:07-04:07:  user
+  04:07-04:08:  with
+  04:08-04:08:  all
+  04:08-04:08:  this
+  04:08-04:09:  factuality,
+  04:09-04:10:  like
+  04:10-04:10:  it
+  04:10-04:10:  could
+  04:10-04:10:  be
+  04:10-04:10:  super
+  04:10-04:11:  grounded
+  04:11-04:11:  but
+  04:11-04:11:  still
+  04:11-04:11:  not
+  04:11-04:12:  provide
+
+[04:12 -> 04:22] the right answer that user expects and this is what you actually need to test. My experience
+  04:12-04:12:  the
+  04:12-04:12:  right
+  04:12-04:13:  answer
+  04:13-04:14:  that
+  04:14-04:14:  user
+  04:14-04:15:  expects
+  04:15-04:15:  and
+  04:15-04:16:  this
+  04:16-04:16:  is
+  04:16-04:16:  what
+  04:16-04:16:  you
+  04:16-04:17:  actually
+  04:17-04:17:  need
+  04:17-04:17:  to
+  04:17-04:17:  test.
+  04:21-04:21:  My
+  04:21-04:22:  experience
+
+[04:22 -> 04:30] was to start with real-world scenarios. Basically, you need to reverse engineer your metrics
+  04:22-04:23:  was
+  04:23-04:24:  to
+  04:24-04:25:  start
+  04:25-04:25:  with
+  04:25-04:26:  real
+  04:26-04:26: -world
+  04:26-04:27:  scenarios.
+  04:27-04:28:  Basically,
+  04:28-04:28:  you
+  04:28-04:28:  need
+  04:28-04:28:  to
+  04:28-04:29:  reverse
+  04:29-04:29:  engineer
+  04:29-04:30:  your
+  04:30-04:30:  metrics
+
+[04:30 -> 04:37] and your metrics should be very, very specific to what your end goal, so they should come
+  04:30-04:31:  and
+  04:31-04:31:  your
+  04:31-04:31:  metrics
+  04:31-04:32:  should
+  04:32-04:32:  be
+  04:32-04:33:  very,
+  04:33-04:33:  very
+  04:33-04:34:  specific
+  04:34-04:34:  to
+  04:34-04:35:  what
+  04:35-04:35:  your
+  04:35-04:36:  end
+  04:36-04:36:  goal,
+  04:36-04:36:  so
+  04:36-04:37:  they
+  04:37-04:37:  should
+  04:37-04:37:  come
+
+[04:37 -> 04:44] from a product experience, from business outcomes. If your solution is customer support bot, you
+  04:37-04:38:  from
+  04:38-04:38:  a
+  04:38-04:38:  product
+  04:38-04:39:  experience,
+  04:40-04:40:  from
+  04:40-04:40:  business
+  04:40-04:41:  outcomes.
+  04:42-04:42:  If
+  04:42-04:43:  your
+  04:43-04:43:  solution
+  04:43-04:43:  is
+  04:43-04:43:  customer
+  04:43-04:43:  support
+  04:43-04:44:  bot,
+  04:44-04:44:  you
+
+[04:44 -> 04:51] need to figure out what your users want and how you can mimic it. Instead of measuring
+  04:44-04:44:  need
+  04:44-04:44:  to
+  04:44-04:44:  figure
+  04:44-04:45:  out
+  04:45-04:45:  what
+  04:45-04:45:  your
+  04:45-04:46:  users
+  04:46-04:46:  want
+  04:46-04:47:  and
+  04:47-04:47:  how
+  04:47-04:47:  you
+  04:47-04:47:  can
+  04:47-04:48:  mimic
+  04:48-04:48:  it.
+  04:49-04:50:  Instead
+  04:50-04:50:  of
+  04:50-04:51:  measuring
+
+[04:51 -> 04:57] something average or something generic, you need to measure a very specific criteria
+  04:51-04:51:  something
+  04:51-04:52:  average
+  04:52-04:53:  or
+  04:53-04:53:  something
+  04:53-04:54:  generic,
+  04:54-04:54:  you
+  04:54-04:55:  need
+  04:55-04:55:  to
+  04:55-04:55:  measure
+  04:55-04:55:  a
+  04:55-04:56:  very
+  04:56-04:56:  specific
+  04:56-04:57:  criteria
+
+[04:58 -> 05:06] because universal valves don't really work. How do we do it? For example, customer
+  04:58-04:59:  because
+  04:59-04:59:  universal
+  04:59-05:00:  valves
+  05:00-05:00:  don't
+  05:00-05:00:  really
+  05:00-05:01:  work.
+  05:03-05:03:  How
+  05:03-05:03:  do
+  05:03-05:03:  we
+  05:03-05:03:  do
+  05:03-05:04:  it?
+  05:05-05:05:  For
+  05:05-05:05:  example,
+  05:06-05:06:  customer
+
+[05:06 -> 05:13] support bot, which is by way one of the hardest things to do the valves properly. Let's say
+  05:06-05:06:  support
+  05:06-05:07:  bot,
+  05:07-05:07:  which
+  05:07-05:07:  is
+  05:07-05:07:  by
+  05:07-05:07:  way
+  05:07-05:08:  one
+  05:08-05:08:  of
+  05:08-05:08:  the
+  05:08-05:08:  hardest
+  05:08-05:10:  things
+  05:10-05:10:  to
+  05:10-05:10:  do
+  05:10-05:11:  the
+  05:11-05:11:  valves
+  05:11-05:11:  properly.
+  05:12-05:13:  Let's
+  05:13-05:13:  say
+
+[05:13 -> 05:21] I have a bank and a bank has FAQ materials which contain, including how do you reset your
+  05:13-05:13:  I
+  05:13-05:13:  have
+  05:13-05:14:  a
+  05:14-05:14:  bank
+  05:14-05:15:  and
+  05:15-05:15:  a
+  05:15-05:15:  bank
+  05:15-05:16:  has
+  05:16-05:17:  FAQ
+  05:17-05:17:  materials
+  05:17-05:19:  which
+  05:19-05:19:  contain,
+  05:20-05:20:  including
+  05:20-05:20:  how
+  05:20-05:20:  do
+  05:20-05:21:  you
+  05:21-05:21:  reset
+  05:21-05:21:  your
+
+[05:21 -> 05:31] password? What I usually do when I help my companies that I help them to build AI
+  05:21-05:22:  password?
+  05:24-05:24:  What
+  05:24-05:25:  I
+  05:25-05:26:  usually
+  05:26-05:26:  do
+  05:26-05:27:  when
+  05:27-05:27:  I
+  05:27-05:27:  help
+  05:27-05:27:  my
+  05:27-05:28:  companies
+  05:28-05:29:  that
+  05:29-05:29:  I
+  05:29-05:29:  help
+  05:29-05:30:  them
+  05:30-05:30:  to
+  05:30-05:30:  build
+  05:30-05:31:  AI
+
+[05:31 -> 05:37] solutions, we start with reverse engineering, like how do we create the valves based on that?
+  05:31-05:32:  solutions,
+  05:33-05:33:  we
+  05:33-05:33:  start
+  05:33-05:33:  with
+  05:33-05:34:  reverse
+  05:34-05:35:  engineering,
+  05:35-05:35:  like
+  05:35-05:35:  how
+  05:35-05:36:  do
+  05:36-05:36:  we
+  05:36-05:36:  create
+  05:36-05:36:  the
+  05:36-05:36:  valves
+  05:36-05:37:  based
+  05:37-05:37:  on
+  05:37-05:37:  that?
+
+[05:38 -> 05:44] In this case, I use LLM, and in most cases I use LLM, to come up with right evaluations.
+  05:38-05:38:  In
+  05:38-05:38:  this
+  05:38-05:38:  case,
+  05:39-05:39:  I
+  05:39-05:39:  use
+  05:39-05:40:  LLM,
+  05:40-05:40:  and
+  05:40-05:41:  in
+  05:41-05:41:  most
+  05:41-05:41:  cases
+  05:41-05:41:  I
+  05:41-05:41:  use
+  05:41-05:42:  LLM,
+  05:42-05:42:  to
+  05:42-05:42:  come
+  05:42-05:42:  up
+  05:42-05:43:  with
+  05:43-05:43:  right
+  05:43-05:44:  evaluations.
+
+[05:45 -> 05:53] Here I can take, say, 01 or 03 now and just reverse engineer what should be the user
+  05:45-05:45:  Here
+  05:45-05:45:  I
+  05:45-05:46:  can
+  05:46-05:46:  take,
+  05:46-05:47:  say,
+  05:47-05:47:  01
+  05:47-05:48:  or
+  05:48-05:48:  03
+  05:48-05:48:  now
+  05:48-05:50:  and
+  05:50-05:50:  just
+  05:50-05:51:  reverse
+  05:51-05:52:  engineer
+  05:52-05:52:  what
+  05:52-05:53:  should
+  05:53-05:53:  be
+  05:53-05:53:  the
+  05:53-05:53:  user
+
+[05:53 -> 05:59] question that we know to answer based on these materials and what should be the
+  05:53-05:54:  question
+  05:54-05:55:  that
+  05:55-05:55:  we
+  05:55-05:56:  know
+  05:56-05:56:  to
+  05:56-05:56:  answer
+  05:56-05:57:  based
+  05:57-05:57:  on
+  05:57-05:57:  these
+  05:57-05:58:  materials
+  05:58-05:58:  and
+  05:58-05:59:  what
+  05:59-05:59:  should
+  05:59-05:59:  be
+  05:59-05:59:  the
+
+[05:59 -> 06:07] specific criteria that these materials provide an answer for. Some of these criteria are quite
+  05:59-05:59:  specific
+  05:59-06:00:  criteria
+  06:00-06:01:  that
+  06:01-06:01:  these
+  06:01-06:02:  materials
+  06:02-06:03:  provide
+  06:03-06:03:  an
+  06:03-06:04:  answer
+  06:04-06:04:  for.
+  06:05-06:05:  Some
+  06:05-06:05:  of
+  06:05-06:05:  these
+  06:05-06:06:  criteria
+  06:06-06:06:  are
+  06:06-06:07:  quite
+
+[06:07 -> 06:13] important. For example, here it says that as part of the thing, you need to receive a
+  06:07-06:07:  important.
+  06:07-06:07:  For
+  06:07-06:08:  example,
+  06:08-06:08:  here
+  06:08-06:08:  it
+  06:08-06:08:  says
+  06:08-06:09:  that
+  06:09-06:10:  as
+  06:10-06:10:  part
+  06:10-06:11:  of
+  06:11-06:11:  the
+  06:11-06:11:  thing,
+  06:12-06:12:  you
+  06:12-06:12:  need
+  06:12-06:12:  to
+  06:12-06:13:  receive
+  06:13-06:13:  a
+
+[06:13 -> 06:19] mobile validation, so you receive a SMS code, and it says that if you don't have
+  06:13-06:13:  mobile
+  06:13-06:13:  validation,
+  06:14-06:14:  so
+  06:14-06:14:  you
+  06:14-06:14:  receive
+  06:14-06:14:  a
+  06:14-06:15:  SMS
+  06:15-06:15:  code,
+  06:15-06:16:  and
+  06:16-06:16:  it
+  06:16-06:16:  says
+  06:16-06:16:  that
+  06:16-06:17:  if
+  06:17-06:17:  you
+  06:17-06:19:  don't
+  06:19-06:19:  have
+
+[06:19 -> 06:25] a mobile number then you can reach support, et cetera, et cetera. If some of that
+  06:19-06:19:  a
+  06:19-06:19:  mobile
+  06:19-06:20:  number
+  06:20-06:20:  then
+  06:20-06:20:  you
+  06:20-06:20:  can
+  06:20-06:21:  reach
+  06:21-06:22:  support,
+  06:22-06:22:  et
+  06:22-06:22:  cetera,
+  06:22-06:23:  et
+  06:23-06:23:  cetera.
+  06:24-06:24:  If
+  06:24-06:24:  some
+  06:24-06:25:  of
+  06:25-06:25:  that
+
+[06:25 -> 06:31] information is missing from the answer, the answer would not be correct, but you need to
+  06:25-06:25:  information
+  06:25-06:26:  is
+  06:26-06:26:  missing
+  06:26-06:26:  from
+  06:26-06:27:  the
+  06:27-06:27:  answer,
+  06:28-06:28:  the
+  06:28-06:28:  answer
+  06:28-06:29:  would
+  06:29-06:29:  not
+  06:29-06:29:  be
+  06:29-06:30:  correct,
+  06:30-06:30:  but
+  06:30-06:31:  you
+  06:31-06:31:  need
+  06:31-06:31:  to
+
+[06:31 -> 06:37] be very specific about what exact information you need to see in the answer, and that information
+  06:31-06:31:  be
+  06:31-06:31:  very
+  06:31-06:32:  specific
+  06:32-06:32:  about
+  06:32-06:33:  what
+  06:33-06:34:  exact
+  06:34-06:34:  information
+  06:34-06:35:  you
+  06:35-06:35:  need
+  06:35-06:35:  to
+  06:35-06:35:  see
+  06:35-06:35:  in
+  06:35-06:36:  the
+  06:36-06:36:  answer,
+  06:36-06:36:  and
+  06:36-06:36:  that
+  06:36-06:37:  information
+
+[06:37 -> 06:46] is very specific to that specific question. So you need to build lots of valves from the
+  06:37-06:38:  is
+  06:38-06:38:  very
+  06:38-06:38:  specific
+  06:38-06:38:  to
+  06:38-06:39:  that
+  06:39-06:39:  specific
+  06:39-06:40:  question.
+  06:40-06:40:  So
+  06:40-06:41:  you
+  06:41-06:41:  need
+  06:41-06:41:  to
+  06:41-06:41:  build
+  06:41-06:42:  lots
+  06:42-06:42:  of
+  06:42-06:42:  valves
+  06:42-06:45:  from
+  06:45-06:46:  the
+
+[06:46 -> 06:53] materials in this case that mimic specific user questions that you need to be able
+  06:46-06:46:  materials
+  06:46-06:46:  in
+  06:46-06:47:  this
+  06:47-06:47:  case
+  06:47-06:48:  that
+  06:48-06:48:  mimic
+  06:48-06:49:  specific
+  06:49-06:50:  user
+  06:50-06:51:  questions
+  06:51-06:52:  that
+  06:52-06:52:  you
+  06:52-06:53:  need
+  06:53-06:53:  to
+  06:53-06:53:  be
+  06:53-06:53:  able
+
+[06:53 -> 07:03] to answer for. How do we do it usually? Again, I work with smart models like 03, and I provide
+  06:53-06:53:  to
+  06:53-06:54:  answer
+  06:54-06:54:  for.
+  06:55-06:55:  How
+  06:55-06:56:  do
+  06:56-06:56:  we
+  06:56-06:56:  do
+  06:56-06:56:  it
+  06:56-06:56:  usually?
+  06:57-06:57:  Again,
+  06:57-06:57:  I
+  06:57-06:57:  work
+  06:57-06:57:  with
+  06:57-06:58:  smart
+  06:58-06:59:  models
+  06:59-06:59:  like
+  06:59-06:59:  03,
+  07:00-07:01:  and
+  07:01-07:01:  I
+  07:01-07:03:  provide
+
+[07:03 -> 07:08] it enough context, I provide it which personas are we trying to represent, because you can
+  07:03-07:03:  it
+  07:03-07:03:  enough
+  07:03-07:03:  context,
+  07:04-07:04:  I
+  07:04-07:04:  provide
+  07:04-07:04:  it
+  07:04-07:05:  which
+  07:05-07:05:  personas
+  07:05-07:06:  are
+  07:06-07:06:  we
+  07:06-07:06:  trying
+  07:06-07:06:  to
+  07:06-07:07:  represent,
+  07:07-07:08:  because
+  07:08-07:08:  you
+  07:08-07:08:  can
+
+[07:08 -> 07:14] make, ask the same question in completely different ways, depending on who is the
+  07:08-07:08:  make,
+  07:08-07:09:  ask
+  07:09-07:09:  the
+  07:09-07:09:  same
+  07:09-07:10:  question
+  07:10-07:10:  in
+  07:10-07:11:  completely
+  07:11-07:11:  different
+  07:11-07:12:  ways,
+  07:12-07:13:  depending
+  07:13-07:13:  on
+  07:13-07:14:  who
+  07:14-07:14:  is
+  07:14-07:14:  the
+
