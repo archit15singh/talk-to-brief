@@ -173,6 +173,81 @@ python merge_brief.py ../data/partials/input_dir ../data/outputs/brief.md
 
 Here's what a typical pipeline execution looks like:
 
+### Raw Terminal Output
+
+```bash
+❯ source .venv/bin/activate && python pipeline.py data/1_audio/sample.mp3
+/Users/architsingh/Documents/projects/talk-to-brief/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+warnings.warn(
+2025-09-15 04:46:13,513 - INFO - Audio file validation passed: data/1_audio/sample.mp3 (34.1 MB)
+Audio Brief Generator Pipeline
+Audio: data/1_audio/sample.mp3
+Output: data/outputs/sample_brief.md
+Started: 2025-09-15 04:46:13
+
+Validating prerequisites...
+2025-09-15 04:46:13,514 - INFO - Audio file validation passed: data/1_audio/sample.mp3 (34.1 MB)
+✓ Audio file validated
+✓ OpenAI API key validated
+✓ Configuration files found
+All prerequisites validated successfully!
+
+============================================================
+STEP 1: TRANSCRIPTION
+============================================================
+Audio file: data/1_audio/sample.mp3
+Output: data/transcripts/sample_transcript.txt
+2025-09-15 04:46:13,514 - INFO - Audio file validation passed: data/1_audio/sample.mp3 (34.1 MB)
+2025-09-15 04:46:13,514 - INFO - Loading faster-whisper small model...
+2025-09-15 04:46:14,960 - INFO - Starting transcription: data/1_audio/sample.mp3
+2025-09-15 04:46:16,406 - INFO - Processing audio with duration 14:54.600
+2025-09-15 04:46:19,401 - INFO - VAD filter removed 00:34.328 of audio
+2025-09-15 04:46:19,877 - INFO - Detected language: en (probability: 1.00)
+2025-09-15 04:46:19,877 - INFO - Audio duration: 894.60 seconds
+2025-09-15 04:48:47,105 - INFO - Processed 123 segments
+2025-09-15 04:48:47,106 - INFO - Transcript saved successfully: data/transcripts/sample_transcript.txt
+✓ Transcription completed successfully
+
+============================================================
+STEP 2: CHUNK ANALYSIS
+============================================================
+Transcript: data/transcripts/sample_transcript.txt
+Partials output: data/partials/sample/
+Created 2 chunks for analysis
+Processing 2 chunks in parallel (max 4 workers)...
+2025-09-15 04:49:04,922 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✓ Chunk 0 (1194 words)
+2025-09-15 04:49:11,251 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✓ Chunk 1 (1149 words)
+Saved: data/partials/sample/chunk_00.json
+Saved: data/partials/sample/chunk_01.json
+✓ All 2 chunks processed successfully
+
+============================================================
+STEP 3: BRIEF GENERATION
+============================================================
+Partials: data/partials/sample/
+Output: data/outputs/sample_brief.md
+Found 2 partial files to merge
+Loading partials from: data/partials/sample
+Found 2 successful partial analyses
+Merging analyses using GPT-4...
+Calling GPT-4 for intelligent merging...
+2025-09-15 04:49:36,235 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+GPT-4 merging completed successfully
+Brief generated successfully: data/outputs/sample_brief.md
+✓ Brief generation completed successfully
+
+Generated brief: data/outputs/sample_brief.md (4457 bytes)
+
+============================================================
+PIPELINE COMPLETED SUCCESSFULLY
+============================================================
+Final brief: data/outputs/sample_brief.md
+Total duration: 0:03:22.727592
+Completed: 2025-09-15 04:49:36
+```
+
 ### Complete Pipeline Run
 
 ```bash
