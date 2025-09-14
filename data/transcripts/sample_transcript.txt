@@ -972,3 +972,663 @@ Duration: 894.60s
   07:14-07:14:  is
   07:14-07:14:  the
 
+[07:14 -> 07:19] persona asking, yet you would expect exactly the same answer, so you need to account
+  07:14-07:14:  persona
+  07:14-07:15:  asking,
+  07:15-07:16:  yet
+  07:16-07:16:  you
+  07:16-07:17:  would
+  07:17-07:17:  expect
+  07:17-07:18:  exactly
+  07:18-07:18:  the
+  07:18-07:18:  same
+  07:18-07:18:  answer,
+  07:18-07:18:  so
+  07:18-07:19:  you
+  07:19-07:19:  need
+  07:19-07:19:  to
+  07:19-07:19:  account
+
+[07:19 -> 07:29] for it. So this is an example from the open source platform that we have that just helps
+  07:19-07:19:  for
+  07:19-07:19:  it.
+  07:22-07:23:  So
+  07:23-07:23:  this
+  07:23-07:23:  is
+  07:23-07:24:  an
+  07:24-07:24:  example
+  07:24-07:25:  from
+  07:25-07:26:  the
+  07:26-07:26:  open
+  07:26-07:26:  source
+  07:26-07:27:  platform
+  07:27-07:27:  that
+  07:27-07:27:  we
+  07:27-07:27:  have
+  07:27-07:28:  that
+  07:28-07:29:  just
+  07:29-07:29:  helps
+
+[07:29 -> 07:35] to get it done. So if you look it up, I'm not trying to sell you anything, I'm not trying
+  07:29-07:29:  to
+  07:29-07:30:  get
+  07:30-07:30:  it
+  07:30-07:30:  done.
+  07:31-07:31:  So
+  07:31-07:32:  if
+  07:32-07:32:  you
+  07:32-07:32:  look
+  07:32-07:32:  it
+  07:32-07:32:  up,
+  07:32-07:33:  I'm
+  07:33-07:33:  not
+  07:33-07:34:  trying
+  07:34-07:34:  to
+  07:34-07:34:  sell
+  07:34-07:34:  you
+  07:34-07:34:  anything,
+  07:35-07:35:  I'm
+  07:35-07:35:  not
+  07:35-07:35:  trying
+
+[07:35 -> 07:41] to like vendor lock in or whatever, it's completely open source, and if needed I can
+  07:35-07:35:  to
+  07:35-07:36:  like
+  07:36-07:36:  vendor
+  07:36-07:37:  lock
+  07:37-07:37:  in
+  07:37-07:37:  or
+  07:37-07:37:  whatever,
+  07:38-07:38:  it's
+  07:38-07:38:  completely
+  07:38-07:38:  open
+  07:38-07:39:  source,
+  07:39-07:40:  and
+  07:40-07:40:  if
+  07:40-07:41:  needed
+  07:41-07:41:  I
+  07:41-07:41:  can
+
+[07:41 -> 07:45] just recreate it in a couple of days now with cursor, the point is in the approach,
+  07:41-07:41:  just
+  07:41-07:42:  recreate
+  07:42-07:42:  it
+  07:42-07:42:  in
+  07:42-07:42:  a
+  07:42-07:42:  couple
+  07:42-07:42:  of
+  07:42-07:43:  days
+  07:43-07:43:  now
+  07:43-07:43:  with
+  07:43-07:44:  cursor,
+  07:44-07:44:  the
+  07:44-07:45:  point
+  07:45-07:45:  is
+  07:45-07:45:  in
+  07:45-07:45:  the
+  07:45-07:45:  approach,
+
+[07:45 -> 07:53] not in the platform. So for example here we see that very same question, how do I reset
+  07:45-07:46:  not
+  07:46-07:46:  in
+  07:46-07:46:  the
+  07:46-07:46:  platform.
+  07:47-07:48:  So
+  07:48-07:48:  for
+  07:48-07:48:  example
+  07:48-07:48:  here
+  07:48-07:49:  we
+  07:49-07:49:  see
+  07:49-07:50:  that
+  07:50-07:50:  very
+  07:50-07:51:  same
+  07:51-07:51:  question,
+  07:52-07:52:  how
+  07:52-07:53:  do
+  07:53-07:53:  I
+  07:53-07:53:  reset
+
+[07:53 -> 08:00] my password, you see what was the input, what was the output, and that specific criteria
+  07:53-07:53:  my
+  07:53-07:53:  password,
+  07:54-07:54:  you
+  07:54-07:55:  see
+  07:55-07:56:  what
+  07:56-07:56:  was
+  07:56-07:56:  the
+  07:56-07:56:  input,
+  07:57-07:57:  what
+  07:57-07:57:  was
+  07:57-07:57:  the
+  07:57-07:57:  output,
+  07:58-07:58:  and
+  07:58-07:59:  that
+  07:59-08:00:  specific
+  08:00-08:00:  criteria
+
+[08:01 -> 08:09] that I measure it, that specific question, how do I know if the answer is correct? And
+  08:01-08:01:  that
+  08:01-08:01:  I
+  08:01-08:02:  measure
+  08:02-08:02:  it,
+  08:04-08:04:  that
+  08:04-08:05:  specific
+  08:05-08:05:  question,
+  08:06-08:06:  how
+  08:06-08:06:  do
+  08:06-08:06:  I
+  08:06-08:06:  know
+  08:06-08:07:  if
+  08:07-08:07:  the
+  08:07-08:07:  answer
+  08:07-08:07:  is
+  08:07-08:08:  correct?
+  08:09-08:09:  And
+
+[08:09 -> 08:14] now I can just reiterate and generate like 50 different variations of the same question
+  08:09-08:09:  now
+  08:09-08:09:  I
+  08:09-08:10:  can
+  08:10-08:10:  just
+  08:10-08:10:  reiterate
+  08:10-08:10:  and
+  08:10-08:11:  generate
+  08:11-08:11:  like
+  08:11-08:12:  50
+  08:12-08:13:  different
+  08:13-08:13:  variations
+  08:13-08:13:  of
+  08:13-08:14:  the
+  08:14-08:14:  same
+  08:14-08:14:  question
+
+[08:14 -> 08:21] and see if I still get the right answer, if the answer matches all the check list that
+  08:14-08:15:  and
+  08:15-08:15:  see
+  08:15-08:15:  if
+  08:15-08:15:  I
+  08:15-08:16:  still
+  08:16-08:17:  get
+  08:17-08:17:  the
+  08:17-08:17:  right
+  08:17-08:18:  answer,
+  08:18-08:18:  if
+  08:18-08:18:  the
+  08:18-08:18:  answer
+  08:18-08:19:  matches
+  08:19-08:19:  all
+  08:19-08:20:  the
+  08:20-08:20:  check
+  08:20-08:20:  list
+  08:20-08:21:  that
+
+[08:21 -> 08:30] I have for that specific answer. How the process usually works? So contrary to like
+  08:21-08:21:  I
+  08:21-08:21:  have
+  08:21-08:21:  for
+  08:21-08:22:  that
+  08:22-08:22:  specific
+  08:22-08:22:  answer.
+  08:25-08:26:  How
+  08:26-08:26:  the
+  08:26-08:26:  process
+  08:26-08:26:  usually
+  08:26-08:27:  works?
+  08:29-08:29:  So
+  08:29-08:30:  contrary
+  08:30-08:30:  to
+  08:30-08:30:  like
+
+[08:30 -> 08:35] regular approach, you build your evals not at the end of the process, but at the very
+  08:30-08:31:  regular
+  08:31-08:31:  approach,
+  08:32-08:32:  you
+  08:32-08:32:  build
+  08:32-08:32:  your
+  08:32-08:32:  evals
+  08:32-08:33:  not
+  08:33-08:33:  at
+  08:33-08:33:  the
+  08:33-08:34:  end
+  08:34-08:34:  of
+  08:34-08:34:  the
+  08:34-08:34:  process,
+  08:34-08:35:  but
+  08:35-08:35:  at
+  08:35-08:35:  the
+  08:35-08:35:  very
+
+[08:35 -> 08:43] beginning of the process. So just build your first version of the POC, you define the
+  08:35-08:36:  beginning
+  08:36-08:36:  of
+  08:36-08:36:  the
+  08:36-08:36:  process.
+  08:37-08:37:  So
+  08:37-08:38:  just
+  08:38-08:38:  build
+  08:38-08:39:  your
+  08:39-08:39:  first
+  08:39-08:39:  version
+  08:39-08:40:  of
+  08:40-08:40:  the
+  08:40-08:41:  POC,
+  08:42-08:42:  you
+  08:42-08:43:  define
+  08:43-08:43:  the
+
+[08:43 -> 08:49] first version of your test evaluations, you run them and you see what's going on, you will
+  08:43-08:44:  first
+  08:44-08:44:  version
+  08:44-08:44:  of
+  08:44-08:44:  your
+  08:44-08:45:  test
+  08:45-08:45:  evaluations,
+  08:46-08:47:  you
+  08:47-08:47:  run
+  08:47-08:47:  them
+  08:47-08:48:  and
+  08:48-08:48:  you
+  08:48-08:48:  see
+  08:48-08:48:  what's
+  08:48-08:48:  going
+  08:48-08:49:  on,
+  08:49-08:49:  you
+  08:49-08:49:  will
+
+[08:49 -> 08:56] see that in some cases it will fail, in some cases it will succeed. What's important is
+  08:49-08:50:  see
+  08:50-08:50:  that
+  08:50-08:51:  in
+  08:51-08:51:  some
+  08:51-08:51:  cases
+  08:51-08:51:  it
+  08:51-08:51:  will
+  08:51-08:52:  fail,
+  08:53-08:53:  in
+  08:53-08:53:  some
+  08:53-08:53:  cases
+  08:53-08:53:  it
+  08:53-08:53:  will
+  08:53-08:54:  succeed.
+  08:55-08:55:  What's
+  08:55-08:55:  important
+  08:55-08:56:  is
+
+[08:56 -> 09:01] to look at the details, not just see the average numbers, the average numbers won't
+  08:56-08:56:  to
+  08:56-08:57:  look
+  08:57-08:57:  at
+  08:57-08:57:  the
+  08:57-08:58:  details,
+  08:58-08:58:  not
+  08:58-08:58:  just
+  08:58-08:59:  see
+  08:59-08:59:  the
+  08:59-08:59:  average
+  08:59-08:59:  numbers,
+  09:00-09:00:  the
+  09:00-09:00:  average
+  09:00-09:00:  numbers
+  09:00-09:01:  won't
+
+[09:01 -> 09:07] tell you anything, won't tell you how to improve it. If you actually look at the details
+  09:01-09:01:  tell
+  09:01-09:01:  you
+  09:01-09:01:  anything,
+  09:02-09:03:  won't
+  09:03-09:04:  tell
+  09:04-09:04:  you
+  09:04-09:04:  how
+  09:04-09:04:  to
+  09:04-09:05:  improve
+  09:05-09:05:  it.
+  09:05-09:05:  If
+  09:05-09:06:  you
+  09:06-09:06:  actually
+  09:06-09:06:  look
+  09:06-09:06:  at
+  09:06-09:06:  the
+  09:06-09:07:  details
+
+[09:07 -> 09:11] of each evaluation, you'll see exactly why it's failing, it could be failing
+  09:07-09:07:  of
+  09:07-09:07:  each
+  09:07-09:08:  evaluation,
+  09:08-09:09:  you'll
+  09:09-09:09:  see
+  09:09-09:09:  exactly
+  09:09-09:10:  why
+  09:10-09:10:  it's
+  09:10-09:10:  failing,
+  09:10-09:11:  it
+  09:11-09:11:  could
+  09:11-09:11:  be
+  09:11-09:11:  failing
+
+[09:12 -> 09:18] because your test is not defined correctly, it could be failing because your solution is
+  09:12-09:13:  because
+  09:13-09:13:  your
+  09:13-09:13:  test
+  09:13-09:14:  is
+  09:14-09:14:  not
+  09:14-09:14:  defined
+  09:14-09:15:  correctly,
+  09:15-09:15:  it
+  09:15-09:16:  could
+  09:16-09:16:  be
+  09:16-09:16:  failing
+  09:16-09:16:  because
+  09:16-09:17:  your
+  09:17-09:17:  solution
+  09:17-09:18:  is
+
+[09:18 -> 09:25] not working as it should be, and like in order to do it, you may need to do a change in,
+  09:18-09:18:  not
+  09:18-09:18:  working
+  09:18-09:19:  as
+  09:19-09:19:  it
+  09:19-09:19:  should
+  09:19-09:19:  be,
+  09:20-09:20:  and
+  09:20-09:21:  like
+  09:21-09:21:  in
+  09:21-09:21:  order
+  09:21-09:22:  to
+  09:22-09:22:  do
+  09:22-09:22:  it,
+  09:22-09:22:  you
+  09:22-09:23:  may
+  09:23-09:23:  need
+  09:23-09:23:  to
+  09:23-09:24:  do
+  09:24-09:24:  a
+  09:24-09:25:  change
+  09:25-09:25:  in,
+
+[09:25 -> 09:29] like you may change a model, you may change something in your logic, you may change
+  09:25-09:26:  like
+  09:26-09:26:  you
+  09:26-09:26:  may
+  09:26-09:26:  change
+  09:26-09:26:  a
+  09:26-09:26:  model,
+  09:27-09:27:  you
+  09:27-09:27:  may
+  09:27-09:27:  change
+  09:27-09:28:  something
+  09:28-09:28:  in
+  09:28-09:28:  your
+  09:28-09:29:  logic,
+  09:29-09:29:  you
+  09:29-09:29:  may
+  09:29-09:29:  change
+
+[09:29 -> 09:37] a prompt or the data that you use in order to answer a question in our example. And
+  09:29-09:29:  a
+  09:29-09:30:  prompt
+  09:30-09:31:  or
+  09:31-09:31:  the
+  09:31-09:31:  data
+  09:31-09:32:  that
+  09:32-09:32:  you
+  09:32-09:32:  use
+  09:32-09:32:  in
+  09:32-09:32:  order
+  09:32-09:33:  to
+  09:33-09:34:  answer
+  09:34-09:34:  a
+  09:34-09:35:  question
+  09:35-09:35:  in
+  09:35-09:35:  our
+  09:35-09:35:  example.
+  09:37-09:37:  And
+
+[09:38 -> 09:43] basically what you do now is experimentation, so you start running your experiment, you
+  09:38-09:38:  basically
+  09:38-09:39:  what
+  09:39-09:39:  you
+  09:39-09:39:  do
+  09:39-09:39:  now
+  09:39-09:39:  is
+  09:39-09:40:  experimentation,
+  09:40-09:40:  so
+  09:40-09:41:  you
+  09:41-09:41:  start
+  09:41-09:42:  running
+  09:42-09:42:  your
+  09:42-09:42:  experiment,
+  09:43-09:43:  you
+
+[09:43 -> 09:50] change something, you need to define these tests in a way that will help you to make an
+  09:43-09:43:  change
+  09:43-09:43:  something,
+  09:44-09:44:  you
+  09:44-09:45:  need
+  09:45-09:45:  to
+  09:45-09:45:  define
+  09:45-09:46:  these
+  09:46-09:46:  tests
+  09:46-09:47:  in
+  09:47-09:47:  a
+  09:47-09:47:  way
+  09:47-09:47:  that
+  09:47-09:48:  will
+  09:48-09:49:  help
+  09:49-09:49:  you
+  09:49-09:49:  to
+  09:49-09:49:  make
+  09:49-09:50:  an
+
+[09:50 -> 09:56] educated guess on what you need to change in order to do it, in some cases it will
+  09:50-09:50:  educated
+  09:50-09:51:  guess
+  09:51-09:51:  on
+  09:51-09:52:  what
+  09:52-09:53:  you
+  09:53-09:53:  need
+  09:53-09:53:  to
+  09:53-09:53:  change
+  09:53-09:54:  in
+  09:54-09:54:  order
+  09:54-09:54:  to
+  09:54-09:54:  do
+  09:54-09:54:  it,
+  09:55-09:55:  in
+  09:55-09:56:  some
+  09:56-09:56:  cases
+  09:56-09:56:  it
+  09:56-09:56:  will
+
+[09:56 -> 10:02] work, in some cases it won't, but even if it works, let's say you change something
+  09:56-09:56:  work,
+  09:56-09:57:  in
+  09:57-09:57:  some
+  09:57-09:57:  cases
+  09:57-09:57:  it
+  09:57-09:57:  won't,
+  09:58-09:58:  but
+  09:58-09:58:  even
+  09:58-09:58:  if
+  09:58-09:58:  it
+  09:58-09:59:  works,
+  10:00-10:01:  let's
+  10:01-10:01:  say
+  10:01-10:01:  you
+  10:01-10:01:  change
+  10:01-10:02:  something
+
+[10:02 -> 10:08] in your prompt and it fixed this test. In my experience in many cases it breaks something
+  10:02-10:02:  in
+  10:02-10:02:  your
+  10:02-10:02:  prompt
+  10:02-10:03:  and
+  10:03-10:03:  it
+  10:03-10:03:  fixed
+  10:03-10:04:  this
+  10:04-10:04:  test.
+  10:05-10:05:  In
+  10:05-10:05:  my
+  10:05-10:06:  experience
+  10:06-10:06:  in
+  10:06-10:06:  many
+  10:06-10:06:  cases
+  10:06-10:07:  it
+  10:07-10:07:  breaks
+  10:07-10:08:  something
+
+[10:08 -> 10:15] that used to work before, like you have constant regressions and if you don't have
+  10:08-10:08:  that
+  10:08-10:08:  used
+  10:08-10:09:  to
+  10:09-10:09:  work
+  10:09-10:09:  before,
+  10:10-10:10:  like
+  10:10-10:11:  you
+  10:11-10:12:  have
+  10:12-10:12:  constant
+  10:12-10:12:  regressions
+  10:12-10:14:  and
+  10:14-10:14:  if
+  10:14-10:14:  you
+  10:14-10:14:  don't
+  10:14-10:15:  have
+
+[10:15 -> 10:20] these evaluations there's no way you'll be able to catch it on time. So this is hugely
+  10:15-10:15:  these
+  10:15-10:15:  evaluations
+  10:15-10:16:  there's
+  10:16-10:16:  no
+  10:16-10:16:  way
+  10:16-10:16:  you'll
+  10:16-10:17:  be
+  10:17-10:17:  able
+  10:17-10:17:  to
+  10:17-10:17:  catch
+  10:17-10:17:  it
+  10:17-10:17:  on
+  10:17-10:18:  time.
+  10:19-10:19:  So
+  10:19-10:20:  this
+  10:20-10:20:  is
+  10:20-10:20:  hugely
+
+[10:20 -> 10:25] important and what actually happens is that, again, you build your first version, you
+  10:20-10:21:  important
+  10:21-10:21:  and
+  10:21-10:21:  what
+  10:21-10:22:  actually
+  10:22-10:23:  happens
+  10:23-10:23:  is
+  10:23-10:23:  that,
+  10:23-10:23:  again,
+  10:23-10:24:  you
+  10:24-10:24:  build
+  10:24-10:24:  your
+  10:24-10:24:  first
+  10:24-10:25:  version,
+  10:25-10:25:  you
+
+[10:25 -> 10:30] build your first version of the VALS, you match them, you run these VALS, you improve
+  10:25-10:25:  build
+  10:25-10:26:  your
+  10:26-10:26:  first
+  10:26-10:26:  version
+  10:26-10:26:  of
+  10:26-10:26:  the
+  10:26-10:27:  VALS,
+  10:27-10:28:  you
+  10:28-10:28:  match
+  10:28-10:28:  them,
+  10:28-10:28:  you
+  10:28-10:29:  run
+  10:29-10:29:  these
+  10:29-10:29:  VALS,
+  10:29-10:30:  you
+  10:30-10:30:  improve
+
+[10:30 -> 10:35] something, you improve your VALS, or maybe add more evaluations and then you continuously
+  10:30-10:30:  something,
+  10:30-10:30:  you
+  10:30-10:31:  improve
+  10:31-10:31:  your
+  10:31-10:31:  VALS,
+  10:31-10:32:  or
+  10:32-10:32:  maybe
+  10:32-10:32:  add
+  10:32-10:32:  more
+  10:32-10:33:  evaluations
+  10:33-10:34:  and
+  10:34-10:34:  then
+  10:34-10:34:  you
+  10:34-10:35:  continuously
+
+[10:35 -> 10:42] improve it until you reach some point where you are satisfied with your VALS for this
+  10:35-10:36:  improve
+  10:36-10:36:  it
+  10:36-10:37:  until
+  10:37-10:37:  you
+  10:37-10:38:  reach
+  10:38-10:38:  some
+  10:38-10:39:  point
+  10:39-10:39:  where
+  10:39-10:39:  you
+  10:39-10:40:  are
+  10:40-10:40:  satisfied
+  10:40-10:41:  with
+  10:41-10:41:  your
+  10:41-10:41:  VALS
+  10:41-10:42:  for
+  10:42-10:42:  this
+
+[10:42 -> 10:48] specific solution, for that specific point of time. And what actually happened is that
+  10:42-10:43:  specific
+  10:43-10:43:  solution,
+  10:43-10:43:  for
+  10:43-10:44:  that
+  10:44-10:44:  specific
+  10:44-10:44:  point
+  10:44-10:44:  of
+  10:44-10:45:  time.
+  10:46-10:46:  And
+  10:46-10:47:  what
+  10:47-10:47:  actually
+  10:47-10:48:  happened
+  10:48-10:48:  is
+  10:48-10:48:  that
+
+[10:48 -> 10:56] you got your baseline, you got your benchmark that now you can start optimizing and you
+  10:48-10:48:  you
+  10:48-10:49:  got
+  10:49-10:49:  your
+  10:49-10:50:  baseline,
+  10:50-10:50:  you
+  10:50-10:50:  got
+  10:50-10:50:  your
+  10:50-10:51:  benchmark
+  10:51-10:51:  that
+  10:51-10:52:  now
+  10:52-10:52:  you
+  10:52-10:53:  can
+  10:53-10:53:  start
+  10:53-10:54:  optimizing
+  10:54-10:55:  and
+  10:55-10:56:  you
+
+[10:56 -> 11:02] have the confidence that the tests should be working, so now you can try another model.
+  10:56-10:56:  have
+  10:56-10:56:  the
+  10:56-10:57:  confidence
+  10:57-10:58:  that
+  10:58-10:58:  the
+  10:58-10:58:  tests
+  10:58-10:59:  should
+  10:59-10:59:  be
+  10:59-11:00:  working,
+  11:00-11:00:  so
+  11:00-11:00:  now
+  11:00-11:01:  you
+  11:01-11:01:  can
+  11:01-11:01:  try
+  11:01-11:01:  another
+  11:01-11:02:  model.
+
