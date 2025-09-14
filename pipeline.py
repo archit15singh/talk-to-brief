@@ -7,6 +7,7 @@ Main orchestrator for the complete audio-to-brief generation process.
 import os
 import sys
 import argparse
+import glob
 from pathlib import Path
 from datetime import datetime
 import logging
@@ -160,12 +161,26 @@ class AudioBriefPipeline:
         print(f"Output: {self.output_path}")
         
         try:
+            # Validate partials directory exists and has files
+            if not Path(self.partials_dir).exists():
+                raise FileNotFoundError(f"Partials directory not found: {self.partials_dir}")
+            
+            import glob
+            partial_files = glob.glob(f"{self.partials_dir}/chunk_*.json")
+            if not partial_files:
+                raise ValueError(f"No chunk files found in {self.partials_dir}")
+            
+            print(f"Found {len(partial_files)} partial files to merge")
+            
             # Import and run merge
-            from merge_brief import merge_partials_to_brief
             success = merge_partials_to_brief(self.partials_dir, self.output_path)
             
             if success:
                 print(f"✓ Brief generation completed successfully")
+                # Verify output file was created
+                if Path(self.output_path).exists():
+                    file_size = Path(self.output_path).stat().st_size
+                    print(f"Generated brief: {self.output_path} ({file_size} bytes)")
                 return True
             else:
                 print(f"✗ Brief generation failed")
@@ -173,54 +188,77 @@ class AudioBriefPipeline:
                 
         except Exception as e:
             print(f"✗ Brief generation failed: {e}")
+            logging.exception("Merge step failed")
             return False
     
     def run_full_pipeline(self) -> bool:
         """Run the complete pipeline from audio to brief."""
+        start_time = datetime.now()
+        
         print(f"Audio Brief Generator Pipeline")
         print(f"Audio: {self.audio_file}")
         print(f"Output: {self.output_path}")
-        print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"Started: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
         
-        # Step 1: Transcription
-        if not self.run_transcription():
+        try:
+            # Validate prerequisites
+            self.validate_prerequisites()
+            
+            # Step 1: Transcription
+            if not self.run_transcription():
+                return False
+            
+            # Step 2: Analysis
+            if not self.run_analysis():
+                return False
+            
+            # Step 3: Merge
+            if not self.run_merge():
+                return False
+            
+            end_time = datetime.now()
+            duration = end_time - start_time
+            
+            print(f"\n{'='*60}")
+            print(f"PIPELINE COMPLETED SUCCESSFULLY")
+            print(f"{'='*60}")
+            print(f"Final brief: {self.output_path}")
+            print(f"Total duration: {duration}")
+            print(f"Completed: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+            
+            return True
+            
+        except Exception as e:
+            print(f"\n{'='*60}")
+            print(f"PIPELINE FAILED")
+            print(f"{'='*60}")
+            print(f"Error: {e}")
+            logging.exception("Pipeline failed")
             return False
-        
-        # Step 2: Analysis
-        if not self.run_analysis():
-            return False
-        
-        # Step 3: Merge
-        if not self.run_merge():
-            return False
-        
-        print(f"\n{'='*60}")
-        print(f"PIPELINE COMPLETED SUCCESSFULLY")
-        print(f"{'='*60}")
-        print(f"Final brief: {self.output_path}")
-        print(f"Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        
-        return True
 
 def main():
     """Main entry point for the pipeline."""
-    parser = argparse.ArgumentParser(description='Generate brief from audio file')
+    parser = argparse.ArgumentParser(
+        description='Generate brief from audio file',
+        epilog='Supported audio formats: wav, mp3, m4a, mp4, flac, ogg, webm, aac'
+    )
     parser.add_argument('audio_file', help='Path to audio file')
     parser.add_argument('--output-name', '-o', help='Output name (defaults to audio filename)')
     parser.add_argument('--step', choices=['transcribe', 'analyze', 'merge'], 
                        help='Run only specific step')
+    parser.add_argument('--verbose', '-v', action='store_true', 
+                       help='Enable verbose logging')
     
     args = parser.parse_args()
     
-    # Validate audio file exists
-    if not os.path.exists(args.audio_file):
-        print(f"Error: Audio file not found: {args.audio_file}")
-        sys.exit(1)
-    
-    # Create pipeline
-    pipeline = AudioBriefPipeline(args.audio_file, args.output_name)
+    # Set logging level
+    if args.verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
     
     try:
+        # Create pipeline (this validates the audio file)
+        pipeline = AudioBriefPipeline(args.audio_file, args.output_name)
+        
         if args.step == 'transcribe':
             success = pipeline.run_transcription()
         elif args.step == 'analyze':
@@ -232,11 +270,21 @@ def main():
         
         sys.exit(0 if success else 1)
         
+    except FileNotFoundError as e:
+        print(f"✗ File Error: {e}")
+        sys.exit(1)
+    except ValueError as e:
+        print(f"✗ Validation Error: {e}")
+        sys.exit(1)
+    except PermissionError as e:
+        print(f"✗ Permission Error: {e}")
+        sys.exit(1)
     except KeyboardInterrupt:
-        print("\nPipeline interrupted by user")
+        print("\n✗ Pipeline interrupted by user")
         sys.exit(1)
     except Exception as e:
-        print(f"Pipeline failed: {e}")
+        print(f"✗ Unexpected Error: {e}")
+        logging.exception("Pipeline failed with unexpected error")
         sys.exit(1)
 
 if __name__ == "__main__":
