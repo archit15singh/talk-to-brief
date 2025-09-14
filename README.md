@@ -4,7 +4,7 @@ A complete pipeline for converting audio files into structured, actionable brief
 
 ## Features
 
-- **Audio Transcription**: High-accuracy transcription with timestamps using faster-whisper
+- **Audio Transcription**: Fast transcription with timestamps using faster-whisper (base model)
 - **Intelligent Chunking**: Smart segmentation respecting sentence boundaries (~1200 words)
 - **Parallel Analysis**: Concurrent GPT-4 processing for optimal performance
 - **Structured Output**: Organized briefs with conversation starters, strategic questions, and key insights

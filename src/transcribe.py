@@ -27,9 +27,9 @@ def transcribe_audio(audio_path, output_path="transcript.txt"):
     if file_ext not in supported_formats:
         raise ValueError(f"Unsupported audio format: {file_ext}. Supported: {', '.join(supported_formats)}")
     
-    print(f"Loading faster-whisper large-v3 model...")
-    # Initialize model with large-v3 for accuracy
-    model = WhisperModel("large-v3", device="auto", compute_type="auto")
+    print(f"Loading faster-whisper base model...")
+    # Initialize model with base for speed and reasonable accuracy
+    model = WhisperModel("base", device="auto", compute_type="auto")
     
     print(f"Transcribing audio: {audio_path}")
     # Transcribe with word-level timestamps

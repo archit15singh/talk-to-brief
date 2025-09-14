@@ -6,6 +6,6 @@
 
 - [ ] 3. Build analyze_chunk.py: intelligent chunking (~1200 words) → parallel GPT-4 → partials/*.json
 
-- [-] 4. Build merge_brief.py: merge partials → final brief.md
+- [ ] 4. Build merge_brief.py: merge partials → final brief.md
 
 - [ ] 5. Add OPENAI_API_KEY validation + multi-format audio support + error handling
