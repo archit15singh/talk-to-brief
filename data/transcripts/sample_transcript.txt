@@ -1,5 +1,5 @@
 # Transcript
-Audio: data/1_audio/sample.mp3
+Audio: data/audio/sample.mp3
 Language: en (confidence: 1.00)
 Duration: 894.60s
 

@@ -33,7 +33,6 @@ def validate_dependencies():
     required_packages = {
         'faster-whisper': 'faster_whisper',
         'openai': 'openai', 
-        'pydub': 'pydub',
         'python-dotenv': 'dotenv'
     }
     
