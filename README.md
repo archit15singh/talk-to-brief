@@ -41,9 +41,18 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Set your OpenAI API key:
+4. Set up your OpenAI API key:
+   - Create a `.env` file in the project root
+   - Add your OpenAI API key:
+   ```
+   OPENAI_API_KEY=your-api-key-here
+   ```
+   - **Important**: Ensure you have GPT-4 access on your OpenAI account
+   - **Security**: Never commit the `.env` file to version control
+
+5. Validate your setup:
 ```bash
-export OPENAI_API_KEY="your-api-key-here"
+python validate_setup.py
 ```
 
 ## Usage
@@ -89,6 +98,95 @@ python src/analyze_chunk.py data/transcripts/input.txt data/partials/output_dir
 
 # Generate brief
 python src/merge_brief.py data/partials/input_dir data/outputs/brief.md
+```
+
+## Example Run Logs
+
+Here's what a typical pipeline execution looks like:
+
+### Complete Pipeline Run
+
+```bash
+$ python pipeline.py data/audio/sample.mp3
+🎵 Starting Audio Brief Generator Pipeline
+📁 Processing: data/audio/sample.mp3
+📝 Output name: sample
+
+=== STEP 1: TRANSCRIPTION ===
+🎤 Transcribing audio with faster-whisper...
+⏱️  Audio duration: 45:32
+📄 Transcript saved: data/transcripts/sample_transcript.txt
+✅ Transcription complete (2.3 minutes)
+
+=== STEP 2: ANALYSIS ===
+📊 Analyzing transcript in chunks...
+🔄 Created 8 chunks (~1200 words each)
+🚀 Starting parallel analysis with 4 workers...
+  ✓ Chunk 1/8 complete (12.4s)
+  ✓ Chunk 2/8 complete (15.1s)
+  ✓ Chunk 3/8 complete (11.8s)
+  ✓ Chunk 4/8 complete (13.7s)
+  ✓ Chunk 5/8 complete (14.2s)
+  ✓ Chunk 6/8 complete (12.9s)
+  ✓ Chunk 7/8 complete (16.3s)
+  ✓ Chunk 8/8 complete (10.8s)
+💾 Analysis saved: data/partials/sample/
+✅ Analysis complete (3.1 minutes)
+
+=== STEP 3: BRIEF GENERATION ===
+📋 Merging 8 partial analyses...
+🔗 Combining insights and removing duplicates...
+📝 Generating final brief structure...
+💾 Brief saved: data/outputs/sample_brief.md
+✅ Brief generation complete (0.2 minutes)
+
+🎉 Pipeline complete! Total time: 5.6 minutes
+📄 Final brief: data/outputs/sample_brief.md
+```
+
+### Individual Step Examples
+
+**Transcription only:**
+```bash
+$ python pipeline.py data/audio/sample.mp3 --step transcribe
+🎵 Starting Audio Brief Generator Pipeline
+📁 Processing: data/audio/sample.mp3
+📝 Output name: sample
+
+=== STEP 1: TRANSCRIPTION ===
+🎤 Transcribing audio with faster-whisper...
+⏱️  Audio duration: 45:32
+📄 Transcript saved: data/transcripts/sample_transcript.txt
+✅ Transcription complete (2.3 minutes)
+
+✨ Transcription step complete!
+```
+
+**Analysis with existing transcript:**
+```bash
+$ python pipeline.py data/audio/sample.mp3 --step analyze
+🎵 Starting Audio Brief Generator Pipeline
+📁 Processing: data/audio/sample.mp3
+📝 Output name: sample
+
+=== STEP 2: ANALYSIS ===
+📊 Found existing transcript: data/transcripts/sample_transcript.txt
+🔄 Created 8 chunks (~1200 words each)
+🚀 Starting parallel analysis with 4 workers...
+  ✓ All chunks processed successfully
+💾 Analysis saved: data/partials/sample/
+✅ Analysis complete (3.1 minutes)
+
+✨ Analysis step complete!
+```
+
+**Error handling example:**
+```bash
+$ python pipeline.py data/audio/nonexistent.mp3
+🎵 Starting Audio Brief Generator Pipeline
+📁 Processing: data/audio/nonexistent.mp3
+❌ Error: Audio file not found: data/audio/nonexistent.mp3
+💡 Tip: Check the file path and ensure the audio file exists
 ```
 
 ## Output Structure
