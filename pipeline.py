@@ -32,6 +32,9 @@ class AudioBriefPipeline:
         self.audio_file = audio_file
         self.audio_path = Path(audio_file)
         
+        # Validate audio file early
+        validate_audio_file(audio_file)
+        
         # Generate output name from audio file if not provided
         if output_name is None:
             self.output_name = self.audio_path.stem
@@ -44,10 +47,34 @@ class AudioBriefPipeline:
         self.output_path = f"data/outputs/{self.output_name}_brief.md"
         
         # Create directories
-        Path("data/transcripts").mkdir(parents=True, exist_ok=True)
-        Path("data/partials").mkdir(parents=True, exist_ok=True)
-        Path("data/outputs").mkdir(parents=True, exist_ok=True)
-        Path(self.partials_dir).mkdir(parents=True, exist_ok=True)
+        try:
+            Path("data/transcripts").mkdir(parents=True, exist_ok=True)
+            Path("data/partials").mkdir(parents=True, exist_ok=True)
+            Path("data/outputs").mkdir(parents=True, exist_ok=True)
+            Path(self.partials_dir).mkdir(parents=True, exist_ok=True)
+        except Exception as e:
+            raise RuntimeError(f"Failed to create output directories: {e}")
+    
+    def validate_prerequisites(self):
+        """Validate all prerequisites before starting the pipeline."""
+        print("Validating prerequisites...")
+        
+        # Validate audio file
+        validate_audio_file(self.audio_file)
+        print("✓ Audio file validated")
+        
+        # Validate OpenAI API key
+        validate_openai_api_key()
+        print("✓ OpenAI API key validated")
+        
+        # Check required config files
+        config_files = ["config/per_chunk.md", "config/merge.md"]
+        for config_file in config_files:
+            if not Path(config_file).exists():
+                raise FileNotFoundError(f"Required config file missing: {config_file}")
+        print("✓ Configuration files found")
+        
+        print("All prerequisites validated successfully!")
     
     def run_transcription(self) -> bool:
         """Step 1: Transcribe audio to text with timestamps."""
