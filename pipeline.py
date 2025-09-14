@@ -101,26 +101,54 @@ class AudioBriefPipeline:
         print(f"Partials output: {self.partials_dir}/")
         
         try:
-            # Temporarily change working directory context for analyze_chunks
-            original_cwd = os.getcwd()
+            # Validate transcript exists
+            if not Path(self.transcript_path).exists():
+                raise FileNotFoundError(f"Transcript file not found: {self.transcript_path}")
             
-            # Set environment variables for the analysis script
-            os.environ['TRANSCRIPT_PATH'] = self.transcript_path
-            os.environ['PARTIALS_DIR'] = self.partials_dir
+            # Import and run analysis functions directly
+            from analyze_chunk import (
+                load_transcript, extract_segments_from_transcript, 
+                create_intelligent_chunks, load_analysis_prompt,
+                process_chunks_parallel, save_partials
+            )
             
-            # Import and run analysis
-            from analyze_chunk import analyze_transcript
-            success = analyze_transcript(self.transcript_path, self.partials_dir)
+            # Load and process transcript
+            transcript_content = load_transcript(self.transcript_path)
+            segments = extract_segments_from_transcript(transcript_content)
             
-            if success:
-                print(f"✓ Analysis completed successfully")
-                return True
-            else:
-                print(f"✗ Analysis failed")
+            if not segments:
+                raise ValueError("No timestamped segments found in transcript")
+            
+            chunks = create_intelligent_chunks(segments, target_words=1200)
+            
+            if not chunks:
+                raise ValueError("No chunks created from transcript")
+            
+            print(f"Created {len(chunks)} chunks for analysis")
+            
+            # Load prompt and process chunks
+            prompt = load_analysis_prompt()
+            results = process_chunks_parallel(chunks, prompt, max_workers=4)
+            save_partials(results, self.partials_dir)
+            
+            # Check success rate
+            successful = sum(1 for r in results if r['success'])
+            total = len(results)
+            
+            if successful == 0:
+                print(f"✗ All chunks failed to process")
                 return False
+            elif successful < total:
+                print(f"⚠️  Partial success: {successful}/{total} chunks processed")
+                print("Continuing with available results...")
+            else:
+                print(f"✓ All {total} chunks processed successfully")
+            
+            return True
                 
         except Exception as e:
             print(f"✗ Analysis failed: {e}")
+            logging.exception("Analysis step failed")
             return False
     
     def run_merge(self) -> bool:
