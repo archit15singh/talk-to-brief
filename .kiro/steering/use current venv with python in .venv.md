@@ -3,3 +3,4 @@
 -------------------------------------------------------------------------------------> 
 
 1. use .venv for this project, python3
+2. .env contains open ai api key

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Brief generation and merging script.
-Combines partial analyses into final brief.md output.
+Combines partial analyses into final brief.md output using GPT-4 for intelligent merging.
 """
 
 import os
@@ -11,6 +11,7 @@ import glob
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any
+from openai import OpenAI
 
 def load_partials(partials_dir: str) -> List[Dict[str, Any]]:
     """Load all partial analysis files from directory."""
@@ -78,7 +79,7 @@ def extract_sections_from_analysis(analysis: str) -> Dict[str, str]:
     return sections
 
 def merge_partials_to_brief(partials_dir: str, output_path: str) -> bool:
-    """Merge partial analyses into a comprehensive brief."""
+    """Merge partial analyses into a comprehensive brief using GPT-4."""
     try:
         print(f"Loading partials from: {partials_dir}")
         partials = load_partials(partials_dir)
@@ -89,14 +90,8 @@ def merge_partials_to_brief(partials_dir: str, output_path: str) -> bool:
         
         print(f"Found {len(partials)} successful partial analyses")
         
-        # Extract and organize content
-        all_approach_scripts = []
-        all_questions = []
-        all_timeline_items = []
-        all_claims = []
-        all_assumptions = []
-        all_tradeoffs = []
-        
+        # Collect all analyses for GPT-4 merging
+        all_analyses = []
         total_words = 0
         
         for i, partial in enumerate(partials):
@@ -105,30 +100,19 @@ def merge_partials_to_brief(partials_dir: str, output_path: str) -> bool:
             word_count = partial.get('word_count', 0)
             total_words += word_count
             
-            sections = extract_sections_from_analysis(analysis)
-            
-            # Collect approach scripts
-            if sections['approach_script']:
-                all_approach_scripts.append(f"**Chunk {chunk_index + 1}:** {sections['approach_script']}")
-            
-            # Collect questions
-            if sections['questions']:
-                all_questions.append(f"### From Chunk {chunk_index + 1}:\n{sections['questions']}")
-            
-            # Collect timeline items
-            if sections['timeline']:
-                all_timeline_items.append(sections['timeline'])
-            
-            # Collect claims, assumptions, tradeoffs
-            if sections['claims_assumptions_tradeoffs']:
-                all_claims.append(f"### Chunk {chunk_index + 1}:\n{sections['claims_assumptions_tradeoffs']}")
+            all_analyses.append(f"=== CHUNK {chunk_index + 1} ANALYSIS ===\n{analysis}")
+        
+        # Use GPT-4 to intelligently merge the analyses
+        print("Merging analyses using GPT-4...")
+        merged_analysis = merge_with_gpt4(all_analyses)
+        
+        if not merged_analysis:
+            print("Error: Failed to merge analyses with GPT-4")
+            return False
         
         # Generate the final brief
-        brief_content = generate_final_brief(
-            all_approach_scripts,
-            all_questions,
-            all_timeline_items,
-            all_claims,
+        brief_content = generate_final_brief_from_merged(
+            merged_analysis,
             len(partials),
             total_words
         )
@@ -145,10 +129,174 @@ def merge_partials_to_brief(partials_dir: str, output_path: str) -> bool:
         print(f"Error generating brief: {e}")
         return False
 
-def generate_final_brief(approach_scripts: List[str], questions: List[str], 
-                        timeline_items: List[str], claims: List[str],
-                        chunk_count: int, total_words: int) -> str:
-    """Generate the final brief markdown content."""
+def merge_with_gpt4(analyses: List[str]) -> str:
+    """Use GPT-4 to intelligently merge multiple partial analyses, with fallback to rule-based merging."""
+    try:
+        # Check for OpenAI API key
+        api_key = os.getenv('OPENAI_API_KEY')
+        if not api_key:
+            print("Warning: OPENAI_API_KEY not set, falling back to rule-based merging")
+            return merge_with_rules(analyses)
+        
+        client = OpenAI(api_key=api_key)
+        
+        # Load merge prompt
+        merge_prompt_path = Path(__file__).parent.parent / "config" / "merge.md"
+        if merge_prompt_path.exists():
+            with open(merge_prompt_path, 'r', encoding='utf-8') as f:
+                merge_instructions = f.read()
+        else:
+            merge_instructions = """
+You have multiple partial outputs from different segments of the same talk. Merge them into ONE final output with the same four sections:
+
+## 1) Approach Script (3 sentences)
+## 2) Five High-Signal Questions (≤ 2 lines each, each tied to a timestamp)
+## 3) Timeline Highlights (8–12 bullets, chronological, no duplicates)
+## 4) Key Claims, Assumptions, Trade-offs (deduplicated, concise lists)
+
+## Instructions:
+- Deduplicate overlapping items.
+- Preserve timestamps; if duplicates have same timestamp, merge wording.
+- Keep total output under 800 words.
+- Ensure sections flow naturally as if it came from one continuous talk.
+- Return clean markdown-formatted text.
+"""
+        
+        # Combine all analyses
+        combined_input = "\n\n".join(analyses)
+        
+        # Create the prompt
+        prompt = f"{merge_instructions}\n\n{combined_input}"
+        
+        print("Calling GPT-4 for intelligent merging...")
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are an expert at synthesizing and merging content analysis. Follow the instructions precisely."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=2000,
+            temperature=0.3
+        )
+        
+        merged_content = response.choices[0].message.content.strip()
+        print("GPT-4 merging completed successfully")
+        return merged_content
+        
+    except Exception as e:
+        print(f"Error in GPT-4 merging: {e}, falling back to rule-based merging")
+        return merge_with_rules(analyses)
+
+def merge_with_rules(analyses: List[str]) -> str:
+    """Rule-based merging as fallback when GPT-4 is not available."""
+    print("Using rule-based merging...")
+    
+    # Parse all analyses to extract sections
+    all_sections = []
+    for analysis in analyses:
+        sections = extract_sections_from_analysis(analysis.split("===")[2] if "===" in analysis else analysis)
+        all_sections.append(sections)
+    
+    # Merge approach scripts (take the first non-empty one and enhance it)
+    approach_script = ""
+    for sections in all_sections:
+        if sections['approach_script'] and not approach_script:
+            approach_script = sections['approach_script']
+            break
+    
+    # Collect and deduplicate questions
+    all_questions = []
+    for sections in all_sections:
+        if sections['questions']:
+            questions_text = sections['questions']
+            # Split by lines and filter out section headers
+            for line in questions_text.split('\n'):
+                line = line.strip()
+                if line and not line.startswith('#') and not line.startswith('**') and '?' in line:
+                    if line not in all_questions:
+                        all_questions.append(line)
+    
+    # Collect and sort timeline items
+    all_timeline_items = []
+    for sections in all_sections:
+        if sections['timeline']:
+            timeline_text = sections['timeline']
+            for line in timeline_text.split('\n'):
+                line = line.strip()
+                if line and line.startswith('-') and '[' in line and ']' in line:
+                    if line not in all_timeline_items:
+                        all_timeline_items.append(line)
+    
+    # Sort timeline items by timestamp
+    def extract_timestamp(item):
+        try:
+            # Extract timestamp like [00:14 -> 00:22] or [09:15]
+            import re
+            match = re.search(r'\[(\d{2}):(\d{2})', item)
+            if match:
+                minutes, seconds = match.groups()
+                return int(minutes) * 60 + int(seconds)
+            return 0
+        except:
+            return 0
+    
+    all_timeline_items.sort(key=extract_timestamp)
+    
+    # Collect claims, assumptions, trade-offs
+    all_claims = []
+    all_assumptions = []
+    all_tradeoffs = []
+    
+    for sections in all_sections:
+        if sections['claims_assumptions_tradeoffs']:
+            text = sections['claims_assumptions_tradeoffs']
+            lines = text.split('\n')
+            current_section = None
+            
+            for line in lines:
+                line = line.strip()
+                if 'Claims' in line or 'assertions' in line:
+                    current_section = 'claims'
+                elif 'Assumptions' in line or 'constraints' in line:
+                    current_section = 'assumptions'
+                elif 'Trade-offs' in line or 'gains vs' in line:
+                    current_section = 'tradeoffs'
+                elif line and line.startswith('-') and current_section:
+                    if current_section == 'claims' and line not in all_claims:
+                        all_claims.append(line)
+                    elif current_section == 'assumptions' and line not in all_assumptions:
+                        all_assumptions.append(line)
+                    elif current_section == 'tradeoffs' and line not in all_tradeoffs:
+                        all_tradeoffs.append(line)
+    
+    # Format the merged output
+    merged_output = f"""## Approach Script
+
+{approach_script}
+
+## Five High-Signal Questions
+
+{chr(10).join(all_questions[:5])}
+
+## Timeline Highlights
+
+{chr(10).join(all_timeline_items[:12])}
+
+## Key Claims, Assumptions, Trade-offs
+
+**Claims:**
+{chr(10).join(all_claims)}
+
+**Assumptions:**
+{chr(10).join(all_assumptions)}
+
+**Trade-offs:**
+{chr(10).join(all_tradeoffs)}"""
+    
+    return merged_output
+
+def generate_final_brief_from_merged(merged_analysis: str, chunk_count: int, total_words: int) -> str:
+    """Generate the final brief markdown content from merged analysis."""
     
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
@@ -161,29 +309,7 @@ Source: {chunk_count} chunks, {total_words} words total
 
 This brief synthesizes key insights from the analyzed audio content, providing actionable conversation starters, strategic questions, and critical decision points.
 
-## Approach Scripts
-
-These are conversation starters referencing specific moments from the content:
-
-{chr(10).join(approach_scripts)}
-
-## Strategic Questions
-
-High-signal questions tied to specific claims and timestamps:
-
-{chr(10).join(questions)}
-
-## Timeline Highlights
-
-Key moments and developments in chronological order:
-
-{chr(10).join(timeline_items)}
-
-## Claims, Assumptions & Trade-offs
-
-Critical assertions, underlying assumptions, and strategic trade-offs identified:
-
-{chr(10).join(claims)}
+{merged_analysis}
 
 ---
 

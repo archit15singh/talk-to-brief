@@ -8,6 +8,10 @@ import sys
 import os
 from pathlib import Path
 from faster_whisper import WhisperModel
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def transcribe_audio(audio_path, output_path="transcript.txt"):
     """
