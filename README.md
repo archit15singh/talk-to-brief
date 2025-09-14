@@ -1,122 +1,160 @@
+# Audio Brief Generator
 
+A complete pipeline for converting audio files into structured, actionable briefs using AI analysis.
 
-# 🎤 Talk-to-Brief  
-From 30-Min Conference Audio → 1-Page Brief with Questions & Highlights in Minutes  
+## Features
 
-**Goal:** Walk out of any talk with:  
-- A **3-line Approach Script** to talk to the speaker  
-- **5 Timestamped Questions** that show you actually listened  
-- **8–12 Key Highlights** with `[mm:ss]` references  
-- **Claims / Assumptions / Trade-offs** to guide real conversation  
+- **Audio Transcription**: High-accuracy transcription with timestamps using faster-whisper
+- **Intelligent Chunking**: Smart segmentation respecting sentence boundaries (~1200 words)
+- **Parallel Analysis**: Concurrent GPT-4 processing for optimal performance
+- **Structured Output**: Organized briefs with conversation starters, strategic questions, and key insights
 
-All in **≤7 min** after the talk ends.  
+## Project Structure
 
----
-
-## 🚀 How It Works (80/20 Flow)
-1. **Record** 30 min audio → `talk.wav` (any recorder works)  
-2. **Transcribe locally** with [faster-whisper](https://github.com/SYSTRAN/faster-whisper) → `transcript.txt + timestamps`  
-3. **Analyze with GPT-5** in two passes:
-   - **Pass 1:** Run per-chunk prompt → 4 partial outputs  
-   - **Pass 2:** Merge prompt → single `brief.md`  
-4. **Skim Brief.md** → Walk up to the speaker with context + sharp questions  
-
----
-
-## 📂 Repo Structure
+```
+├── pipeline.py              # Main orchestrator script
+├── src/                     # Core pipeline components
+│   ├── transcribe.py        # Audio → timestamped transcript
+│   ├── analyze_chunk.py     # Transcript → parallel GPT-4 analysis
+│   └── merge_brief.py       # Partials → final brief
+├── config/                  # Configuration and prompts
+│   └── per_chunk.md         # GPT-4 analysis prompt template
+├── data/                    # All data artifacts
+│   ├── audio/               # Input audio files
+│   ├── transcripts/         # Generated transcripts
+│   ├── partials/            # Individual chunk analyses
+│   └── outputs/             # Final briefs
+└── requirements.txt         # Python dependencies
 ```
 
-talk-to-brief/
-├── record.sh             # optional: 30-min recorder script
-├── transcribe.py         # audio → transcript + timestamps
-├── analyze\_chunk.py      # per-chunk GPT-5 call
-├── merge\_brief.py        # final merge GPT-5 call
-├── prompts/
-│   ├── per\_chunk.md      # per-chunk prompt (Tier-1 only)
-│   └── merge.md          # merge prompt
-├── outputs/
-│   ├── transcript.txt
-│   ├── chunks/
-│   ├── partials/
-│   └── brief.md
-└── README.md
+## Installation
 
-````
-
----
-
-## 🛠 Setup
+1. Clone the repository
+2. Create virtual environment:
 ```bash
-git clone https://github.com/yourname/talk-to-brief.git
-cd talk-to-brief
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
+
+3. Install dependencies:
+```bash
 pip install -r requirements.txt
-````
+```
 
-* Get a [GPT-5 API key](#) and set it as `OPENAI_API_KEY`.
-* Install `faster-whisper` for transcription.
+4. Set your OpenAI API key:
+```bash
+export OPENAI_API_KEY="your-api-key-here"
+```
 
----
+## Usage
 
-## 🏃 Usage
+### Complete Pipeline (Recommended)
+
+Process an audio file from start to finish:
 
 ```bash
-# 1. Record 30 min talk (or use any WAV recorder)
-bash record.sh
-
-# 2. Transcribe
-python transcribe.py talk.wav
-
-# 3. Analyze chunks in parallel
-python analyze_chunk.py
-
-# 4. Merge into final brief
-python merge_brief.py
-
-# 5. Open the brief
-open outputs/brief.md
+python pipeline.py data/audio/your_file.mp3
 ```
 
----
-
-## 🎯 Output Example
-
-```
-# Approach Script
-"At 12:47 you mentioned cold vector latency. I'd love to hear why PQ over OPQ was the final call — we hit similar issues in our own pipelines."
-
-# Five High-Signal Questions
-1. [12:47] Why PQ vs OPQ for latency optimization?  
-2. [18:05] How did you balance cost vs recall here?  
-...
-
-# Timeline Highlights
-- [05:20] Introduced hybrid index approach
-- [12:47] Latency benchmarks on cold vectors
-...
-
-# Key Claims / Assumptions / Trade-offs
-Claims:
-- Hybrid indexing reduced cold start latency by 40%
-Assumptions:
-- NVMe storage cost is acceptable at this scale
-Trade-offs:
-- Higher indexing latency during ingestion
+With custom output name:
+```bash
+python pipeline.py data/audio/your_file.mp3 --output-name "my_talk"
 ```
 
----
+### Individual Steps
 
-## 🧠 Why This Matters
+Run specific pipeline steps:
 
-You get **specific, timestamped context** + **conversation-ready questions** without sifting through 30 min of audio manually.
+```bash
+# Step 1: Transcription only
+python pipeline.py data/audio/your_file.mp3 --step transcribe
 
-Perfect for:
+# Step 2: Analysis only (requires existing transcript)
+python pipeline.py data/audio/your_file.mp3 --step analyze
 
-* Conferences
-* Guest lectures
-* Tech meetups
+# Step 3: Brief generation only (requires existing partials)
+python pipeline.py data/audio/your_file.mp3 --step merge
+```
 
----
+### Direct Script Usage
 
-## 📜 License
+You can also run individual scripts directly:
 
-MIT
+```bash
+# Transcribe audio
+python src/transcribe.py data/audio/your_file.mp3 data/transcripts/output.txt
+
+# Analyze transcript
+python src/analyze_chunk.py data/transcripts/input.txt data/partials/output_dir
+
+# Generate brief
+python src/merge_brief.py data/partials/input_dir data/outputs/brief.md
+```
+
+## Output Structure
+
+For an audio file named `sample.mp3`, the pipeline generates:
+
+```
+data/
+├── transcripts/sample_transcript.txt    # Timestamped transcript
+├── partials/sample/                     # Individual analyses
+│   ├── chunk_00.json
+│   ├── chunk_01.json
+│   └── ...
+└── outputs/sample_brief.md              # Final structured brief
+```
+
+## Brief Format
+
+The generated brief includes:
+
+1. **Executive Summary** - Overview of content and insights
+2. **Approach Scripts** - Conversation starters with specific timestamps
+3. **Strategic Questions** - High-signal, outcome-oriented questions
+4. **Timeline Highlights** - Chronological key moments
+5. **Claims, Assumptions & Trade-offs** - Critical decision points
+
+## Configuration
+
+### Analysis Prompt
+
+Customize the GPT-4 analysis by editing `config/per_chunk.md`. The prompt controls:
+- Output format and structure
+- Analysis depth and focus
+- Word count limits
+- Specific instructions for each section
+
+### Pipeline Parameters
+
+Key parameters can be adjusted in the source files:
+- **Chunk size**: Modify `target_words` in `analyze_chunk.py` (default: 1200)
+- **Parallel workers**: Adjust `max_workers` in `analyze_chunk.py` (default: 4)
+- **GPT-4 model**: Change model in `analyze_chunk.py` (default: "gpt-4")
+
+## Requirements
+
+- Python 3.8+
+- OpenAI API key with GPT-4 access
+- Audio files in supported formats: WAV, MP3, M4A, MP4, FLAC, OGG
+- Sufficient disk space for transcripts and analysis files
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Missing API Key**: Ensure `OPENAI_API_KEY` is set in your environment
+2. **Audio Format**: Verify your audio file is in a supported format
+3. **Memory Issues**: For very long audio files, consider splitting them first
+4. **Network Timeouts**: Check internet connection for GPT-4 API calls
+
+### Performance Tips
+
+- Use shorter audio files (< 2 hours) for optimal performance
+- Ensure stable internet connection for API calls
+- Monitor API usage and rate limits
+- Use SSD storage for faster I/O operations
+
+## License
+
+MIT License - see LICENSE file for details.

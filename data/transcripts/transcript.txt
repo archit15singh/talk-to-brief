@@ -1,0 +1,53 @@
+# Transcript
+Audio: test_audio/harvard.wav
+Language: en (confidence: 1.00)
+Duration: 18.36s
+
+[00:00 -> 00:17] the stale smell of old beer lingers it takes heat to bring out the odor a cold dip restores health and zest a salt pickle tastes fine with ham tacos al pastor are my favorite a zestful food is the hot cross bun
+  00:00-00:01:  the
+  00:01-00:01:  stale
+  00:01-00:02:  smell
+  00:02-00:02:  of
+  00:02-00:02:  old
+  00:02-00:02:  beer
+  00:02-00:03:  lingers
+  00:03-00:04:  it
+  00:04-00:04:  takes
+  00:04-00:05:  heat
+  00:05-00:05:  to
+  00:05-00:05:  bring
+  00:05-00:05:  out
+  00:05-00:05:  the
+  00:05-00:06:  odor
+  00:06-00:07:  a
+  00:07-00:07:  cold
+  00:07-00:07:  dip
+  00:07-00:08:  restores
+  00:08-00:08:  health
+  00:08-00:08:  and
+  00:08-00:09:  zest
+  00:09-00:10:  a
+  00:10-00:10:  salt
+  00:10-00:10:  pickle
+  00:10-00:11:  tastes
+  00:11-00:11:  fine
+  00:11-00:11:  with
+  00:11-00:11:  ham
+  00:11-00:12:  tacos
+  00:12-00:13:  al
+  00:13-00:13:  pastor
+  00:13-00:13:  are
+  00:13-00:13:  my
+  00:13-00:14:  favorite
+  00:14-00:15:  a
+  00:15-00:15:  zestful
+  00:15-00:15:  food
+  00:15-00:16:  is
+  00:16-00:16:  the
+  00:16-00:16:  hot
+  00:16-00:16:  cross
+  00:16-00:17:  bun
+
+[00:17 -> 00:17] you
+  00:17-00:17:  you
+
