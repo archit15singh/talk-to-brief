@@ -1,0 +1,1014 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Main Content */
+main {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Recording Section */
+.recording-section {
+    padding: 40px;
+    text-align: center;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.recording-controls {
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-start {
+    background: #28a745;
+    color: white;
+}
+
+.btn-start:hover:not(:disabled) {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-stop {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-stop:hover:not(:disabled) {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+/* Recording Status */
+.recording-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.status-dot.recording {
+    background: #dc3545;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.recording-timer {
+    font-size: 2rem;
+    font-weight: 300;
+    font-family: 'Courier New', monospace;
+    color: #495057;
+}
+
+.recording-timer.active {
+    color: #dc3545;
+}
+
+/* Progress Section */
+.progress-section {
+    padding: 40px;
+}
+
+.progress-section h2 {
+    margin-bottom: 30px;
+    color: #495057;
+    font-weight: 400;
+}
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.progress-step.active {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+}
+
+.progress-step.completed {
+    background: #e8f5e8;
+    border-left: 4px solid #28a745;
+}
+
+.progress-step.error {
+    background: #ffeaea;
+    border-left: 4px solid #dc3545;
+}
+
+.step-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #6c757d;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.progress-step.active .step-indicator {
+    background: #2196f3;
+    animation: spin 2s linear infinite;
+}
+
+.progress-step.completed .step-indicator {
+    background: #28a745;
+}
+
+.progress-step.completed .step-indicator::before {
+    content: '✓';
+    font-size: 1.2rem;
+}
+
+.progress-step.error .step-indicator {
+    background: #dc3545;
+}
+
+.progress-step.error .step-indicator::before {
+    content: '✗';
+    font-size: 1.2rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* WebSocket Status Indicators */
+.step-checkmark {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.step-error {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.step-spinner {
+    color: white;
+    font-size: 1.2rem;
+    animation: spin 1s linear infinite;
+}
+
+/* Brief Result Success State */
+.brief-result.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-left: 4px solid #28a745;
+}
+
+.brief-result.success .brief-title {
+    color: #155724;
+}
+
+.brief-details {
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+}
+
+.brief-details p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.brief-actions-secondary {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Overall Progress Bar (if needed) */
+.overall-progress {
+    margin: 20px 0;
+    background: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 8px;
+}
+
+.overall-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+/* Brief Management Styles */
+.briefs-list {
+    margin-top: 20px;
+}
+
+.briefs-list h3 {
+    margin-bottom: 20px;
+    color: #495057;
+    font-weight: 400;
+}
+
+.brief-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid #007bff;
+}
+
+.brief-info h4 {
+    margin: 0 0 5px 0;
+    color: #495057;
+    font-size: 1rem;
+}
+
+.brief-info p {
+    margin: 2px 0;
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.brief-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* Job Management Styles */
+.job-controls {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.job-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: #e3f2fd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1976d2;
+}
+
+.job-status.error {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.job-status.success {
+    background: #e8f5e8;
+    color: #2e7d32;
+}
+
+/* Cancel button */
+.btn-cancel {
+    background: #ffc107;
+    color: #212529;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #e0a800;
+    transform: translateY(-1px);
+}
+
+/* Responsive adjustments for brief management */
+@media (max-width: 768px) {
+    .brief-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .brief-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .job-controls {
+        margin: 15px 0;
+    }
+}
+
+.step-content h3 {
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.step-status {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Results Section */
+.results-section {
+    padding: 40px;
+    border-top: 1px solid #e9ecef;
+}
+
+.results-section h2 {
+    margin-bottom: 30px;
+    color: #495057;
+    font-weight: 400;
+}
+
+.no-results {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 40px;
+}
+
+.brief-result {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.brief-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.brief-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.brief-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+/* Error Messages */
+.error-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.error-message {
+    background: #dc3545;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.error-message.error-warning {
+    background: #ffc107;
+    color: #212529;
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+.error-message.error-info {
+    background: #17a2b8;
+    color: white;
+    box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+}
+
+.error-message.error-network {
+    background: #6f42c1;
+    color: white;
+    box-shadow: 0 5px 15px rgba(111, 66, 193, 0.3);
+}
+
+.error-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.error-text {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.error-persistent-indicator {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.error-close {
+    background: none;
+    border: none;
+    color: currentColor;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.error-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .recording-section {
+        padding: 30px 20px;
+    }
+    
+    .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+        margin: 5px;
+    }
+    
+    .recording-status {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .recording-timer {
+        font-size: 1.5rem;
+    }
+    
+    .progress-section,
+    .results-section {
+        padding: 30px 20px;
+    }
+    
+    .progress-step {
+        padding: 15px;
+    }
+    
+    .step-indicator {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .error-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+    
+    .error-message {
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .recording-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/*
+ Brief Management Section */
+.briefs-section {
+    padding: 40px;
+    border-top: 1px solid #e0e0e0;
+    background: #fafafa;
+}
+
+.briefs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.briefs-header h2 {
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Brief Cards */
+.briefs-list {
+    display: grid;
+    gap: 20px;
+}
+
+.brief-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brief-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.brief-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.brief-info h3 {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.brief-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.brief-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.brief-preview {
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.brief-preview-text {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.brief-card-footer {
+    padding: 15px 20px;
+    background: #f5f5f5;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Brief States */
+.loading-briefs,
+.error-briefs,
+.no-briefs {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.loading-spinner {
+    font-size: 2rem;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+.error-icon,
+.no-briefs-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.no-briefs-subtitle {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Brief Preview Modal */
+.brief-preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.brief-preview-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 800px;
+    max-height: 80vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.brief-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f8f9fa;
+}
+
+.brief-preview-header h3 {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.brief-preview-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.brief-preview-body {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+}
+
+.brief-content {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #333;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+/* Brief Messages */
+.brief-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.brief-message-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.brief-message-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.brief-message-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Button Variants */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .briefs-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .brief-card-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .brief-actions {
+        justify-content: stretch;
+    }
+    
+    .brief-actions .btn {
+        flex: 1;
+    }
+    
+    .brief-preview-modal {
+        padding: 10px;
+    }
+    
+    .brief-preview-content {
+        max-height: 90vh;
+    }
+    
+    .brief-preview-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .brief-preview-actions {
+        justify-content: stretch;
+    }
+    
+    .brief-preview-actions .btn {
+        flex: 1;
+    }
+}
+
+/* Animation for loading spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Help Sections */
+.help-section {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.help-section h3 {
+    color: #495057;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.help-steps h4 {
+    color: #6c757d;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.help-steps ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.help-steps li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.compatibility-info {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.compatibility-info h3 {
+    color: #856404;
+    margin-bottom: 15px;
+}
+
+.feature-support ul,
+.browser-recommendations ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.feature-support li {
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-support li.supported {
+    color: #28a745;
+}
+
+.feature-support li.unsupported {
+    color: #dc3545;
+}
+
+.browser-recommendations li {
+    padding: 3px 0;
+    margin-left: 20px;
+    list-style: disc;
+}
+
+.microphone-help .btn {
+    margin-top: 15px;
+}

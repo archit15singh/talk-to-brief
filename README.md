@@ -4,6 +4,7 @@ A complete pipeline for converting audio files into structured, actionable brief
 
 ## Features
 
+- **Web Interface**: Browser-based recording with real-time progress tracking
 - **Live Audio Recording**: Record talks/presentations in real-time with automatic silence detection
 - **Audio Transcription**: Fast transcription with timestamps using faster-whisper (base model)
 - **Intelligent Chunking**: Smart segmentation respecting sentence boundaries (~1200 words)
@@ -29,12 +30,25 @@ A complete pipeline for converting audio files into structured, actionable brief
 │   └── config/              # Configuration and prompts
 │       ├── per_chunk.md     # GPT-4 analysis prompt template
 │       └── merge.md         # Brief merging instructions
+├── web/                     # Web interface
+│   ├── app.py               # Flask application entry point
+│   ├── web_server.py        # Main web server and API routes
+│   ├── pipeline_runner.py   # Pipeline integration for web
+│   ├── config.py            # Web application configuration
+│   ├── requirements_web.txt # Web-specific dependencies
+│   ├── static/              # Frontend files
+│   │   ├── index.html       # Main recording interface
+│   │   ├── app.js           # JavaScript application logic
+│   │   └── style.css        # Interface styling
+│   ├── templates/           # Jinja2 templates (if needed)
+│   └── logs/                # Web server logs
 ├── data/                    # All data artifacts
-│   ├── audio/               # Input audio files
+│   ├── 1_audio/             # Input audio files (web uploads)
+│   ├── audio/               # Input audio files (command line)
 │   ├── transcripts/         # Generated transcripts
 │   ├── partials/            # Individual chunk analyses
 │   └── outputs/             # Final briefs
-└── requirements.txt         # Python dependencies
+└── requirements.txt         # Core Python dependencies
 ```
 
 ## Installation
@@ -46,12 +60,17 @@ python3 -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-3. Install dependencies:
+3. Install core dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Set up your OpenAI API key:
+4. Install web interface dependencies:
+```bash
+pip install -r web/requirements_web.txt
+```
+
+5. Set up your OpenAI API key:
    - Create a `.env` file in the project root
    - Add your OpenAI API key:
    ```
@@ -60,19 +79,82 @@ pip install -r requirements.txt
    - **Important**: Ensure you have GPT-4 access on your OpenAI account
    - **Security**: Never commit the `.env` file to version control
 
-5. Set up audio recording (optional):
+6. Set up audio recording (optional for command line):
 ```bash
 python setup_recording.py
 ```
 
-6. Validate your setup:
+7. Validate your setup:
 ```bash
 python validate_setup.py
 ```
 
+### Web Interface Setup
+
+For the web interface, additional configuration options are available:
+
+**Environment Variables** (optional):
+```bash
+# Server configuration
+FLASK_HOST=127.0.0.1          # Server host (default: 127.0.0.1)
+FLASK_PORT=5000               # Server port (default: 5000)
+FLASK_DEBUG=True              # Debug mode (default: True)
+FLASK_ENV=development         # Environment (development/production)
+
+# Security
+SECRET_KEY=your-secret-key    # Required for production
+
+# Upload limits
+MAX_UPLOAD_SIZE_MB=100        # Max file size in MB (default: 100)
+
+# Logging
+LOG_LEVEL=INFO                # Logging level (default: INFO)
+LOG_FILE=web/logs/app.log     # Log file path (optional)
+```
+
 ## Usage
 
-### Live Recording + Processing (New!)
+### Web Interface (Recommended)
+
+The easiest way to use the Audio Brief Generator is through the web interface:
+
+1. **Start the web server**:
+```bash
+# Activate virtual environment
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Start the web interface
+cd web
+python app.py
+```
+
+2. **Open your browser** and navigate to `http://127.0.0.1:5000`
+
+3. **Record audio** directly in your browser:
+   - Click "Start Recording" to begin
+   - Speak into your microphone
+   - Click "Stop Recording" when finished
+   - The system automatically processes your audio and generates a brief
+
+4. **Download your brief** when processing completes
+
+#### Web Interface Features
+
+- **Browser-based recording**: No additional software needed
+- **Real-time progress**: See transcription and analysis progress
+- **Automatic processing**: Pipeline starts immediately after recording
+- **Brief management**: Download and preview generated briefs
+- **Error handling**: Clear error messages and troubleshooting guidance
+- **Cross-browser support**: Works in Chrome, Firefox, Safari, and Edge
+
+#### Browser Requirements
+
+- **Microphone access**: Required for recording
+- **Modern browser**: Chrome 47+, Firefox 29+, Safari 14+, Edge 79+
+- **JavaScript enabled**: Required for the recording interface
+- **Stable internet**: Needed for AI processing
+
+### Live Recording + Processing (Command Line)
 
 Record a talk/presentation and automatically process it:
 
@@ -427,12 +509,95 @@ Key parameters can be adjusted in the source files:
 
 ## Troubleshooting
 
-### Common Issues
+### Web Interface Issues
 
-1. **Missing API Key**: Ensure `OPENAI_API_KEY` is set in your environment
-2. **Audio Format**: Verify your audio file is in a supported format
-3. **Memory Issues**: For very long audio files, consider splitting them first
-4. **Network Timeouts**: Check internet connection for GPT-4 API calls
+#### Recording Problems
+
+**Microphone not working:**
+- **Chrome/Edge**: Click the microphone icon in the address bar and allow access
+- **Firefox**: Click "Allow" when prompted for microphone access
+- **Safari**: Go to Safari > Preferences > Websites > Microphone and allow access
+- **Check system**: Ensure your microphone is working in other applications
+
+**"MediaRecorder not supported" error:**
+- Update your browser to the latest version
+- Supported browsers: Chrome 47+, Firefox 29+, Safari 14+, Edge 79+
+- Try a different browser if the issue persists
+
+**Recording stops immediately:**
+- Check microphone permissions in browser settings
+- Ensure microphone is not being used by another application
+- Try refreshing the page and allowing permissions again
+
+**No audio captured:**
+- Check system audio levels and microphone settings
+- Test microphone in system settings or other applications
+- Try using a different microphone or audio input device
+
+#### Upload and Processing Issues
+
+**"File too large" error:**
+- Maximum file size is 100MB by default
+- For longer recordings, use the command-line interface instead
+- Check available disk space
+
+**Processing fails or gets stuck:**
+- Check internet connection for AI processing
+- Verify OpenAI API key is valid and has GPT-4 access
+- Check server logs in `web/logs/` for detailed error messages
+- Try refreshing the page and uploading again
+
+**"System not ready" error:**
+- Ensure all dependencies are installed: `pip install -r requirements.txt`
+- Check that data directories exist and are writable
+- Verify sufficient disk space (at least 500MB free)
+
+#### Connection Issues
+
+**Cannot connect to server:**
+- Ensure the web server is running: `python web/app.py`
+- Check the correct URL: `http://127.0.0.1:5000`
+- Verify no firewall is blocking the connection
+- Try a different port if 5000 is in use
+
+**WebSocket connection fails:**
+- Disable browser extensions that might block WebSockets
+- Check corporate firewall settings
+- Try using a different network connection
+
+### Command Line Issues
+
+**Missing API Key**: Ensure `OPENAI_API_KEY` is set in your environment
+**Audio Format**: Verify your audio file is in a supported format
+**Memory Issues**: For very long audio files, consider splitting them first
+**Network Timeouts**: Check internet connection for GPT-4 API calls
+
+### Browser Compatibility
+
+#### Fully Supported Browsers
+- **Chrome 47+**: Full feature support, recommended
+- **Firefox 29+**: Full feature support
+- **Safari 14+**: Full feature support (macOS/iOS)
+- **Edge 79+**: Full feature support
+
+#### Limited Support
+- **Safari 13 and below**: MediaRecorder API not available
+- **Internet Explorer**: Not supported
+- **Chrome 46 and below**: Limited MediaRecorder support
+
+#### Required Browser Features
+- **MediaRecorder API**: For audio recording
+- **WebSocket support**: For real-time updates
+- **File API**: For file uploads
+- **Fetch API**: For server communication
+
+#### Mobile Browser Support
+- **iOS Safari 14+**: Supported
+- **Chrome Mobile 47+**: Supported
+- **Firefox Mobile 29+**: Supported
+- **Samsung Internet 5+**: Supported
+
+**Note**: Mobile recording may have different audio quality and format limitations.
 
 ### Performance Tips
 
@@ -440,6 +605,18 @@ Key parameters can be adjusted in the source files:
 - Ensure stable internet connection for API calls
 - Monitor API usage and rate limits
 - Use SSD storage for faster I/O operations
+- Close unnecessary browser tabs during processing
+- Use the web interface for files under 100MB, command line for larger files
+
+### Getting Help
+
+If you encounter issues not covered here:
+
+1. **Check the logs**: Look in `web/logs/` for detailed error messages
+2. **Test system health**: Visit `http://127.0.0.1:5000/api/health` for system status
+3. **Validate setup**: Run `python validate_setup.py` to check dependencies
+4. **Try command line**: Use the command-line interface as an alternative
+5. **Check browser console**: Open developer tools (F12) and check for JavaScript errors
 
 ## License
 
