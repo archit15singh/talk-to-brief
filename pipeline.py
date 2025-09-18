@@ -767,7 +767,7 @@ def load_and_chunk_transcript(file_path, dirs):
         doc = Document(text=clean_text)
         
         # Set up semantic chunking with adaptive parameters
-        embed = OpenAIEmbedding()
+        embed = OpenAIEmbedding(model="text-embedding-3-small")
         parser = SemanticSplitterNodeParser(
             embed_model=embed,
             buffer_size=strategy['buffer'],
@@ -794,7 +794,7 @@ def load_and_chunk_transcript(file_path, dirs):
         chunking_config = {
             'buffer_size': strategy['buffer'],
             'breakpoint_threshold': strategy['threshold'],
-            'embedding_model': 'text-embedding-ada-002',
+            'embedding_model': 'text-embedding-3-small',
             'min_chunk_size': MIN_CHUNK_SIZE,
             'max_chunk_size': MAX_CHUNK_SIZE,
             'overlap_size': OVERLAP_SIZE,
