@@ -11,12 +11,13 @@ git clone <repository-url>
 cd transcript-analysis
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 ```
 
 ### Configuration
-Create a `.env` file with your OpenAI API key:
-```
+Create a `.env` file in the backend directory with your OpenAI API key:
+```bash
+# In backend/.env
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
