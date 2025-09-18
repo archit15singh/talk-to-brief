@@ -1,9 +1,9 @@
 {
-  "total_chunks": 6,
+  "total_chunks": 7,
   "chunking_config": {
     "buffer_size": 2,
     "breakpoint_threshold": 85,
-    "embedding_model": "text-embedding-ada-002",
+    "embedding_model": "text-embedding-3-small",
     "min_chunk_size": 500,
     "max_chunk_size": 3000,
     "overlap_size": 100,
@@ -21,38 +21,45 @@
     {
       "chunk_id": 2,
       "file": "chunk_002.txt",
-      "char_count": 1078,
-      "word_count": 173,
-      "preview": "[Previous context: ...design with growth in mind. \n\nWhat does this mean practically? First, separate..."
+      "char_count": 816,
+      "word_count": 133,
+      "preview": "[Previous context: ...o design with growth in mind. What does this mean practically? First, separate..."
     },
     {
       "chunk_id": 3,
       "file": "chunk_003.txt",
-      "char_count": 737,
-      "word_count": 108,
-      "preview": "[Previous context: ...he thing - you need to design for this from the beginning. **Audience Member:*..."
+      "char_count": 997,
+      "word_count": 149,
+      "preview": "[Previous context: ...greSQL instance. Worked great until it didn't. Our first instinct was to throw..."
     },
     {
       "chunk_id": 4,
       "file": "chunk_004.txt",
-      "char_count": 3000,
-      "word_count": 445,
+      "char_count": 1059,
+      "word_count": 149,
       "preview": "[Previous context: ...solved some problems and created others. Independent scaling, technology diver..."
     },
     {
       "chunk_id": 5,
       "file": "chunk_005.txt",
-      "char_count": 1206,
-      "word_count": 185,
-      "preview": "[Previous context: ...keaways: 1. Design for observability from day one 2. Separate concerns early, ..."
+      "char_count": 2063,
+      "word_count": 314,
+      "preview": "[Previous context: ...ough your entire system. ## Security at Scale **Alex:** Security becomes more ..."
     },
     {
       "chunk_id": 6,
       "file": "chunk_006.txt",
-      "char_count": 1093,
-      "word_count": 169,
-      "preview": "[Previous context: ...advance to your API consumers. **Audience Member 3:** What about testing strat..."
+      "char_count": 816,
+      "word_count": 128,
+      "preview": "[Previous context: ...keaways: 1. Design for observability from day one 2. Separate concerns early, ..."
+    },
+    {
+      "chunk_id": 7,
+      "file": "chunk_007.txt",
+      "char_count": 1485,
+      "word_count": 229,
+      "preview": "[Previous context: ...based on your use case, not hype. **Audience Member 2:** How do you handle API..."
     }
   ],
-  "timestamp": "2025-09-19T01:47:57.671796"
+  "timestamp": "2025-09-19T01:48:44.378669"
 }

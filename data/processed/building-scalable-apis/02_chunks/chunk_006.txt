@@ -1,7 +1,3 @@
-[Previous context: ...advance to your API consumers. **Audience Member 3:** What about testing strategies for large APIs?]
+[Previous context: ...keaways: 1. Design for observability from day one 2. Separate concerns early, even in a monolith 3.]
 
-**Alex:** Testing becomes critical at scale. We have unit tests, integration tests, contract tests between services, and end-to-end tests. But here's the key - we also do chaos engineering. Randomly killing services in production teaches you a lot about your system's resilience. *[More questions continue...]* ## Closing **Alex:** Building scalable APIs is a journey, not a destination. Every system is different, every team is different. What worked for us might not work for you, but I hope these lessons help you avoid some of the pitfalls we encountered. 
-
-Remember - premature optimization is the root of all evil, but so is ignoring scalability until it's too late. Find the balance that works for your context. Thank you all for your attention, and feel free to reach out if you have more questions! 
-
-*[Audience applause]* --- **End of Transcript** *Total word count: ~1,200 words* *Transcript prepared by: Conference Recording Services* *Reviewed by: Speaker*
+Cache strategically, but prepare for cache invalidation complexity 4. Don't go microservices until you have to, but when you do, invest in tooling 5. Security and performance are not afterthoughts - they're architectural decisions ## Q&A Session **Audience Member 1:** What's your take on GraphQL vs REST for scalable APIs? **Alex:** Great question. We actually use both. REST for simple CRUD operations and public APIs, GraphQL for complex data fetching where clients need flexibility. GraphQL can be more efficient for mobile clients, but it adds complexity in caching and security. Choose based on your use case, not hype. **Audience Member 2:** How do you handle API versioning at scale? 
