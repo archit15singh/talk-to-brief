@@ -94,7 +94,7 @@ Traditional Q&A focuses on clarification. This tool generates questions that:
 Adjust processing in `backend/config/settings.py`:
 
 ```python
-INPUT_TXT = "data/transcripts/your-file.md"  # Your transcript
+INPUT_TXT = "data/transcripts/your-file.txt"  # Your transcript
 BUFFER_SIZE = 3             # Semantic chunking window
 BREAKPOINT_THRESHOLD = 92   # Chunk boundary sensitivity
 MIN_CHUNK_SIZE = 500        # Minimum chunk size
@@ -276,7 +276,7 @@ Perfect for content creators, interviewers, educators, and anyone who wants to e
 ════════════════════════════════════════════════════════════════════════════════
                SEMANTIC TRANSCRIPT ANALYSIS & QUESTION GENERATION               
 ════════════════════════════════════════════════════════════════════════════════
-ℹ Input transcript: data/transcripts/building-scalable-apis.md
+ℹ Input transcript: data/transcripts/building-scalable-apis.txt
 ℹ Semantic chunking: 3 sentence buffer, 92% threshold
 ℹ AI Model: GPT-5-Nano
   ✓ Created cleaned directory
