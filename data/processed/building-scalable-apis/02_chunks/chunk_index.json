@@ -1,81 +1,58 @@
 {
-  "total_chunks": 10,
+  "total_chunks": 6,
   "chunking_config": {
-    "buffer_size": 3,
-    "breakpoint_threshold": 92,
-    "embedding_model": "text-embedding-ada-002"
+    "buffer_size": 2,
+    "breakpoint_threshold": 85,
+    "embedding_model": "text-embedding-ada-002",
+    "min_chunk_size": 500,
+    "max_chunk_size": 3000,
+    "overlap_size": 100,
+    "strategy_used": "Dense content, smaller chunks",
+    "post_processing": true
   },
   "chunks": [
     {
       "chunk_id": 1,
       "file": "chunk_001.txt",
-      "char_count": 409,
-      "word_count": 65,
+      "char_count": 1294,
+      "word_count": 213,
       "preview": "# Building Scalable APIs: Lessons from the Trenches **Speaker:** Alex Chen **Event:** DevCon 2024 **..."
     },
     {
       "chunk_id": 2,
       "file": "chunk_002.txt",
-      "char_count": 958,
-      "word_count": 160,
-      "preview": "*[Audience applause]* So, who here has built an API that started simple and then... well, let's just..."
+      "char_count": 1078,
+      "word_count": 173,
+      "preview": "[Previous context: ...design with growth in mind. \n\nWhat does this mean practically? First, separate..."
     },
     {
       "chunk_id": 3,
       "file": "chunk_003.txt",
-      "char_count": 221,
-      "word_count": 37,
-      "preview": "Use proper layering - controllers, services, data access. This makes it easier to extract services l..."
+      "char_count": 737,
+      "word_count": 108,
+      "preview": "[Previous context: ...he thing - you need to design for this from the beginning. **Audience Member:*..."
     },
     {
       "chunk_id": 4,
       "file": "chunk_004.txt",
-      "char_count": 1334,
-      "word_count": 203,
-      "preview": "Plan for it. Third, and this is crucial - instrument everything from day one. You can't optimize wha..."
+      "char_count": 3000,
+      "word_count": 445,
+      "preview": "[Previous context: ...solved some problems and created others. Independent scaling, technology diver..."
     },
     {
       "chunk_id": 5,
       "file": "chunk_005.txt",
-      "char_count": 84,
-      "word_count": 9,
-      "preview": "Service discovery, monitoring complexity, and the dreaded distributed transactions. "
+      "char_count": 1206,
+      "word_count": 185,
+      "preview": "[Previous context: ...keaways: 1. Design for observability from day one 2. Separate concerns early, ..."
     },
     {
       "chunk_id": 6,
       "file": "chunk_006.txt",
-      "char_count": 1813,
-      "word_count": 277,
-      "preview": "*[Audience laughs]* My advice? Don't go microservices until you have to. But when you do, invest hea..."
-    },
-    {
-      "chunk_id": 7,
-      "file": "chunk_007.txt",
-      "char_count": 575,
-      "word_count": 83,
-      "preview": "Enable gzip compression, use CDNs for static content, optimize your database queries, implement prop..."
-    },
-    {
-      "chunk_id": 8,
-      "file": "chunk_008.txt",
-      "char_count": 1968,
-      "word_count": 309,
-      "preview": "You need to think about on-call rotations and incident response procedures. The best technical archi..."
-    },
-    {
-      "chunk_id": 9,
-      "file": "chunk_009.txt",
-      "char_count": 111,
-      "word_count": 19,
-      "preview": "Remember - premature optimization is the root of all evil, but so is ignoring scalability until it's..."
-    },
-    {
-      "chunk_id": 10,
-      "file": "chunk_010.txt",
-      "char_count": 294,
-      "word_count": 45,
-      "preview": "Find the balance that works for your context. Thank you all for your attention, and feel free to rea..."
+      "char_count": 1093,
+      "word_count": 169,
+      "preview": "[Previous context: ...advance to your API consumers. **Audience Member 3:** What about testing strat..."
     }
   ],
-  "timestamp": "2025-09-19T01:42:06.251071"
+  "timestamp": "2025-09-19T01:47:57.671796"
 }

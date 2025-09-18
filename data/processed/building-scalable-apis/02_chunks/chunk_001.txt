@@ -1,1 +1,7 @@
-# Building Scalable APIs: Lessons from the Trenches **Speaker:** Alex Chen **Event:** DevCon 2024 **Date:** March 15, 2024 **Duration:** 45 minutes --- ## Introduction **Alex Chen:** Good morning everyone! Thanks for joining me today. I'm Alex, and I've been building APIs for the past eight years. Today I want to share some hard-learned lessons about scaling APIs from zero to millions of requests per day. 
+# Building Scalable APIs: Lessons from the Trenches **Speaker:** Alex Chen **Event:** DevCon 2024 **Date:** March 15, 2024 **Duration:** 45 minutes --- ## Introduction **Alex Chen:** Good morning everyone! Thanks for joining me today. I'm Alex, and I've been building APIs for the past eight years. 
+
+Today I want to share some hard-learned lessons about scaling APIs from zero to millions of requests per day. *[Audience applause]* So, who here has built an API that started simple and then... well, let's just say it got complicated? *[Several hands raise]* Yeah, I thought so. We've all been there. ## The Journey Begins **Alex:** Let me start with a story. Three years ago, I joined a startup with a simple REST API. It handled about 100 requests per minute. The entire codebase was one Express.js file. 500 lines. Everything worked perfectly. 
+
+Fast forward 18 months - we're processing 50,000 requests per minute, the database is crying, and our single server is basically on fire. Sound familiar? *[Audience chuckles]* ## Lesson 1: Design for Growth, Not Just Today **Alex:** The first lesson I learned the hard way is this: you don't have to over-engineer from day one, but you need to design with growth in mind. 
+
+What does this mean practically? First, separate your concerns early. 
