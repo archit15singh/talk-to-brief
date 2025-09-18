@@ -11,19 +11,21 @@ git clone <repository-url>
 cd transcript-analysis
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 ```
 
 ### Configuration
-Create a `.env` file with your OpenAI API key:
-```
+Create a `.env` file in the backend directory with your OpenAI API key:
+```bash
+# In backend/.env
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 ### Run Analysis
 ```bash
 # Place your transcript in data/transcripts/
-python backend/main.py
+cd backend
+python main.py
 ```
 
 ## What You Get
@@ -278,7 +280,7 @@ Perfect for content creators, interviewers, educators, and anyone who wants to e
 ════════════════════════════════════════════════════════════════════════════════
 ℹ Input transcript: data/transcripts/building-scalable-apis.txt
 ℹ Semantic chunking: 3 sentence buffer, 92% threshold
-ℹ AI Model: GPT-5-Nano
+ℹ AI Model: GPT-4o
   ✓ Created cleaned directory
   ✓ Created chunks directory
   ✓ Created summaries directory

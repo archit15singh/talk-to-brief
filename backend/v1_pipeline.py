@@ -21,7 +21,7 @@ from schemas import QuestionPipelineSchemas
 load_dotenv()
 
 # ---------- CONFIG ----------
-INPUT_TXT = "data/transcripts/building-scalable-apis.txt"  # path to your transcript
+INPUT_TXT = "../data/transcripts/building-scalable-apis.txt"  # path to your transcript
 BUFFER_SIZE = 3             # sentences in rolling window
 BREAKPOINT_THRESHOLD = 92   # higher = fewer/larger chunks
 
