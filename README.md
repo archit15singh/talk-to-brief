@@ -264,3 +264,158 @@ Unlike simple Q&A generators that focus on comprehension, this tool:
 - **Creates Leverage**: Generates questions that unlock disproportionate insight
 
 Perfect for content creators, interviewers, educators, and anyone who wants to extract maximum value from spoken content.
+
+
+# sample run
+
+```bash
+❯ source .venv/bin/activate && python backend/main.py
+/Users/architsingh/Documents/projects/talk-to-brief/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+════════════════════════════════════════════════════════════════════════════════
+               SEMANTIC TRANSCRIPT ANALYSIS & QUESTION GENERATION               
+════════════════════════════════════════════════════════════════════════════════
+ℹ Input transcript: data/transcripts/building-scalable-apis.md
+ℹ Semantic chunking: 3 sentence buffer, 92% threshold
+ℹ AI Model: GPT-5-Nano
+  ✓ Created cleaned directory
+  ✓ Created chunks directory
+  ✓ Created summaries directory
+  ✓ Created metadata directory
+✓ Initialized workspace: data/processed/building-scalable-apis
+
+────────────────────────────────────────────────────────────
+            Text Processing & Semantic Chunking             
+────────────────────────────────────────────────────────────
+   💾 Saved: data/processed/building-scalable-apis/01_cleaned/cleaned_transcript.txt
+      Cleaned transcript text
+   • Text reduction: 0.6%
+   • Original chars: 2,625
+   • Cleaned chars: 2,608
+ℹ Using dense content, smaller chunks
+   • Buffer size: 2
+   • Threshold: 85%
+ℹ Generating semantic chunks...
+✓ Generated 5 semantic chunks
+ℹ Post-processing chunks for quality...
+ℹ Adding overlap for continuity...
+✓ Generated 3 enhanced semantic chunks
+   💾 Saved: data/processed/building-scalable-apis/02_chunks/chunk_index.json
+      Enhanced chunk index and metadata
+   • Average chunk size: 953 chars
+   • Size range: 722 - 1,248 chars
+   • Size variance: 526 chars
+   • Quality ratio: 100.0%
+✓ Transcript processed into 3 semantic chunks
+
+════════════════════════════════════════════════════════════════════════════════
+                      3-STEP QUESTION GENERATION PIPELINE                       
+════════════════════════════════════════════════════════════════════════════════
+ℹ Step 1: Summarization Layer - Extract main points, evidence, assumptions
+ℹ Step 2: Critical Thinking Layer - Identify weak spots, contrarian angles
+ℹ Step 3: Question Generation - Create high-leverage audience questions
+
+────────────────────────────────────────────────────────────
+                    Processing 3 Chunks                     
+────────────────────────────────────────────────────────────
+📊 Progress: [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 0.0% (0/3 chunks)  ℹ Processing chunk 1 (1,248 chars)
+    ℹ Step 1: Summarization Layer
+      ✓ Extracted 4 main points, 3 assumptions
+    ℹ Step 2: Critical Thinking Layer
+      ✓ Identified 3 weak spots, 3 contrarian angles
+    ℹ Step 3: Question Generation & Ranking
+      ✓ Generated 9 questions (top rank: 10)
+   ⏱ Chunk 1 completed in 1m 12.1s
+      ℹ Top question (rank 10): If your app requires per-user personalization, can a truly s...
+📊 Progress: [██████████░░░░░░░░░░░░░░░░░░░░] 33.3% (1/3 chunks)  ℹ Processing chunk 2 (722 chars)
+    ℹ Step 1: Summarization Layer
+      ✓ Extracted 4 main points, 3 assumptions
+    ℹ Step 2: Critical Thinking Layer
+      ✓ Identified 3 weak spots, 3 contrarian angles
+    ℹ Step 3: Question Generation & Ranking
+      ✓ Generated 9 questions (top rank: 10)
+   ⏱ Chunk 2 completed in 1m 1.7s
+      ℹ Top question (rank 10): If we rely on multiple DB instances to boost reads, under wh...
+📊 Progress: [████████████████████░░░░░░░░░░] 66.7% (2/3 chunks)  ℹ Processing chunk 3 (890 chars)
+    ℹ Step 1: Summarization Layer
+      ✓ Extracted 4 main points, 3 assumptions
+    ℹ Step 2: Critical Thinking Layer
+      ✓ Identified 3 weak spots, 3 contrarian angles
+    ℹ Step 3: Question Generation & Ranking
+      ✓ Generated 9 questions (top rank: 9)
+   ⏱ Chunk 3 completed in 1m 7.0s
+      ℹ Top question (rank 9): Can a well-designed monolith scale as effectively as microse...
+📊 Progress: [██████████████████████████████] 100.0% (3/3 chunks)
+
+────────────────────────────────────────────────────────────
+                  Chunk Processing Summary                  
+────────────────────────────────────────────────────────────
+   • Successful chunks: 3
+   • Failed chunks: 0
+   • Success rate: 100.0%
+
+────────────────────────────────────────────────────────────
+                  Final Question Synthesis                  
+────────────────────────────────────────────────────────────
+ℹ Merging and ranking questions from all chunks...
+✓ Synthesized 5 top questions from 3 chunks
+   ⏱ Question synthesis completed in 26.01s
+
+────────────────────────────────────────────────────────────
+                      Saving Artifacts                      
+────────────────────────────────────────────────────────────
+   💾 Saved: data/processed/building-scalable-apis/04_questions
+      Question analysis directory
+   💾 Saved: data/processed/building-scalable-apis/04_questions/final_top5_questions.md
+      Human-readable final questions
+   💾 Saved: data/processed/building-scalable-apis/04_questions/final_top5_questions.json
+      Machine-readable final questions (JSON)
+   ⏱ Complete question generation pipeline completed in 3m 46.8s
+   💾 Saved: data/processed/building-scalable-apis/metadata/processing_metadata.json
+      Pipeline configuration and statistics
+
+════════════════════════════════════════════════════════════════════════════════
+                               PIPELINE COMPLETE                                
+════════════════════════════════════════════════════════════════════════════════
+
+📁 Output Structure:
+data/processed/building-scalable-apis
+├── 01_cleaned/ - Cleaned transcript text
+├── 02_chunks/ - 3 semantic chunks
+├── 03_summaries/ - Legacy summaries (deprecated)
+├── 04_questions/ - 3-step question analysis
+└── metadata/ - Processing metadata & config
+
+────────────────────────────────────────────────────────────
+             High-Leverage Questions Generated              
+────────────────────────────────────────────────────────────
+✓ Generated 5 high-leverage questions
+
+1. How would you design a hybrid model that preserves statelessness but still gu...
+   💡 High asymmetry: challenges the default stateless approach by forcing a deep dive into patterns like CQRS/Sagas and hybrid read/write designs; connects data consistency, latency, and governance across architectures.
+
+2. When does TTL-based caching become a correctness risk, and what signals would...
+   💡 Targets a concrete, actionable correctness risk with observable signals; yields guardrails, monitoring strategies, and testable assumptions.
+
+3. Could external dependencies be the true bottlenecks, making internal observab...
+   💡 Shifts focus from internal systems to vendor reliability and integration risk; creates asymmetry by challenging assumptions about controllability and connected SLAs.
+
+4. If tracing is noisy and causes alert fatigue, what practical heuristics separ...
+   💡 Transforms observability into actionable, repeatable practices; directly improves MTTR and decision quality, with cross-cutting impact on tooling and process.
+
+5. With AI-assisted observability auto-triage, will teams over-rely on automatio...
+   💡 Probes governance and potential failure modes of automation; connects design quality, security, and operational practices in a future-facing context.
+
+────────────────────────────────────────────────────────────
+                    Pipeline Statistics                     
+────────────────────────────────────────────────────────────
+   • Chunks processed: 3/3
+   • Success rate: 100.0%
+   • Questions generated: 5
+   • Average chunk size: 953 chars
+   ⏱ Complete pipeline completed in 3m 48.5s
+ℹ Full analysis available at: data/processed/building-scalable-apis/04_questions
+~/Documents/projects/talk-to-brief v2 ?3                         3m 50s Py talk-to-brief 02:14:38 AM
+❯ 
+```
