@@ -4,84 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Processing Library</title>
+    <title>Building Scalable APIs - Questions</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <style>
-        .stats-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: var(--pico-card-background-color);
-            border-radius: var(--pico-border-radius);
-            border: var(--pico-border-width) solid var(--pico-border-color);
-        }
-
-        .stats-bar span {
-            font-size: 0.875rem;
-            color: var(--pico-muted-color);
-        }
-
-        .content-grid {
-            display: grid;
-            gap: 1.5rem;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        }
-
-        .processing-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin: 1rem 0;
-            font-size: 0.875rem;
-        }
-
-        .processing-stats .stat {
-            text-align: center;
-            padding: 0.5rem;
-            background: var(--pico-code-background-color);
+        .question-item {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--pico-border-color);
             border-radius: var(--pico-border-radius);
         }
 
-        .processing-stats label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .question-preview {
-            font-style: italic;
-            color: var(--pico-muted-color);
-            margin: 0.5rem 0;
-            padding: 1rem;
-            background: var(--pico-code-background-color);
-            border-radius: var(--pico-border-radius);
-            border-left: 3px solid var(--pico-primary);
-        }
-
-        .actions {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .status-badge {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 1rem;
+        .question-number {
             background: var(--pico-primary);
             color: white;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 1rem;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+            margin-right: 0.75rem;
         }
 
-        .card-header h3 {
-            margin: 0;
+        .question-text {
+            font-weight: 600;
+            margin: 0.5rem 0;
         }
     </style>
 </head>
@@ -89,68 +38,68 @@
 <body>
     <main class="container">
         <header>
-            <h1>Content Processing Library</h1>
-            <div class="stats-bar">
-                <span><strong>1</strong> Item Processed</span>
-                <span><strong>5</strong> Questions Generated</span>
-                <span><strong>Last Updated:</strong> Sep 19, 2025</span>
-            </div>
+            <h1>Building Scalable APIs</h1>
+            <p>High-leverage questions generated from content analysis</p>
         </header>
 
-        <section class="content-grid">
-            <article>
-                <div class="card-header">
-                    <h3>Building Scalable APIs</h3>
-                    <span class="status-badge">Complete</span>
-                </div>
+        <section>
+            <div class="question-item">
+                <span class="question-number">1</span>
+                <div class="question-text">How would you design a hybrid model that preserves statelessness but still
+                    guarantees strong consistency for critical data?</div>
+                <button onclick="copyText(this)"
+                    data-text="How would you design a hybrid model that preserves statelessness but still guarantees strong consistency for critical data?">Copy
+                    Question</button>
+            </div>
 
-                <div class="processing-stats">
-                    <div class="stat">
-                        <label>Chunks</label>
-                        <span>3</span>
-                    </div>
-                    <div class="stat">
-                        <label>Questions</label>
-                        <span>5</span>
-                    </div>
-                    <div class="stat">
-                        <label>Time</label>
-                        <span>3m 48s</span>
-                    </div>
-                </div>
+            <div class="question-item">
+                <span class="question-number">2</span>
+                <div class="question-text">When does TTL-based caching become a correctness risk, and what signals would
+                    you monitor to detect it?</div>
+                <button onclick="copyText(this)"
+                    data-text="When does TTL-based caching become a correctness risk, and what signals would you monitor to detect it?">Copy
+                    Question</button>
+            </div>
 
-                <div>
-                    <h4>Top Question Preview:</h4>
-                    <div class="question-preview">
-                        "How would you design a hybrid model that preserves statelessness but still guarantees strong
-                        consistency for critical data?"
-                    </div>
-                </div>
+            <div class="question-item">
+                <span class="question-number">3</span>
+                <div class="question-text">Could external dependencies be the true bottlenecks, making internal
+                    observability less effective?</div>
+                <button onclick="copyText(this)"
+                    data-text="Could external dependencies be the true bottlenecks, making internal observability less effective?">Copy
+                    Question</button>
+            </div>
 
-                <div class="actions">
-                    <a href="content.html?id=building-scalable-apis" role="button">View Questions</a>
-                    <a href="content.html?id=building-scalable-apis&tab=analysis" role="button" class="secondary">View
-                        Analysis</a>
-                    <a href="content.html?id=building-scalable-apis&tab=raw" role="button" class="outline">Raw Data</a>
-                </div>
-            </article>
+            <div class="question-item">
+                <span class="question-number">4</span>
+                <div class="question-text">If tracing is noisy and causes alert fatigue, what practical heuristics
+                    separate signal from noise in production?</div>
+                <button onclick="copyText(this)"
+                    data-text="If tracing is noisy and causes alert fatigue, what practical heuristics separate signal from noise in production?">Copy
+                    Question</button>
+            </div>
 
-            <!-- Placeholder for future content -->
-            <article style="opacity: 0.6; border: 2px dashed var(--pico-border-color);">
-                <div class="card-header">
-                    <h3>Add New Content</h3>
-                </div>
-                <p>Upload a new transcript or document to process and generate high-leverage questions.</p>
-                <div class="actions">
-                    <a href="#" role="button" class="outline">Upload Content</a>
-                </div>
-            </article>
+            <div class="question-item">
+                <span class="question-number">5</span>
+                <div class="question-text">With AI-assisted observability auto-triage, will teams over-rely on
+                    automation and overlook fundamental design issues or data security?</div>
+                <button onclick="copyText(this)"
+                    data-text="With AI-assisted observability auto-triage, will teams over-rely on automation and overlook fundamental design issues or data security?">Copy
+                    Question</button>
+            </div>
         </section>
-
-        <footer style="margin-top: 3rem;">
-            <p><small>Content Processing Pipeline v1.0 - Powered by GPT Analysis</small></p>
-        </footer>
     </main>
+
+    <script>
+        function copyText(button) {
+            const text = button.getAttribute('data-text');
+            navigator.clipboard.writeText(text).then(() => {
+                const original = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = original, 2000);
+            });
+        }
+    </script>
 </body>
 
 </html>
