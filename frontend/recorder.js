@@ -51,24 +51,25 @@ class VoiceRecorder {
                 this.currentBlob = audioBlob;
                 const audioUrl = URL.createObjectURL(audioBlob);
                 this.audioPlayback.src = audioUrl;
-                this.audioPlayback.style.display = 'block';
+                this.audioPlayback.classList.remove('hidden');
                 
                 this.playBtn.disabled = false;
                 this.saveBtn.disabled = false;
-                this.updateStatus('Recording completed. You can now play or save it.');
+                this.updateStatus('Recording completed. You can now play or save it.', 'success');
             };
             
             this.mediaRecorder.start();
             this.isRecording = true;
             
-            this.recordBtn.classList.add('recording');
-            this.recordBtn.querySelector('.btn-text').textContent = 'Recording...';
+            this.recordBtn.classList.add('recording', 'animate-pulse');
+            this.recordBtn.querySelector('.btn-text-icon').className = 'fas fa-stop text-2xl btn-text-icon';
+            this.recordBtn.querySelector('.recording-indicator').classList.add('animate-ping', 'opacity-75');
             this.stopBtn.disabled = false;
-            this.updateStatus('Recording in progress...');
+            this.updateStatus('Recording in progress...', 'warning');
             
         } catch (error) {
             console.error('Error accessing microphone:', error);
-            this.updateStatus('Error: Could not access microphone. Please check permissions.');
+            this.updateStatus('Error: Could not access microphone. Please check permissions.', 'error');
         }
     }
 
@@ -78,8 +79,9 @@ class VoiceRecorder {
             this.mediaRecorder.stream.getTracks().forEach(track => track.stop());
             
             this.isRecording = false;
-            this.recordBtn.classList.remove('recording');
-            this.recordBtn.querySelector('.btn-text').textContent = 'Start Recording';
+            this.recordBtn.classList.remove('recording', 'animate-pulse');
+            this.recordBtn.querySelector('.btn-text-icon').className = 'fas fa-microphone text-2xl btn-text-icon';
+            this.recordBtn.querySelector('.recording-indicator').classList.remove('animate-ping', 'opacity-75');
             this.stopBtn.disabled = true;
         }
     }
@@ -141,18 +143,23 @@ class VoiceRecorder {
     resetRecorder() {
         this.currentBlob = null;
         this.audioPlayback.src = '';
-        this.audioPlayback.style.display = 'none';
+        this.audioPlayback.classList.add('hidden');
         this.playBtn.disabled = true;
         this.saveBtn.disabled = true;
     }
 
     addRecordingToList(filename) {
         const recordingItem = document.createElement('div');
-        recordingItem.className = 'recording-item';
+        recordingItem.className = 'flex items-center justify-between p-3 bg-base-200 rounded-lg hover:bg-base-300 transition-colors';
         recordingItem.innerHTML = `
-            <span class="recording-name">${filename}</span>
-            <div class="recording-actions">
-                <button class="action-btn" onclick="this.parentElement.parentElement.remove()">Delete</button>
+            <div class="flex items-center gap-3">
+                <i class="fas fa-file-audio text-primary"></i>
+                <span class="font-medium">${filename}</span>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-ghost btn-xs text-error hover:bg-error hover:text-error-content" onclick="this.closest('.flex').remove()">
+                    <i class="fas fa-trash"></i>
+                </button>
             </div>
         `;
         this.recordingsList.appendChild(recordingItem);
@@ -177,8 +184,29 @@ class VoiceRecorder {
         });
     }
 
-    updateStatus(message) {
+    updateStatus(message, type = 'info') {
         this.statusText.textContent = message;
+        const alertElement = this.statusText.parentElement;
+        
+        // Remove existing alert classes
+        alertElement.classList.remove('alert-info', 'alert-success', 'alert-warning', 'alert-error');
+        
+        // Add new alert class based on type
+        alertElement.classList.add(`alert-${type}`);
+        
+        // Update icon based on type
+        const icon = alertElement.querySelector('i');
+        icon.className = `fas ${this.getIconForType(type)}`;
+    }
+    
+    getIconForType(type) {
+        const icons = {
+            info: 'fa-info-circle',
+            success: 'fa-check-circle',
+            warning: 'fa-exclamation-triangle',
+            error: 'fa-exclamation-circle'
+        };
+        return icons[type] || icons.info;
     }
 }
 
