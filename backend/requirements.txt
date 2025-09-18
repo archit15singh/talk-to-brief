@@ -82,3 +82,5 @@ tzdata==2025.2
 urllib3==2.5.0
 wrapt==1.17.3
 yarl==1.20.1
+fastapi==0.115.6
+uvicorn==0.34.0
