@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.recorder-section {
+    margin-bottom: 2rem;
+}
+
+.record-btn {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: none;
+    background: #ff4757;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.record-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+}
+
+.record-btn.recording {
+    background: #ff3742;
+    animation: pulse 1.5s infinite;
+}
+
+.recording-indicator {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.record-btn.recording .recording-indicator {
+    opacity: 1;
+    animation: blink 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.control-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    background: #5352ed;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.control-btn:hover:not(:disabled) {
+    background: #3742fa;
+    transform: translateY(-2px);
+}
+
+.control-btn:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.audio-section {
+    margin: 1.5rem 0;
+}
+
+#audioPlayback {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.status {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+#statusText {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.recordings-list {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.recordings-list h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.recording-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.recording-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.recording-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    padding: 0.25rem 0.75rem;
+    border: none;
+    border-radius: 15px;
+    background: #28a745;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+    background: #218838;
+}
+
+.action-btn.delete {
+    background: #dc3545;
+}
+
+.action-btn.delete:hover {
+    background: #c82333;
+}

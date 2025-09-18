@@ -6,18 +6,34 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+import shutil
 
 app = FastAPI(title="Processed Data API", version="1.0.0")
 
-# Base path for processed data
-PROCESSED_DATA_PATH = Path("data/processed")
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mount static files for frontend
+app.mount("/static", StaticFiles(directory="../../frontend"), name="static")
+
+# Base paths (relative to api folder)
+PROCESSED_DATA_PATH = Path("../../data/processed")
+RAW_SOURCE_PATH = Path("../../data/raw-source")
 
 @app.get("/")
 async def root():
     """Root endpoint with API information"""
-    return {"message": "Processed Data API", "version": "1.0.0"}
+    return {"message": "Processed Data API with Voice Recorder", "version": "1.0.0", "recorder": "/recorder"}
 
 @app.get("/datasets")
 async def list_datasets():
@@ -163,6 +179,46 @@ async def get_questions(dataset_name: str):
     
     return {"questions": questions}
 
-if __name__ == "__main__":
+@app.post("/api/save-recording")
+async def save_recording(audio: UploadFile = File(...)):
+    """Save uploaded audio recording to data/raw-source"""
+    try:
+        # Ensure the raw-source directory exists
+        RAW_SOURCE_PATH.mkdir(parents=True, exist_ok=True)
+        
+        # Save the uploaded file
+        file_path = RAW_SOURCE_PATH / audio.filename
+        
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(audio.file, buffer)
+        
+        return {
+            "message": "Recording saved successfully",
+            "filename": audio.filename,
+            "path": str(file_path)
+        }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error saving recording: {str(e)}")
+
+@app.get("/recorder")
+async def serve_frontend():
+    """Serve the frontend application"""
+    from fastapi.responses import FileResponse
+    return FileResponse("../../frontend/index.html")
+
+def start_server():
+    """Start the voice recorder application server"""
+    # Ensure the raw-source directory exists
+    RAW_SOURCE_PATH.mkdir(parents=True, exist_ok=True)
+    
+    print("Starting Voice Recorder & Data API Server...")
+    print("Frontend available at: http://localhost:8000/recorder")
+    print("API docs available at: http://localhost:8000/docs")
+    print("Press Ctrl+C to stop the server")
+    
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+
+if __name__ == "__main__":
+    start_server()
