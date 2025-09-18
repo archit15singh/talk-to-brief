@@ -33,7 +33,7 @@ class QuestionGenerationPipeline:
     
     def __init__(self, client: OpenAIClient = None):
         self.client = client or OpenAIClient()
-        self.config = CompletionConfig(model=ModelType.GPT_4O_MINI, temperature=0.3)
+        self.config = CompletionConfig(model=ModelType.GPT_5_MINI, temperature=0.3)
         self.schemas = QuestionPipelineSchemas()
         self.prompts = PromptTemplates()
     
@@ -599,7 +599,7 @@ def main():
             'input_file': INPUT_TXT,
             'buffer_size': BUFFER_SIZE,
             'breakpoint_threshold': BREAKPOINT_THRESHOLD,
-            'model': 'gpt-4o-mini'
+            'model': 'gpt-5-mini'
         }
         
         stats = {
