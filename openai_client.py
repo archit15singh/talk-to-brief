@@ -16,7 +16,7 @@ class ModelType(Enum):
     """Available OpenAI models"""
     GPT_5_NANO = "gpt-5-nano"
     GPT_4O = "gpt-4o"
-    GPT_4O_MINI = "gpt-4o-mini"
+    GPT_5_NANO_ALT = "gpt-5-nano"
     GPT_4_TURBO = "gpt-4-turbo"
 
 

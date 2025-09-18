@@ -4,7 +4,7 @@
     "input_file": "data/transcripts/building-scalable-apis.md",
     "buffer_size": 3,
     "breakpoint_threshold": 92,
-    "model": "gpt-4o-mini"
+    "model": "gpt-5-nano"
   },
   "stats": {
     "total_chunks": 10,
