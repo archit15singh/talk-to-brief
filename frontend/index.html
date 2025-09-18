@@ -1,62 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Pico CSS Demo</title>
+    <title>Content Processing Library</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        .stats-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--pico-card-background-color);
+            border-radius: var(--pico-border-radius);
+            border: var(--pico-border-width) solid var(--pico-border-color);
+        }
+
+        .stats-bar span {
+            font-size: 0.875rem;
+            color: var(--pico-muted-color);
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        .processing-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
+        .processing-stats .stat {
+            text-align: center;
+            padding: 0.5rem;
+            background: var(--pico-code-background-color);
+            border-radius: var(--pico-border-radius);
+        }
+
+        .processing-stats label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .question-preview {
+            font-style: italic;
+            color: var(--pico-muted-color);
+            margin: 0.5rem 0;
+            padding: 1rem;
+            background: var(--pico-code-background-color);
+            border-radius: var(--pico-border-radius);
+            border-left: 3px solid var(--pico-primary);
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            background: var(--pico-primary);
+            color: white;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-header h3 {
+            margin: 0;
+        }
+    </style>
 </head>
+
 <body>
     <main class="container">
         <header>
-            <h1>Welcome to Pico CSS</h1>
-            <p>A minimal CSS framework for semantic HTML</p>
+            <h1>Content Processing Library</h1>
+            <div class="stats-bar">
+                <span><strong>1</strong> Item Processed</span>
+                <span><strong>5</strong> Questions Generated</span>
+                <span><strong>Last Updated:</strong> Sep 19, 2025</span>
+            </div>
         </header>
 
-        <section>
-            <h2>Features</h2>
-            <p>This page demonstrates Pico CSS with semantic HTML elements that look great without any custom classes.</p>
-            
+        <section class="content-grid">
             <article>
-                <h3>Sample Form</h3>
-                <form>
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your name">
-                    
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email">
-                    
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Your message here"></textarea>
-                    
-                    <button type="submit">Submit</button>
-                </form>
+                <div class="card-header">
+                    <h3>Building Scalable APIs</h3>
+                    <span class="status-badge">Complete</span>
+                </div>
+
+                <div class="processing-stats">
+                    <div class="stat">
+                        <label>Chunks</label>
+                        <span>3</span>
+                    </div>
+                    <div class="stat">
+                        <label>Questions</label>
+                        <span>5</span>
+                    </div>
+                    <div class="stat">
+                        <label>Time</label>
+                        <span>3m 48s</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Top Question Preview:</h4>
+                    <div class="question-preview">
+                        "How would you design a hybrid model that preserves statelessness but still guarantees strong
+                        consistency for critical data?"
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a href="content.html?id=building-scalable-apis" role="button">View Questions</a>
+                    <a href="content.html?id=building-scalable-apis&tab=analysis" role="button" class="secondary">View
+                        Analysis</a>
+                    <a href="content.html?id=building-scalable-apis&tab=raw" role="button" class="outline">Raw Data</a>
+                </div>
             </article>
 
-            <article>
-                <h3>Sample Content</h3>
-                <p>Here's some sample content to show how Pico CSS styles regular HTML elements:</p>
-                <ul>
-                    <li>Clean typography</li>
-                    <li>Responsive design</li>
-                    <li>Dark/light mode support</li>
-                    <li>Minimal footprint</li>
-                </ul>
-                
-                <blockquote>
-                    "Pico CSS is perfect for rapid prototyping and simple websites."
-                </blockquote>
-                
-                <p>
-                    <a href="#" role="button">Primary Button</a>
-                    <a href="#" role="button" class="secondary">Secondary Button</a>
-                </p>
+            <!-- Placeholder for future content -->
+            <article style="opacity: 0.6; border: 2px dashed var(--pico-border-color);">
+                <div class="card-header">
+                    <h3>Add New Content</h3>
+                </div>
+                <p>Upload a new transcript or document to process and generate high-leverage questions.</p>
+                <div class="actions">
+                    <a href="#" role="button" class="outline">Upload Content</a>
+                </div>
             </article>
         </section>
 
-        <footer>
-            <p><small>Built with Pico CSS - No custom CSS required!</small></p>
+        <footer style="margin-top: 3rem;">
+            <p><small>Content Processing Pipeline v1.0 - Powered by GPT Analysis</small></p>
         </footer>
     </main>
 </body>
+
 </html>
