@@ -6,6 +6,7 @@ Pipeline script for semantic chunking of transcript files using llama-index.
 import re
 import os
 import json
+import time
 from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
@@ -27,6 +28,139 @@ BREAKPOINT_THRESHOLD = 92   # higher = fewer/larger chunks
 # Data hierarchy structure
 DATA_ROOT = Path("data")
 PROCESSED_ROOT = DATA_ROOT / "processed"
+
+# Enhanced logging utilities
+class Logger:
+    """Enhanced logging with colors and formatting"""
+    
+    # ANSI color codes
+    COLORS = {
+        'RESET': '\033[0m',
+        'BOLD': '\033[1m',
+        'DIM': '\033[2m',
+        'RED': '\033[91m',
+        'GREEN': '\033[92m',
+        'YELLOW': '\033[93m',
+        'BLUE': '\033[94m',
+        'MAGENTA': '\033[95m',
+        'CYAN': '\033[96m',
+        'WHITE': '\033[97m',
+        'GRAY': '\033[90m'
+    }
+    
+    @classmethod
+    def _colorize(cls, text, color):
+        """Add color to text"""
+        return f"{cls.COLORS.get(color, '')}{text}{cls.COLORS['RESET']}"
+    
+    @classmethod
+    def header(cls, text, width=80):
+        """Print a styled header"""
+        border = "═" * width
+        print(f"\n{cls._colorize(border, 'CYAN')}")
+        print(f"{cls._colorize(text.center(width), 'CYAN')}")
+        print(f"{cls._colorize(border, 'CYAN')}")
+    
+    @classmethod
+    def subheader(cls, text, width=60):
+        """Print a styled subheader"""
+        border = "─" * width
+        print(f"\n{cls._colorize(border, 'BLUE')}")
+        print(f"{cls._colorize(text.center(width), 'BLUE')}")
+        print(f"{cls._colorize(border, 'BLUE')}")
+    
+    @classmethod
+    def success(cls, message, indent=0):
+        """Print success message"""
+        prefix = "  " * indent
+        print(f"{prefix}{cls._colorize('✓', 'GREEN')} {message}")
+    
+    @classmethod
+    def error(cls, message, indent=0):
+        """Print error message"""
+        prefix = "  " * indent
+        print(f"{prefix}{cls._colorize('✗', 'RED')} {cls._colorize(message, 'RED')}")
+    
+    @classmethod
+    def warning(cls, message, indent=0):
+        """Print warning message"""
+        prefix = "  " * indent
+        print(f"{prefix}{cls._colorize('⚠', 'YELLOW')} {cls._colorize(message, 'YELLOW')}")
+    
+    @classmethod
+    def info(cls, message, indent=0):
+        """Print info message"""
+        prefix = "  " * indent
+        print(f"{prefix}{cls._colorize('ℹ', 'BLUE')} {message}")
+    
+    @classmethod
+    def step(cls, step_num, title, description=""):
+        """Print step header"""
+        step_text = f"STEP {step_num}: {title}"
+        print(f"\n{cls._colorize('🔄', 'MAGENTA')} {cls._colorize(step_text, 'BOLD')}")
+        if description:
+            print(f"   {cls._colorize(description, 'DIM')}")
+    
+    @classmethod
+    def progress(cls, current, total, item_name="item"):
+        """Print progress indicator"""
+        percentage = (current / total) * 100
+        bar_length = 30
+        filled_length = int(bar_length * current // total)
+        bar = '█' * filled_length + '░' * (bar_length - filled_length)
+        
+        print(f"\r{cls._colorize('📊', 'CYAN')} Progress: [{bar}] {percentage:.1f}% ({current}/{total} {item_name}s)", end='', flush=True)
+        if current == total:
+            print()  # New line when complete
+    
+    @classmethod
+    def metric(cls, label, value, unit="", color='WHITE'):
+        """Print a metric"""
+        print(f"   {cls._colorize('•', 'GRAY')} {label}: {cls._colorize(f'{value}{unit}', color)}")
+    
+    @classmethod
+    def file_saved(cls, filepath, description=""):
+        """Print file saved message"""
+        print(f"   {cls._colorize('💾', 'GREEN')} Saved: {cls._colorize(str(filepath), 'CYAN')}")
+        if description:
+            print(f"      {cls._colorize(description, 'DIM')}")
+    
+    @classmethod
+    def processing_time(cls, start_time, operation="Operation"):
+        """Print processing time"""
+        elapsed = time.time() - start_time
+        if elapsed < 60:
+            time_str = f"{elapsed:.2f}s"
+        else:
+            minutes = int(elapsed // 60)
+            seconds = elapsed % 60
+            time_str = f"{minutes}m {seconds:.1f}s"
+        
+        print(f"   {cls._colorize('⏱', 'YELLOW')} {operation} completed in {cls._colorize(time_str, 'BOLD')}")
+    
+    @classmethod
+    def question_preview(cls, rank, question, reason, max_length=80):
+        """Print a formatted question preview"""
+        # Truncate question if too long
+        if len(question) > max_length:
+            question = question[:max_length-3] + "..."
+        
+        print(f"\n{cls._colorize(f'{rank}.', 'BOLD')} {cls._colorize(question, 'WHITE')}")
+        print(f"   {cls._colorize('💡', 'YELLOW')} {cls._colorize(reason, 'DIM')}")
+    
+    @classmethod
+    def directory_tree(cls, base_path, items):
+        """Print a directory tree structure"""
+        print(f"\n{cls._colorize('📁', 'CYAN')} {cls._colorize('Output Structure:', 'BOLD')}")
+        print(f"{cls._colorize(str(base_path), 'CYAN')}")
+        
+        for i, (name, description) in enumerate(items):
+            is_last = i == len(items) - 1
+            prefix = "└── " if is_last else "├── "
+            print(f"{prefix}{cls._colorize(name, 'WHITE')} - {cls._colorize(description, 'DIM')}")
+
+# Global logger instance
+log = Logger()
 
 class QuestionGenerationPipeline:
     """3-step pipeline for generating high-leverage audience questions"""
@@ -101,20 +235,42 @@ class QuestionGenerationPipeline:
     
     def process_chunk(self, chunk: str, chunk_number: int):
         """Process a single chunk through all 3 steps"""
-        print(f"Processing chunk {chunk_number} through 3-step pipeline...")
+        start_time = time.time()
+        
+        log.info(f"Processing chunk {chunk_number} ({len(chunk):,} chars)", indent=1)
         
         try:
             # Step 1: Summarization
-            print(f"  Step 1: Summarization...")
+            step1_start = time.time()
+            log.info("Step 1: Summarization Layer", indent=2)
             summary = self.step1_summarization(chunk)
             
+            main_points = len(summary.get('main_points', []))
+            assumptions = len(summary.get('assumptions', []))
+            log.success(f"Extracted {main_points} main points, {assumptions} assumptions", indent=3)
+            
             # Step 2: Critical Thinking
-            print(f"  Step 2: Critical Thinking...")
+            step2_start = time.time()
+            log.info("Step 2: Critical Thinking Layer", indent=2)
             critical_analysis = self.step2_critical_thinking(summary)
             
+            weak_spots = len(critical_analysis.get('weak_spots', []))
+            contrarian = len(critical_analysis.get('contrarian_angles', []))
+            log.success(f"Identified {weak_spots} weak spots, {contrarian} contrarian angles", indent=3)
+            
             # Step 3: Question Generation
-            print(f"  Step 3: Question Generation...")
+            step3_start = time.time()
+            log.info("Step 3: Question Generation & Ranking", indent=2)
             questions = self.step3_question_generation(critical_analysis)
+            
+            question_count = len(questions.get('questions', []))
+            if question_count > 0:
+                top_question = max(questions.get('questions', []), key=lambda x: x.get('rank', 0))
+                top_rank = top_question.get('rank', 0)
+                log.success(f"Generated {question_count} questions (top rank: {top_rank})", indent=3)
+            
+            total_time = time.time() - start_time
+            log.processing_time(start_time, f"Chunk {chunk_number}")
             
             return {
                 'chunk_number': chunk_number,
@@ -122,11 +278,12 @@ class QuestionGenerationPipeline:
                 'summary': summary,
                 'critical_analysis': critical_analysis,
                 'questions': questions,
-                'char_count': len(chunk)
+                'char_count': len(chunk),
+                'processing_time': total_time
             }
             
         except Exception as e:
-            print(f"✗ Error processing chunk {chunk_number}: {e}")
+            log.error(f"Chunk {chunk_number} failed: {str(e)}", indent=2)
             return {
                 'chunk_number': chunk_number,
                 'original_text': chunk,
@@ -218,8 +375,14 @@ def create_processing_directories(transcript_name):
     }
     
     # Create all directories
-    for dir_path in dirs.values():
-        dir_path.mkdir(parents=True, exist_ok=True)
+    for name, dir_path in dirs.items():
+        try:
+            dir_path.mkdir(parents=True, exist_ok=True)
+            if name != 'base':  # Don't log the base directory separately
+                log.success(f"Created {name} directory", indent=1)
+        except Exception as e:
+            log.error(f"Failed to create {name} directory: {e}", indent=1)
+            raise
     
     return dirs
 
@@ -481,8 +644,10 @@ def load_and_chunk_transcript(file_path, dirs):
         
         # Save cleaned text artifacts
         cleaned_file, cleaning_stats = save_cleaned_text(dirs, raw_text, clean_text)
-        print(f"✓ Saved cleaned text: {cleaned_file}")
-        print(f"  Reduction: {cleaning_stats['reduction_ratio']:.1%}")
+        log.file_saved(cleaned_file, "Cleaned transcript text")
+        log.metric("Text reduction", f"{cleaning_stats['reduction_ratio']:.1%}", color='GREEN')
+        log.metric("Original chars", f"{cleaning_stats['raw_char_count']:,}")
+        log.metric("Cleaned chars", f"{cleaning_stats['cleaned_char_count']:,}")
         
         # Create document
         doc = Document(text=clean_text)
@@ -509,87 +674,125 @@ def load_and_chunk_transcript(file_path, dirs):
         }
         
         chunk_files, chunk_index = save_chunks(dirs, chunks, chunking_config)
-        print(f"✓ Saved {len(chunks)} chunks: {dirs['chunks']}")
-        print(f"  Chunk index: {chunk_index}")
+        log.success(f"Generated {len(chunks)} semantic chunks")
+        log.file_saved(chunk_index, "Chunk index and metadata")
+        
+        # Show chunk statistics
+        chunk_sizes = [len(chunk) for chunk in chunks]
+        avg_size = sum(chunk_sizes) / len(chunk_sizes)
+        min_size = min(chunk_sizes)
+        max_size = max(chunk_sizes)
+        
+        log.metric("Average chunk size", f"{avg_size:.0f}", " chars")
+        log.metric("Size range", f"{min_size:,} - {max_size:,}", " chars")
         
         return chunks, clean_text, cleaning_stats
         
     except FileNotFoundError:
-        print(f"Error: File '{file_path}' not found.")
+        log.error(f"Transcript file not found: {file_path}")
         return None, None, None
     except Exception as e:
-        print(f"Error processing file: {e}")
+        log.error(f"Error processing transcript: {e}")
         return None, None, None
 
 def process_chunks_with_questions(chunks, dirs):
     """Process chunks through 3-step question generation pipeline."""
+    start_time = time.time()
     pipeline = QuestionGenerationPipeline()
-    
     results = []
     
-    print("\n" + "=" * 60)
-    print("3-STEP QUESTION GENERATION PIPELINE:")
-    print("=" * 60)
-    print("Step 1: Summarization Layer")
-    print("Step 2: Critical Thinking Layer") 
-    print("Step 3: Question Generation & Ranking")
-    print("=" * 60)
+    log.header("3-STEP QUESTION GENERATION PIPELINE")
+    log.info("Step 1: Summarization Layer - Extract main points, evidence, assumptions")
+    log.info("Step 2: Critical Thinking Layer - Identify weak spots, contrarian angles") 
+    log.info("Step 3: Question Generation - Create high-leverage audience questions")
+    
+    log.subheader(f"Processing {len(chunks)} Chunks")
     
     # Process each chunk through the 3-step pipeline
+    successful_count = 0
+    failed_count = 0
+    
     for i, chunk in enumerate(chunks, 1):
-        print(f"\n--- Processing Chunk {i}/{len(chunks)} ---")
+        log.progress(i-1, len(chunks), "chunk")
+        
         result = pipeline.process_chunk(chunk, i)
         results.append(result)
         
         if 'error' not in result:
+            successful_count += 1
             questions_count = len(result.get('questions', {}).get('questions', []))
-            print(f"✓ Chunk {i} complete: {questions_count} questions generated")
+            
+            # Show preview of top question for this chunk
+            if questions_count > 0:
+                top_q = max(result['questions']['questions'], key=lambda x: x.get('rank', 0))
+                log.info(f"Top question (rank {top_q.get('rank', 0)}): {top_q.get('question', 'N/A')[:60]}...", indent=3)
         else:
-            print(f"✗ Chunk {i} failed: {result['error']}")
+            failed_count += 1
+    
+    log.progress(len(chunks), len(chunks), "chunk")
+    
+    # Show processing summary
+    log.subheader("Chunk Processing Summary")
+    log.metric("Successful chunks", successful_count, color='GREEN')
+    log.metric("Failed chunks", failed_count, color='RED' if failed_count > 0 else 'GREEN')
+    log.metric("Success rate", f"{(successful_count/len(chunks)*100):.1f}%", color='GREEN')
     
     # Merge all questions into final top 5
-    print(f"\n--- Final Merge: Top 5 Questions ---")
+    log.subheader("Final Question Synthesis")
     successful_results = [r for r in results if 'error' not in r]
     
     if successful_results:
         try:
+            merge_start = time.time()
+            log.info("Merging and ranking questions from all chunks...")
+            
             final_questions = pipeline.merge_final_questions(successful_results)
-            print(f"✓ Final merge complete: {len(final_questions.get('top_questions', []))} top questions")
+            final_count = len(final_questions.get('top_questions', []))
+            
+            log.success(f"Synthesized {final_count} top questions from {len(successful_results)} chunks")
+            log.processing_time(merge_start, "Question synthesis")
+            
         except Exception as e:
-            print(f"✗ Final merge failed: {e}")
+            log.error(f"Final merge failed: {e}")
             final_questions = {'top_questions': [], 'error': str(e)}
     else:
-        print("✗ No successful chunks to merge")
+        log.error("No successful chunks to merge")
         final_questions = {'top_questions': [], 'error': 'No successful chunks'}
     
     # Save all artifacts
+    log.subheader("Saving Artifacts")
     questions_dir, final_file, final_readable = save_question_pipeline_results(dirs, results, final_questions)
-    print(f"✓ Saved question pipeline artifacts: {questions_dir}")
-    print(f"  Final questions: {final_readable}")
+    
+    log.file_saved(questions_dir, "Question analysis directory")
+    log.file_saved(final_readable, "Human-readable final questions")
+    log.file_saved(final_file, "Machine-readable final questions (JSON)")
+    
+    log.processing_time(start_time, "Complete question generation pipeline")
     
     return results, final_questions
 
 def main():
     """Main pipeline function with full artifact tracking."""
-    print("=" * 60)
-    print("SEMANTIC TRANSCRIPT CHUNKING & SUMMARIZATION PIPELINE")
-    print("=" * 60)
-    print(f"Processing transcript: {INPUT_TXT}")
-    print(f"Buffer size: {BUFFER_SIZE} sentences")
-    print(f"Breakpoint threshold: {BREAKPOINT_THRESHOLD}%")
-    print("=" * 60)
-    print()
+    pipeline_start = time.time()
+    
+    log.header("SEMANTIC TRANSCRIPT ANALYSIS & QUESTION GENERATION")
+    
+    # Show configuration
+    log.info(f"Input transcript: {log._colorize(INPUT_TXT, 'CYAN')}")
+    log.info(f"Semantic chunking: {BUFFER_SIZE} sentence buffer, {BREAKPOINT_THRESHOLD}% threshold")
+    log.info(f"AI Model: {log._colorize('GPT-5-Mini', 'MAGENTA')}")
     
     # Create processing directories
     transcript_name = Path(INPUT_TXT).name
     dirs = create_processing_directories(transcript_name)
-    print(f"✓ Created processing directories: {dirs['base']}")
+    log.success(f"Initialized workspace: {dirs['base']}")
     
     # Process transcript with artifact saving
+    log.subheader("Text Processing & Semantic Chunking")
     chunks, clean_text, cleaning_stats = load_and_chunk_transcript(INPUT_TXT, dirs)
     
     if chunks:
-        print(f"Successfully processed transcript into {len(chunks)} semantic chunks")
+        log.success(f"Transcript processed into {len(chunks)} semantic chunks")
         
         # Process chunks through 3-step question generation pipeline
         results, final_questions = process_chunks_with_questions(chunks, dirs)
@@ -599,7 +802,8 @@ def main():
             'input_file': INPUT_TXT,
             'buffer_size': BUFFER_SIZE,
             'breakpoint_threshold': BREAKPOINT_THRESHOLD,
-            'model': 'gpt-5-mini'
+            'model': 'gpt-5-mini',
+            'pipeline_version': '3-step-v1.0'
         }
         
         stats = {
@@ -608,44 +812,53 @@ def main():
             'successful_chunks': len([r for r in results if 'error' not in r]),
             'final_questions_count': len(final_questions.get('top_questions', [])),
             'cleaning_stats': cleaning_stats,
-            'avg_chunk_size': sum(len(c) for c in chunks) / len(chunks) if chunks else 0
+            'avg_chunk_size': sum(len(c) for c in chunks) / len(chunks) if chunks else 0,
+            'total_processing_time': time.time() - pipeline_start
         }
         
         metadata_file = save_processing_metadata(dirs, config, stats)
-        print(f"✓ Saved processing metadata: {metadata_file}")
+        log.file_saved(metadata_file, "Pipeline configuration and statistics")
         
-        print("\n" + "=" * 60)
-        print("PIPELINE COMPLETE - ARTIFACTS SAVED")
-        print("=" * 60)
-        print(f"Processing directory: {dirs['base']}")
-        print(f"├── 01_cleaned/     - Cleaned transcript")
-        print(f"├── 02_chunks/      - {len(chunks)} semantic chunks")
-        print(f"├── 03_summaries/   - Legacy summaries (deprecated)")
-        print(f"├── 04_questions/   - 3-step question analysis")
-        print(f"└── metadata/       - Processing metadata")
+        # Show final results
+        log.header("PIPELINE COMPLETE")
         
-        print("\n" + "=" * 40)
-        print("FINAL RESULTS:")
-        print("=" * 40)
+        # Directory structure
+        structure_items = [
+            ("01_cleaned/", "Cleaned transcript text"),
+            (f"02_chunks/", f"{len(chunks)} semantic chunks"),
+            ("03_summaries/", "Legacy summaries (deprecated)"),
+            ("04_questions/", "3-step question analysis"),
+            ("metadata/", "Processing metadata & config")
+        ]
+        log.directory_tree(dirs['base'], structure_items)
         
         # Show final top questions
+        log.subheader("High-Leverage Questions Generated")
         top_questions = final_questions.get('top_questions', [])
+        
         if top_questions:
-            print(f"\n🎯 TOP {len(top_questions)} HIGH-LEVERAGE QUESTIONS:")
+            log.success(f"Generated {len(top_questions)} high-leverage questions")
+            
             for q in top_questions:
                 rank = q.get('rank', 0)
                 question = q.get('question', 'No question')
                 reason = q.get('leverage_reason', 'No reason')
-                print(f"\n{rank}. {question}")
-                print(f"   💡 {reason}")
+                log.question_preview(rank, question, reason)
         else:
-            print("\n❌ No final questions generated")
+            log.error("No final questions generated")
         
+        # Final statistics
+        log.subheader("Pipeline Statistics")
         successful_chunks = len([r for r in results if 'error' not in r])
-        print(f"\n📊 Pipeline Stats:")
-        print(f"   • {successful_chunks}/{len(chunks)} chunks processed successfully")
-        print(f"   • {len(top_questions)} final high-leverage questions")
-        print(f"   • Full analysis saved in: {dirs['base']}/04_questions/")
+        success_rate = (successful_chunks / len(chunks)) * 100
+        
+        log.metric("Chunks processed", f"{successful_chunks}/{len(chunks)}", color='GREEN')
+        log.metric("Success rate", f"{success_rate:.1f}%", color='GREEN')
+        log.metric("Questions generated", len(top_questions), color='MAGENTA')
+        log.metric("Average chunk size", f"{stats['avg_chunk_size']:.0f}", " chars")
+        log.processing_time(pipeline_start, "Complete pipeline")
+        
+        log.info(f"Full analysis available at: {log._colorize(str(dirs['base'] / '04_questions'), 'CYAN')}")
         
         # Return processing results and directory info
         return {
@@ -656,7 +869,7 @@ def main():
             'stats': stats
         }
     else:
-        print("Failed to process transcript.")
+        log.error("Failed to process transcript")
         return None
 
 if __name__ == "__main__":
