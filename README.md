@@ -23,7 +23,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 ### Run Analysis
 ```bash
 # Place your transcript in data/transcripts/
-python src/main.py
+python backend/main.py
 ```
 
 ## What You Get
@@ -91,7 +91,7 @@ Traditional Q&A focuses on clarification. This tool generates questions that:
 
 ## Configuration
 
-Adjust processing in `src/config/settings.py`:
+Adjust processing in `backend/config/settings.py`:
 
 ```python
 INPUT_TXT = "data/transcripts/your-file.md"  # Your transcript
@@ -122,7 +122,7 @@ MAX_CHUNK_SIZE = 3000       # Maximum chunk size
 The codebase follows a clean, modular architecture with clear separation of concerns:
 
 ```
-src/
+backend/
 ├── config/           # Configuration and settings
 ├── data/            # Data layer and file management
 ├── processors/      # Text processing and transformation
