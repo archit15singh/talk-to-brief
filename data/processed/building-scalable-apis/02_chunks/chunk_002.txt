@@ -1,5 +1,0 @@
-[Previous context: ...multiple database instances. 
-
-This can significantly improve performance for read-heavy workloads.]
-
-Implement proper indexing strategies. Well-designed indexes can make the difference between a query that takes milliseconds versus one that takes seconds. However, be mindful that indexes also have overhead for write operations. Consider database sharding for very large datasets. Sharding distributes your data across multiple database instances, allowing you to scale beyond the limits of a single database server. ## Monitoring and Observability Implement comprehensive monitoring from day one. You need to understand how your API is performing in production to make informed scaling decisions. 
