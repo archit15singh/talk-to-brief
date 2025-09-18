@@ -24,11 +24,11 @@ app.add_middleware(
 )
 
 # Mount static files for frontend
-app.mount("/static", StaticFiles(directory="../../frontend"), name="static")
+app.mount("/static", StaticFiles(directory="../frontend"), name="static")
 
-# Base paths (relative to api folder)
-PROCESSED_DATA_PATH = Path("../../data/processed")
-RAW_SOURCE_PATH = Path("../../data/raw-source")
+# Base paths (relative to backend folder when running from backend/)
+PROCESSED_DATA_PATH = Path("../data/processed")
+RAW_SOURCE_PATH = Path("../data/raw-source")
 
 @app.get("/")
 async def root():
@@ -205,7 +205,7 @@ async def save_recording(audio: UploadFile = File(...)):
 async def serve_frontend():
     """Serve the frontend application"""
     from fastapi.responses import FileResponse
-    return FileResponse("../../frontend/index.html")
+    return FileResponse("../frontend/index.html")
 
 def start_server():
     """Start the voice recorder application server"""
