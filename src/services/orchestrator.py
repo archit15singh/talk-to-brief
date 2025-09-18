@@ -5,7 +5,7 @@ High-level orchestration and business logic
 
 import time
 from services.question_pipeline import QuestionGenerationPipeline
-from data.file_manager import save_question_pipeline_results
+from file_manager import save_question_pipeline_results
 from utils.logger import Logger
 
 # Global logger instance

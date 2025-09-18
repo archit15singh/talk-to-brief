@@ -12,7 +12,7 @@ from config.settings import INPUT_TXT, BUFFER_SIZE, BREAKPOINT_THRESHOLD, MIN_CH
 # Import services and utilities
 from processors.text_processor import load_and_chunk_transcript
 from services.orchestrator import process_chunks_with_questions
-from data.file_manager import create_processing_directories, save_processing_metadata
+from file_manager import create_processing_directories, save_processing_metadata
 from utils.logger import Logger
 
 # Global logger instance

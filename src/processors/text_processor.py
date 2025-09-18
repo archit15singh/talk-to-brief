@@ -131,7 +131,7 @@ def add_chunk_overlap(chunks, overlap_size=100):
 
 def load_and_chunk_transcript(file_path, dirs, buffer_size=3, breakpoint_threshold=92, min_chunk_size=500, max_chunk_size=3000, overlap_size=100):
     """Load transcript and perform enhanced semantic chunking with artifact saving."""
-    from data.file_manager import save_cleaned_text, save_chunks
+    from file_manager import save_cleaned_text, save_chunks
     
     try:
         # Load raw text
