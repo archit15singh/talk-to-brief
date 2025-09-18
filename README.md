@@ -24,7 +24,8 @@ OPENAI_API_KEY=your_openai_api_key_here
 ### Run Analysis
 ```bash
 # Place your transcript in data/transcripts/
-python backend/main.py
+cd backend
+python main.py
 ```
 
 ## What You Get
@@ -279,7 +280,7 @@ Perfect for content creators, interviewers, educators, and anyone who wants to e
 ════════════════════════════════════════════════════════════════════════════════
 ℹ Input transcript: data/transcripts/building-scalable-apis.txt
 ℹ Semantic chunking: 3 sentence buffer, 92% threshold
-ℹ AI Model: GPT-5-Nano
+ℹ AI Model: GPT-4o
   ✓ Created cleaned directory
   ✓ Created chunks directory
   ✓ Created summaries directory
