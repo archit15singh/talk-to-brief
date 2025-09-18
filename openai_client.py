@@ -14,7 +14,7 @@ from openai import OpenAI
 
 class ModelType(Enum):
     """Available OpenAI models"""
-    GPT_5_MINI = "gpt-5-mini"
+    GPT_5_NANO = "gpt-5-nano"
     GPT_4O = "gpt-4o"
     GPT_4O_MINI = "gpt-4o-mini"
     GPT_4_TURBO = "gpt-4-turbo"
@@ -30,7 +30,7 @@ class ChatMessage:
 @dataclass
 class CompletionConfig:
     """Configuration for OpenAI completions"""
-    model: ModelType = ModelType.GPT_5_MINI
+    model: ModelType = ModelType.GPT_5_NANO
     temperature: Optional[float] = None  # Use model default
     max_tokens: Optional[int] = None
     top_p: Optional[float] = None  # Use model default

@@ -167,7 +167,7 @@ class QuestionGenerationPipeline:
     
     def __init__(self, client: OpenAIClient = None):
         self.client = client or OpenAIClient()
-        self.config = CompletionConfig(model=ModelType.GPT_5_MINI, temperature=0.3)
+        self.config = CompletionConfig(model=ModelType.GPT_5_NANO)
         self.schemas = QuestionPipelineSchemas()
         self.prompts = PromptTemplates()
     
@@ -780,7 +780,7 @@ def main():
     # Show configuration
     log.info(f"Input transcript: {log._colorize(INPUT_TXT, 'CYAN')}")
     log.info(f"Semantic chunking: {BUFFER_SIZE} sentence buffer, {BREAKPOINT_THRESHOLD}% threshold")
-    log.info(f"AI Model: {log._colorize('GPT-5-Mini', 'MAGENTA')}")
+    log.info(f"AI Model: {log._colorize('GPT-5-Nano', 'MAGENTA')}")
     
     # Create processing directories
     transcript_name = Path(INPUT_TXT).name
@@ -802,7 +802,7 @@ def main():
             'input_file': INPUT_TXT,
             'buffer_size': BUFFER_SIZE,
             'breakpoint_threshold': BREAKPOINT_THRESHOLD,
-            'model': 'gpt-5-mini',
+            'model': 'gpt-5-nano',
             'pipeline_version': '3-step-v1.0'
         }
         
