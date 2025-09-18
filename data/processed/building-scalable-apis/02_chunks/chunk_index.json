@@ -3,7 +3,6 @@
   "chunking_config": {
     "buffer_size": 2,
     "breakpoint_threshold": 85,
-    "embedding_model": "text-embedding-3-small",
     "min_chunk_size": 500,
     "max_chunk_size": 3000,
     "overlap_size": 100,
@@ -61,5 +60,5 @@
       "preview": "[Previous context: ...based on your use case, not hype. **Audience Member 2:** How do you handle API..."
     }
   ],
-  "timestamp": "2025-09-19T01:48:44.378669"
+  "timestamp": "2025-09-19T01:58:47.692277"
 }
