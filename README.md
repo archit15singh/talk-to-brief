@@ -1,623 +1,421 @@
-# Audio Brief Generator
+# Semantic Transcript Analysis & Question Generation
 
-A complete pipeline for converting audio files into structured, actionable briefs using AI analysis.
+Transform your transcripts into high-leverage audience questions that create real conversation value. This AI-powered tool analyzes spoken content and generates the kind of questions that expose deep thinking, open doors for follow-up conversations, and create asymmetric value for your audience.
 
-## Features
+## Quick Start
 
-- **Web Interface**: Browser-based recording with real-time progress tracking
-- **Live Audio Recording**: Record talks/presentations in real-time with automatic silence detection
-- **Audio Transcription**: Fast transcription with timestamps using faster-whisper (base model)
-- **Intelligent Chunking**: Smart segmentation respecting sentence boundaries (~1200 words)
-- **Parallel Analysis**: Concurrent GPT-4 processing for optimal performance
-- **Structured Output**: Organized briefs with conversation starters, strategic questions, and key insights
-- **End-to-End Workflow**: Record → Transcribe → Analyze → Generate Brief in one command
-
-## Project Structure
-
-```
-├── pipeline.py              # Pipeline launcher (runs src/pipeline.py)
-├── record_and_process.py    # Recording launcher (runs src/record_and_process.py)
-├── setup_recording.py       # Setup launcher (runs src/setup_recording.py)
-├── src/                     # All source code and configuration
-│   ├── pipeline.py          # Main orchestrator script
-│   ├── record_and_process.py # Live recording + full pipeline
-│   ├── setup_recording.py   # Audio recording setup script
-│   ├── record_audio.py      # Live audio recording
-│   ├── transcribe.py        # Audio → timestamped transcript
-│   ├── analyze_chunk.py     # Transcript → parallel GPT-4 analysis
-│   ├── merge_brief.py       # Partials → final brief
-│   ├── validate_setup.py    # Setup validation
-│   └── config/              # Configuration and prompts
-│       ├── per_chunk.md     # GPT-4 analysis prompt template
-│       └── merge.md         # Brief merging instructions
-├── web/                     # Web interface
-│   ├── app.py               # Flask application entry point
-│   ├── web_server.py        # Main web server and API routes
-│   ├── pipeline_runner.py   # Pipeline integration for web
-│   ├── config.py            # Web application configuration
-│   ├── requirements_web.txt # Web-specific dependencies
-│   ├── static/              # Frontend files
-│   │   ├── index.html       # Main recording interface
-│   │   ├── app.js           # JavaScript application logic
-│   │   └── style.css        # Interface styling
-│   ├── templates/           # Jinja2 templates (if needed)
-│   └── logs/                # Web server logs
-├── data/                    # All data artifacts
-│   ├── 1_audio/             # Input audio files (web uploads)
-│   ├── audio/               # Input audio files (command line)
-│   ├── transcripts/         # Generated transcripts
-│   ├── partials/            # Individual chunk analyses
-│   └── outputs/             # Final briefs
-└── requirements.txt         # Core Python dependencies
-```
-
-## Installation
-
-1. Clone the repository
-2. Create virtual environment:
+### Setup
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
-
-3. Install core dependencies:
-```bash
+# Clone and setup
+git clone <repository-url>
+cd transcript-analysis
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Install web interface dependencies:
+### Configuration
+Create a `.env` file with your OpenAI API key:
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### Run Analysis
 ```bash
-pip install -r web/requirements_web.txt
+# Place your transcript in data/transcripts/
+python backend/main.py
 ```
 
-5. Set up your OpenAI API key:
-   - Create a `.env` file in the project root
-   - Add your OpenAI API key:
-   ```
-   OPENAI_API_KEY=your-api-key-here
-   ```
-   - **Important**: Ensure you have GPT-4 access on your OpenAI account
-   - **Security**: Never commit the `.env` file to version control
+## What You Get
 
-6. Set up audio recording (optional for command line):
-```bash
-python setup_recording.py
+### Sample Output
+**Top 5 High-Leverage Questions**
+
+1. **What specific architectural decisions would you make differently if you knew your API would need to handle 100x traffic in 6 months?**
+   *Why this creates leverage: Forces discussion of proactive vs reactive scaling strategies*
+
+2. **How do you balance the trade-off between API flexibility and performance when designing endpoints?**
+   *Why this creates leverage: Exposes fundamental design philosophy and real-world constraints*
+
+### Complete Output Package
+```
+📁 your-transcript/
+├── 01_cleaned/ - Cleaned transcript text
+├── 02_chunks/ - Semantic chunks with metadata
+├── 04_questions/ - The main event: your questions!
+│   ├── final_top5_questions.md - Your top 5 questions (human-readable)
+│   ├── final_top5_questions.json - Machine-readable format
+│   └── analysis_*.md - Detailed analysis per chunk
+└── metadata/ - Processing stats and configuration
 ```
 
-7. Validate your setup:
-```bash
-python validate_setup.py
-```
-
-### Web Interface Setup
-
-For the web interface, additional configuration options are available:
-
-**Environment Variables** (optional):
-```bash
-# Server configuration
-FLASK_HOST=127.0.0.1          # Server host (default: 127.0.0.1)
-FLASK_PORT=5000               # Server port (default: 5000)
-FLASK_DEBUG=True              # Debug mode (default: True)
-FLASK_ENV=development         # Environment (development/production)
-
-# Security
-SECRET_KEY=your-secret-key    # Required for production
-
-# Upload limits
-MAX_UPLOAD_SIZE_MB=100        # Max file size in MB (default: 100)
-
-# Logging
-LOG_LEVEL=INFO                # Logging level (default: INFO)
-LOG_FILE=web/logs/app.log     # Log file path (optional)
-```
-
-## Usage
-
-### Web Interface (Recommended)
-
-The easiest way to use the Audio Brief Generator is through the web interface:
-
-1. **Start the web server**:
-```bash
-# Activate virtual environment
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Start the web interface
-cd web
-python app.py
-```
-
-2. **Open your browser** and navigate to `http://127.0.0.1:5000`
-
-3. **Record audio** directly in your browser:
-   - Click "Start Recording" to begin
-   - Speak into your microphone
-   - Click "Stop Recording" when finished
-   - The system automatically processes your audio and generates a brief
-
-4. **Download your brief** when processing completes
-
-#### Web Interface Features
-
-- **Browser-based recording**: No additional software needed
-- **Real-time progress**: See transcription and analysis progress
-- **Automatic processing**: Pipeline starts immediately after recording
-- **Brief management**: Download and preview generated briefs
-- **Error handling**: Clear error messages and troubleshooting guidance
-- **Cross-browser support**: Works in Chrome, Firefox, Safari, and Edge
-
-#### Browser Requirements
-
-- **Microphone access**: Required for recording
-- **Modern browser**: Chrome 47+, Firefox 29+, Safari 14+, Edge 79+
-- **JavaScript enabled**: Required for the recording interface
-- **Stable internet**: Needed for AI processing
-
-### Live Recording + Processing (Command Line)
-
-Record a talk/presentation and automatically process it:
-
-```bash
-# Interactive mode with device selection
-python record_and_process.py --interactive
-
-# Quick start with default settings
-python record_and_process.py
-
-# With specific settings
-python record_and_process.py --filename "my_talk.wav" --device 1
-```
-
-### Audio Recording Only
-
-Record audio without processing:
-
-```bash
-# Interactive recording setup
-python src/record_audio.py --interactive
-
-# List available microphones
-python src/record_audio.py --list-devices
-
-# Test your microphone
-python src/record_audio.py --test
-
-# Record with specific device
-python src/record_audio.py --device 1 --filename "recording.wav"
-```
-
-### Complete Pipeline (Existing Audio)
-
-Process an existing audio file from start to finish:
-
-```bash
-python pipeline.py data/audio/your_file.mp3
-```
-
-With custom output name:
-```bash
-python pipeline.py data/audio/your_file.mp3 --output-name "my_talk"
-```
-
-### Individual Steps
-
-Run specific pipeline steps:
-
-```bash
-# Step 1: Transcription only
-python pipeline.py data/audio/your_file.mp3 --step transcribe
-
-# Step 2: Analysis only (requires existing transcript)
-python pipeline.py data/audio/your_file.mp3 --step analyze
-
-# Step 3: Brief generation only (requires existing partials)
-python pipeline.py data/audio/your_file.mp3 --step merge
-```
-
-### Direct Script Usage
-
-You can also run individual scripts directly from the src directory:
-
-```bash
-# From project root
-python src/transcribe.py data/audio/your_file.mp3 data/transcripts/output.txt
-python src/analyze_chunk.py data/transcripts/input.txt data/partials/output_dir
-python src/merge_brief.py data/partials/input_dir data/outputs/brief.md
-
-# Or from src directory
-cd src
-python transcribe.py ../data/audio/your_file.mp3 ../data/transcripts/output.txt
-python analyze_chunk.py ../data/transcripts/input.txt ../data/partials/output_dir
-python merge_brief.py ../data/partials/input_dir ../data/outputs/brief.md
-```
-
-## Recording Workflow
-
-### Live Recording During a Talk
-
-1. **Setup**: Run `python setup_recording.py` to install audio dependencies
-2. **Test**: Use `python src/record_audio.py --test` to verify your microphone
-3. **Record**: Start `python record_and_process.py --interactive` before your talk
-4. **Present**: The system records automatically with silence detection
-5. **Process**: After recording stops, the full pipeline runs automatically
-6. **Review**: Your brief is ready in `data/outputs/`
-
-### Recording Features
-
-- **Auto-silence detection**: Stops recording after 30 seconds of silence
-- **Real-time monitoring**: Shows recording status and duration
-- **Device selection**: Choose from available microphones
-- **Quality validation**: Tests audio levels before recording
-- **Flexible formats**: Saves as high-quality WAV files
-
-## Example Run Logs
-
-Here's what a typical pipeline execution looks like:
-
-### Raw Terminal Output
-
-```bash
-❯ source .venv/bin/activate && python pipeline.py data/1_audio/sample.mp3
-/Users/architsingh/Documents/projects/talk-to-brief/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
-warnings.warn(
-2025-09-15 04:46:13,513 - INFO - Audio file validation passed: data/1_audio/sample.mp3 (34.1 MB)
-Audio Brief Generator Pipeline
-Audio: data/1_audio/sample.mp3
-Output: data/outputs/sample_brief.md
-Started: 2025-09-15 04:46:13
-
-Validating prerequisites...
-2025-09-15 04:46:13,514 - INFO - Audio file validation passed: data/1_audio/sample.mp3 (34.1 MB)
-✓ Audio file validated
-✓ OpenAI API key validated
-✓ Configuration files found
-All prerequisites validated successfully!
-
-============================================================
-STEP 1: TRANSCRIPTION
-============================================================
-Audio file: data/1_audio/sample.mp3
-Output: data/transcripts/sample_transcript.txt
-2025-09-15 04:46:13,514 - INFO - Audio file validation passed: data/1_audio/sample.mp3 (34.1 MB)
-2025-09-15 04:46:13,514 - INFO - Loading faster-whisper small model...
-2025-09-15 04:46:14,960 - INFO - Starting transcription: data/1_audio/sample.mp3
-2025-09-15 04:46:16,406 - INFO - Processing audio with duration 14:54.600
-2025-09-15 04:46:19,401 - INFO - VAD filter removed 00:34.328 of audio
-2025-09-15 04:46:19,877 - INFO - Detected language: en (probability: 1.00)
-2025-09-15 04:46:19,877 - INFO - Audio duration: 894.60 seconds
-2025-09-15 04:48:47,105 - INFO - Processed 123 segments
-2025-09-15 04:48:47,106 - INFO - Transcript saved successfully: data/transcripts/sample_transcript.txt
-✓ Transcription completed successfully
-
-============================================================
-STEP 2: CHUNK ANALYSIS
-============================================================
-Transcript: data/transcripts/sample_transcript.txt
-Partials output: data/partials/sample/
-Created 2 chunks for analysis
-Processing 2 chunks in parallel (max 4 workers)...
-2025-09-15 04:49:04,922 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✓ Chunk 0 (1194 words)
-2025-09-15 04:49:11,251 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✓ Chunk 1 (1149 words)
-Saved: data/partials/sample/chunk_00.json
-Saved: data/partials/sample/chunk_01.json
-✓ All 2 chunks processed successfully
-
-============================================================
-STEP 3: BRIEF GENERATION
-============================================================
-Partials: data/partials/sample/
-Output: data/outputs/sample_brief.md
-Found 2 partial files to merge
-Loading partials from: data/partials/sample
-Found 2 successful partial analyses
-Merging analyses using GPT-4...
-Calling GPT-4 for intelligent merging...
-2025-09-15 04:49:36,235 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-GPT-4 merging completed successfully
-Brief generated successfully: data/outputs/sample_brief.md
-✓ Brief generation completed successfully
-
-Generated brief: data/outputs/sample_brief.md (4457 bytes)
-
-============================================================
-PIPELINE COMPLETED SUCCESSFULLY
-============================================================
-Final brief: data/outputs/sample_brief.md
-Total duration: 0:03:22.727592
-Completed: 2025-09-15 04:49:36
-```
-
-### Complete Pipeline Run
-
-```bash
-$ python pipeline.py data/audio/sample.mp3
-🎵 Starting Audio Brief Generator Pipeline
-📁 Processing: data/audio/sample.mp3
-📝 Output name: sample
-
-=== STEP 1: TRANSCRIPTION ===
-🎤 Transcribing audio with faster-whisper...
-⏱️  Audio duration: 45:32
-📄 Transcript saved: data/transcripts/sample_transcript.txt
-✅ Transcription complete (2.3 minutes)
-
-=== STEP 2: ANALYSIS ===
-📊 Analyzing transcript in chunks...
-🔄 Created 8 chunks (~1200 words each)
-🚀 Starting parallel analysis with 4 workers...
-  ✓ Chunk 1/8 complete (12.4s)
-  ✓ Chunk 2/8 complete (15.1s)
-  ✓ Chunk 3/8 complete (11.8s)
-  ✓ Chunk 4/8 complete (13.7s)
-  ✓ Chunk 5/8 complete (14.2s)
-  ✓ Chunk 6/8 complete (12.9s)
-  ✓ Chunk 7/8 complete (16.3s)
-  ✓ Chunk 8/8 complete (10.8s)
-💾 Analysis saved: data/partials/sample/
-✅ Analysis complete (3.1 minutes)
-
-=== STEP 3: BRIEF GENERATION ===
-📋 Merging 8 partial analyses...
-🔗 Combining insights and removing duplicates...
-📝 Generating final brief structure...
-💾 Brief saved: data/outputs/sample_brief.md
-✅ Brief generation complete (0.2 minutes)
-
-🎉 Pipeline complete! Total time: 5.6 minutes
-📄 Final brief: data/outputs/sample_brief.md
-```
-
-### Live Recording Example
-
-```bash
-$ python record_and_process.py --interactive
-🎙️  Interactive Recording Mode
-========================================
-
-Available audio input devices:
-  0: Built-in Microphone (channels: 1)
-  1: USB Headset (channels: 1)
-  2: External Mic (channels: 2)
-
-Select device ID (or press Enter for default): 1
-Testing audio input for 2 seconds...
-Speak into your microphone...
-Audio test results:
-  Max volume: 0.1234
-  Average volume: 0.0456
-✓ Audio levels look good!
-
-Enter recording filename (or press Enter for auto): 
-Enter brief output name (or press Enter for auto): 
-Auto-stop on silence? (y/n, default: y): y
-
-Ready to record!
-Press Enter to start recording...
-
-📹 STEP 1: RECORDING AUDIO
-------------------------------
-Starting recording: data/audio/talk_20241215_143022.wav
-🔴 Recording... Press Ctrl+C to stop
-Recording... 60s (silence: 0.0s)
-Recording... 120s (silence: 0.0s)
-...
-Auto-stopping after 30s of silence
-✅ Recording completed: data/audio/talk_20241215_143022.wav
-  Duration: 1847.3 seconds
-  File size: 35.2 MB
-
-🔄 STEP 2: PROCESSING THROUGH PIPELINE
-----------------------------------------
-[Full pipeline execution follows...]
-```
-
-### Individual Step Examples
-
-**Transcription only:**
-```bash
-$ python pipeline.py data/audio/sample.mp3 --step transcribe
-🎵 Starting Audio Brief Generator Pipeline
-📁 Processing: data/audio/sample.mp3
-📝 Output name: sample
-
-=== STEP 1: TRANSCRIPTION ===
-🎤 Transcribing audio with faster-whisper...
-⏱️  Audio duration: 45:32
-📄 Transcript saved: data/transcripts/sample_transcript.txt
-✅ Transcription complete (2.3 minutes)
-
-✨ Transcription step complete!
-```
-
-**Analysis with existing transcript:**
-```bash
-$ python pipeline.py data/audio/sample.mp3 --step analyze
-🎵 Starting Audio Brief Generator Pipeline
-📁 Processing: data/audio/sample.mp3
-📝 Output name: sample
-
-=== STEP 2: ANALYSIS ===
-📊 Found existing transcript: data/transcripts/sample_transcript.txt
-🔄 Created 8 chunks (~1200 words each)
-🚀 Starting parallel analysis with 4 workers...
-  ✓ All chunks processed successfully
-💾 Analysis saved: data/partials/sample/
-✅ Analysis complete (3.1 minutes)
-
-✨ Analysis step complete!
-```
-
-**Error handling example:**
-```bash
-$ python pipeline.py data/audio/nonexistent.mp3
-🎵 Starting Audio Brief Generator Pipeline
-📁 Processing: data/audio/nonexistent.mp3
-❌ Error: Audio file not found: data/audio/nonexistent.mp3
-💡 Tip: Check the file path and ensure the audio file exists
-```
-
-## Output Structure
-
-For an audio file named `sample.mp3`, the pipeline generates:
-
-```
-data/
-├── transcripts/sample_transcript.txt    # Timestamped transcript
-├── partials/sample/                     # Individual analyses
-│   ├── chunk_00.json
-│   ├── chunk_01.json
-│   └── ...
-└── outputs/sample_brief.md              # Final structured brief
-```
-
-## Brief Format
-
-The generated brief includes:
-
-1. **Executive Summary** - Overview of content and insights
-2. **Approach Scripts** - Conversation starters with specific timestamps
-3. **Strategic Questions** - High-signal, outcome-oriented questions
-4. **Timeline Highlights** - Chronological key moments
-5. **Claims, Assumptions & Trade-offs** - Critical decision points
+## How It Works
+
+### The 3-Step Analysis Process
+
+**Step 1: Summarization Layer**
+- Extracts main arguments and claims
+- Identifies supporting evidence
+- Spots assumptions and biases
+- Notes unanswered questions
+
+**Step 2: Critical Thinking Layer**
+- Finds weak spots in arguments
+- Explores contrarian angles
+- Considers future implications
+- Identifies personalization hooks
+
+**Step 3: Question Generation**
+- Creates 8-10 questions per section
+- Ranks by "asymmetric return" potential
+- Focuses on audience value
+- Synthesizes into top 5 overall
+
+### Why This Approach Works
+
+Traditional Q&A focuses on clarification. This tool generates questions that:
+- **Expose Deep Thinking**: Go beyond surface-level understanding
+- **Create Conversation Value**: Open doors for meaningful follow-up
+- **Generate Asymmetric Returns**: Small questions that unlock big insights
+- **Connect to Context**: Link to speaker's background and current work
+
+## Supported Content
+
+- **Conference Talks**: Technical presentations, keynotes
+- **Podcast Transcripts**: Interview-style content
+- **Workshop Content**: Educational material
+- **Meeting Transcripts**: Strategic discussions
+- **Webinar Content**: Any spoken presentation format
+
+**Sweet Spot**: 5,000-50,000 characters of substantive content with clear arguments and evidence.
 
 ## Configuration
 
-### Analysis Prompt
+Adjust processing in `backend/config/settings.py`:
 
-Customize the GPT-4 analysis by editing `config/per_chunk.md`. The prompt controls:
-- Output format and structure
-- Analysis depth and focus
-- Word count limits
-- Specific instructions for each section
-
-### Pipeline Parameters
-
-Key parameters can be adjusted in the source files:
-- **Chunk size**: Modify `target_words` in `analyze_chunk.py` (default: 1200)
-- **Parallel workers**: Adjust `max_workers` in `analyze_chunk.py` (default: 4)
-- **GPT-4 model**: Change model in `analyze_chunk.py` (default: "gpt-4")
-
-## Requirements
-
-- Python 3.8+
-- OpenAI API key with GPT-4 access
-- Audio files in supported formats: WAV, MP3, M4A, MP4, FLAC, OGG
-- Sufficient disk space for transcripts and analysis files
+```python
+INPUT_TXT = "data/transcripts/your-file.txt"  # Your transcript
+BUFFER_SIZE = 3             # Semantic chunking window
+BREAKPOINT_THRESHOLD = 92   # Chunk boundary sensitivity
+MIN_CHUNK_SIZE = 500        # Minimum chunk size
+MAX_CHUNK_SIZE = 3000       # Maximum chunk size
+```
 
 ## Troubleshooting
 
-### Web Interface Issues
+**"No questions generated"**
+- Check transcript length (needs 2,000+ characters)
+- Ensure content has substantive arguments/claims
+- Verify OpenAI API key is working
 
-#### Recording Problems
+**"Processing failed"**
+- Check internet connection for OpenAI API
+- Verify API key has sufficient credits
+- Try with the sample transcript first
 
-**Microphone not working:**
-- **Chrome/Edge**: Click the microphone icon in the address bar and allow access
-- **Firefox**: Click "Allow" when prompted for microphone access
-- **Safari**: Go to Safari > Preferences > Websites > Microphone and allow access
-- **Check system**: Ensure your microphone is working in other applications
+---
 
-**"MediaRecorder not supported" error:**
-- Update your browser to the latest version
-- Supported browsers: Chrome 47+, Firefox 29+, Safari 14+, Edge 79+
-- Try a different browser if the issue persists
+# Developer Documentation
 
-**Recording stops immediately:**
-- Check microphone permissions in browser settings
-- Ensure microphone is not being used by another application
-- Try refreshing the page and allowing permissions again
+## Architecture Overview
 
-**No audio captured:**
-- Check system audio levels and microphone settings
-- Test microphone in system settings or other applications
-- Try using a different microphone or audio input device
+The codebase follows a clean, modular architecture with clear separation of concerns:
 
-#### Upload and Processing Issues
+```
+backend/
+├── config/           # Configuration and settings
+├── data/            # Data layer and file management
+├── processors/      # Text processing and transformation
+├── services/        # Business logic and orchestration
+├── utils/           # Utilities and logging
+├── main.py          # Entry point and pipeline orchestration
+├── openai_client.py # OpenAI API client with structured outputs
+├── prompts.py       # AI prompt templates
+└── schemas.py       # JSON schemas for structured responses
+```
 
-**"File too large" error:**
-- Maximum file size is 100MB by default
-- For longer recordings, use the command-line interface instead
-- Check available disk space
+## Core Components
 
-**Processing fails or gets stuck:**
-- Check internet connection for AI processing
-- Verify OpenAI API key is valid and has GPT-4 access
-- Check server logs in `web/logs/` for detailed error messages
-- Try refreshing the page and uploading again
+### 1. Text Processing Pipeline (`processors/text_processor.py`)
+- **Transcript Cleaning**: Removes timestamps, speaker labels, stage directions
+- **Semantic Chunking**: Uses LlamaIndex with OpenAI embeddings for intelligent text segmentation
+- **Adaptive Strategies**: Automatically adjusts chunking parameters based on content length
+- **Quality Control**: Post-processes chunks to ensure optimal size and continuity
 
-**"System not ready" error:**
-- Ensure all dependencies are installed: `pip install -r requirements.txt`
-- Check that data directories exist and are writable
-- Verify sufficient disk space (at least 500MB free)
+### 2. Question Generation Pipeline (`services/question_pipeline.py`)
+Three-step AI analysis process with structured JSON outputs:
 
-#### Connection Issues
+```python
+class QuestionGenerationPipeline:
+    def step1_summarization(self, chunk: str)
+    def step2_critical_thinking(self, summary)
+    def step3_question_generation(self, critical_analysis)
+    def merge_final_questions(self, all_question_sets)
+```
 
-**Cannot connect to server:**
-- Ensure the web server is running: `python web/app.py`
-- Check the correct URL: `http://127.0.0.1:5000`
-- Verify no firewall is blocking the connection
-- Try a different port if 5000 is in use
+### 3. OpenAI Client (`openai_client.py`)
+Generalized interface for structured AI completions:
 
-**WebSocket connection fails:**
-- Disable browser extensions that might block WebSockets
-- Check corporate firewall settings
-- Try using a different network connection
+```python
+client = OpenAIClient()
+result = client.structured_completion(
+    messages=messages,
+    schema=schema,
+    schema_name="OutputSchema",
+    config=CompletionConfig(model=ModelType.GPT_5_NANO)
+)
+```
 
-### Command Line Issues
+### 4. File Management (`data/file_manager.py`)
+- Organized artifact storage with full traceability
+- JSON metadata for all processing steps
+- Human-readable outputs alongside machine data
+- Comprehensive directory structure management
 
-**Missing API Key**: Ensure `OPENAI_API_KEY` is set in your environment
-**Audio Format**: Verify your audio file is in a supported format
-**Memory Issues**: For very long audio files, consider splitting them first
-**Network Timeouts**: Check internet connection for GPT-4 API calls
+## Key Features
 
-### Browser Compatibility
+### Semantic Chunking
+- Uses OpenAI embeddings for context-aware text segmentation
+- Adaptive parameters based on content characteristics
+- Post-processing for quality assurance
+- Overlap handling for continuity
 
-#### Fully Supported Browsers
-- **Chrome 47+**: Full feature support, recommended
-- **Firefox 29+**: Full feature support
-- **Safari 14+**: Full feature support (macOS/iOS)
-- **Edge 79+**: Full feature support
+### Structured AI Processing
+- JSON schema-validated responses
+- Consistent data structures across all steps
+- Error handling and graceful degradation
+- Comprehensive logging and metrics
 
-#### Limited Support
-- **Safari 13 and below**: MediaRecorder API not available
-- **Internet Explorer**: Not supported
-- **Chrome 46 and below**: Limited MediaRecorder support
+### Artifact Management
+- Complete processing history preservation
+- Human-readable and machine-readable formats
+- Metadata tracking for reproducibility
+- Organized directory structure
 
-#### Required Browser Features
-- **MediaRecorder API**: For audio recording
-- **WebSocket support**: For real-time updates
-- **File API**: For file uploads
-- **Fetch API**: For server communication
+## Dependencies
 
-#### Mobile Browser Support
-- **iOS Safari 14+**: Supported
-- **Chrome Mobile 47+**: Supported
-- **Firefox Mobile 29+**: Supported
-- **Samsung Internet 5+**: Supported
+Core dependencies:
+- **OpenAI**: AI completions and embeddings
+- **LlamaIndex**: Document processing and semantic chunking
+- **Python-dotenv**: Environment variable management
+- **Pydantic**: Data validation and schemas
 
-**Note**: Mobile recording may have different audio quality and format limitations.
+See `requirements.txt` for complete dependency list.
 
-### Performance Tips
+## Extending the System
 
-- Use shorter audio files (< 2 hours) for optimal performance
-- Ensure stable internet connection for API calls
-- Monitor API usage and rate limits
-- Use SSD storage for faster I/O operations
-- Close unnecessary browser tabs during processing
-- Use the web interface for files under 100MB, command line for larger files
+### Adding New Processing Steps
+1. Create new service in `services/`
+2. Add corresponding schema in `schemas.py`
+3. Update orchestrator in `services/orchestrator.py`
+4. Add file management in `data/file_manager.py`
 
-### Getting Help
+### Custom Chunking Strategies
+Implement in `processors/text_processor.py`:
+```python
+def custom_chunking_strategy(text, **params):
+    # Your implementation
+    return chunks
+```
 
-If you encounter issues not covered here:
+### New AI Models
+Add to `openai_client.py`:
+```python
+class ModelType(Enum):
+    YOUR_MODEL = "your-model-name"
+```
 
-1. **Check the logs**: Look in `web/logs/` for detailed error messages
-2. **Test system health**: Visit `http://127.0.0.1:5000/api/health` for system status
-3. **Validate setup**: Run `python validate_setup.py` to check dependencies
-4. **Try command line**: Use the command-line interface as an alternative
-5. **Check browser console**: Open developer tools (F12) and check for JavaScript errors
+## Performance Considerations
 
-## License
+- **Chunking**: Adaptive strategies optimize for content type
+- **AI Calls**: Structured outputs reduce parsing overhead
+- **File I/O**: Efficient artifact management with metadata
+- **Memory**: Streaming processing for large transcripts
 
-MIT License - see LICENSE file for details.
+## Error Handling
+
+- Graceful degradation for failed chunks
+- Comprehensive error logging
+- Partial results preservation
+- Recovery mechanisms for interrupted processing
+
+## Security
+
+- API key management through environment variables
+- Input validation and sanitization
+- Safe file operations with path validation
+- No sensitive data in logs or artifacts
+
+## Contributing
+
+1. Follow the existing architecture patterns
+2. Add comprehensive logging for new features
+3. Include JSON schemas for structured outputs
+4. Update documentation for new components
+5. Test with various transcript formats and sizes
+
+## What Makes This Different
+
+Unlike simple Q&A generators that focus on comprehension, this tool:
+- **Thinks Critically**: Identifies assumptions and weak spots
+- **Considers Context**: Connects to speaker background and current trends
+- **Optimizes for Value**: Ranks questions by their potential impact
+- **Preserves Nuance**: Maintains the complexity of the original content
+- **Creates Leverage**: Generates questions that unlock disproportionate insight
+
+Perfect for content creators, interviewers, educators, and anyone who wants to extract maximum value from spoken content.
+
+
+# sample run
+
+```bash
+❯ source .venv/bin/activate && python backend/main.py
+/Users/architsingh/Documents/projects/talk-to-brief/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+
+════════════════════════════════════════════════════════════════════════════════
+               SEMANTIC TRANSCRIPT ANALYSIS & QUESTION GENERATION               
+════════════════════════════════════════════════════════════════════════════════
+ℹ Input transcript: data/transcripts/building-scalable-apis.txt
+ℹ Semantic chunking: 3 sentence buffer, 92% threshold
+ℹ AI Model: GPT-5-Nano
+  ✓ Created cleaned directory
+  ✓ Created chunks directory
+  ✓ Created summaries directory
+  ✓ Created metadata directory
+✓ Initialized workspace: data/processed/building-scalable-apis
+
+────────────────────────────────────────────────────────────
+            Text Processing & Semantic Chunking             
+────────────────────────────────────────────────────────────
+   💾 Saved: data/processed/building-scalable-apis/01_cleaned/cleaned_transcript.txt
+      Cleaned transcript text
+   • Text reduction: 0.6%
+   • Original chars: 2,625
+   • Cleaned chars: 2,608
+ℹ Using dense content, smaller chunks
+   • Buffer size: 2
+   • Threshold: 85%
+ℹ Generating semantic chunks...
+✓ Generated 5 semantic chunks
+ℹ Post-processing chunks for quality...
+ℹ Adding overlap for continuity...
+✓ Generated 3 enhanced semantic chunks
+   💾 Saved: data/processed/building-scalable-apis/02_chunks/chunk_index.json
+      Enhanced chunk index and metadata
+   • Average chunk size: 953 chars
+   • Size range: 722 - 1,248 chars
+   • Size variance: 526 chars
+   • Quality ratio: 100.0%
+✓ Transcript processed into 3 semantic chunks
+
+════════════════════════════════════════════════════════════════════════════════
+                      3-STEP QUESTION GENERATION PIPELINE                       
+════════════════════════════════════════════════════════════════════════════════
+ℹ Step 1: Summarization Layer - Extract main points, evidence, assumptions
+ℹ Step 2: Critical Thinking Layer - Identify weak spots, contrarian angles
+ℹ Step 3: Question Generation - Create high-leverage audience questions
+
+────────────────────────────────────────────────────────────
+                    Processing 3 Chunks                     
+────────────────────────────────────────────────────────────
+📊 Progress: [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 0.0% (0/3 chunks)  ℹ Processing chunk 1 (1,248 chars)
+    ℹ Step 1: Summarization Layer
+      ✓ Extracted 4 main points, 3 assumptions
+    ℹ Step 2: Critical Thinking Layer
+      ✓ Identified 3 weak spots, 3 contrarian angles
+    ℹ Step 3: Question Generation & Ranking
+      ✓ Generated 9 questions (top rank: 10)
+   ⏱ Chunk 1 completed in 1m 12.1s
+      ℹ Top question (rank 10): If your app requires per-user personalization, can a truly s...
+📊 Progress: [██████████░░░░░░░░░░░░░░░░░░░░] 33.3% (1/3 chunks)  ℹ Processing chunk 2 (722 chars)
+    ℹ Step 1: Summarization Layer
+      ✓ Extracted 4 main points, 3 assumptions
+    ℹ Step 2: Critical Thinking Layer
+      ✓ Identified 3 weak spots, 3 contrarian angles
+    ℹ Step 3: Question Generation & Ranking
+      ✓ Generated 9 questions (top rank: 10)
+   ⏱ Chunk 2 completed in 1m 1.7s
+      ℹ Top question (rank 10): If we rely on multiple DB instances to boost reads, under wh...
+📊 Progress: [████████████████████░░░░░░░░░░] 66.7% (2/3 chunks)  ℹ Processing chunk 3 (890 chars)
+    ℹ Step 1: Summarization Layer
+      ✓ Extracted 4 main points, 3 assumptions
+    ℹ Step 2: Critical Thinking Layer
+      ✓ Identified 3 weak spots, 3 contrarian angles
+    ℹ Step 3: Question Generation & Ranking
+      ✓ Generated 9 questions (top rank: 9)
+   ⏱ Chunk 3 completed in 1m 7.0s
+      ℹ Top question (rank 9): Can a well-designed monolith scale as effectively as microse...
+📊 Progress: [██████████████████████████████] 100.0% (3/3 chunks)
+
+────────────────────────────────────────────────────────────
+                  Chunk Processing Summary                  
+────────────────────────────────────────────────────────────
+   • Successful chunks: 3
+   • Failed chunks: 0
+   • Success rate: 100.0%
+
+────────────────────────────────────────────────────────────
+                  Final Question Synthesis                  
+────────────────────────────────────────────────────────────
+ℹ Merging and ranking questions from all chunks...
+✓ Synthesized 5 top questions from 3 chunks
+   ⏱ Question synthesis completed in 26.01s
+
+────────────────────────────────────────────────────────────
+                      Saving Artifacts                      
+────────────────────────────────────────────────────────────
+   💾 Saved: data/processed/building-scalable-apis/04_questions
+      Question analysis directory
+   💾 Saved: data/processed/building-scalable-apis/04_questions/final_top5_questions.md
+      Human-readable final questions
+   💾 Saved: data/processed/building-scalable-apis/04_questions/final_top5_questions.json
+      Machine-readable final questions (JSON)
+   ⏱ Complete question generation pipeline completed in 3m 46.8s
+   💾 Saved: data/processed/building-scalable-apis/metadata/processing_metadata.json
+      Pipeline configuration and statistics
+
+════════════════════════════════════════════════════════════════════════════════
+                               PIPELINE COMPLETE                                
+════════════════════════════════════════════════════════════════════════════════
+
+📁 Output Structure:
+data/processed/building-scalable-apis
+├── 01_cleaned/ - Cleaned transcript text
+├── 02_chunks/ - 3 semantic chunks
+├── 03_summaries/ - Legacy summaries (deprecated)
+├── 04_questions/ - 3-step question analysis
+└── metadata/ - Processing metadata & config
+
+────────────────────────────────────────────────────────────
+             High-Leverage Questions Generated              
+────────────────────────────────────────────────────────────
+✓ Generated 5 high-leverage questions
+
+1. How would you design a hybrid model that preserves statelessness but still gu...
+   💡 High asymmetry: challenges the default stateless approach by forcing a deep dive into patterns like CQRS/Sagas and hybrid read/write designs; connects data consistency, latency, and governance across architectures.
+
+2. When does TTL-based caching become a correctness risk, and what signals would...
+   💡 Targets a concrete, actionable correctness risk with observable signals; yields guardrails, monitoring strategies, and testable assumptions.
+
+3. Could external dependencies be the true bottlenecks, making internal observab...
+   💡 Shifts focus from internal systems to vendor reliability and integration risk; creates asymmetry by challenging assumptions about controllability and connected SLAs.
+
+4. If tracing is noisy and causes alert fatigue, what practical heuristics separ...
+   💡 Transforms observability into actionable, repeatable practices; directly improves MTTR and decision quality, with cross-cutting impact on tooling and process.
+
+5. With AI-assisted observability auto-triage, will teams over-rely on automatio...
+   💡 Probes governance and potential failure modes of automation; connects design quality, security, and operational practices in a future-facing context.
+
+────────────────────────────────────────────────────────────
+                    Pipeline Statistics                     
+────────────────────────────────────────────────────────────
+   • Chunks processed: 3/3
+   • Success rate: 100.0%
+   • Questions generated: 5
+   • Average chunk size: 953 chars
+   ⏱ Complete pipeline completed in 3m 48.5s
+ℹ Full analysis available at: data/processed/building-scalable-apis/04_questions
+~/Documents/projects/talk-to-brief v2 ?3                         3m 50s Py talk-to-brief 02:14:38 AM
+❯ 
+```
