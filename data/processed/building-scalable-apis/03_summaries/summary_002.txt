@@ -1,0 +1,7 @@
+# Summary for Chunk 2
+Source: chunk_002.txt
+Generated: 2025-09-19T01:22:28.232871
+Original Length: 958 characters
+
+## Summary
+Alex shares his experience of joining a startup with a simple REST API that quickly became overwhelmed as it scaled from handling 100 requests per minute to 50,000. He emphasizes the importance of designing for growth from the beginning, suggesting that while over-engineering isn't necessary at the start, it's crucial to separate concerns early and structure the codebase with scalability in mind, even if it begins as a monolith.

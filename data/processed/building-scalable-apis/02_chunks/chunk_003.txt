@@ -1,0 +1,1 @@
+Use proper layering - controllers, services, data access. This makes it easier to extract services later. Second, think about your data models. That user table with 10 columns? It's going to have 50 columns in two years. 

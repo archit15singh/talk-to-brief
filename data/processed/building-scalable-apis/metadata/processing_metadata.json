@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-09-19T01:22:28.236819",
+  "config": {
+    "input_file": "data/transcripts/building-scalable-apis.md",
+    "buffer_size": 3,
+    "breakpoint_threshold": 92,
+    "model": "gpt-4o-mini"
+  },
+  "stats": {
+    "total_chunks": 10,
+    "total_summaries": 10,
+    "cleaning_stats": {
+      "raw_char_count": 7923,
+      "cleaned_char_count": 7767,
+      "reduction_ratio": 0.019689511548655836,
+      "timestamp": "2025-09-19T01:21:58.215649"
+    },
+    "avg_chunk_size": 776.7
+  },
+  "pipeline_version": "1.0"
+}

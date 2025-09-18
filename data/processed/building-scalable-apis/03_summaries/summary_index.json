@@ -1,0 +1,86 @@
+{
+  "total_summaries": 10,
+  "summaries": [
+    {
+      "chunk_id": 1,
+      "summary_file": "summary_001.txt",
+      "source_chunk": "chunk_001.txt",
+      "original_chars": 409,
+      "summary_chars": 338,
+      "compression_ratio": 0.8264058679706602
+    },
+    {
+      "chunk_id": 2,
+      "summary_file": "summary_002.txt",
+      "source_chunk": "chunk_002.txt",
+      "original_chars": 958,
+      "summary_chars": 432,
+      "compression_ratio": 0.4509394572025052
+    },
+    {
+      "chunk_id": 3,
+      "summary_file": "summary_003.txt",
+      "source_chunk": "chunk_003.txt",
+      "original_chars": 221,
+      "summary_chars": 286,
+      "compression_ratio": 1.2941176470588236
+    },
+    {
+      "chunk_id": 4,
+      "summary_file": "summary_004.txt",
+      "source_chunk": "chunk_004.txt",
+      "original_chars": 1334,
+      "summary_chars": 541,
+      "compression_ratio": 0.40554722638680657
+    },
+    {
+      "chunk_id": 5,
+      "summary_file": "summary_005.txt",
+      "source_chunk": "chunk_005.txt",
+      "original_chars": 84,
+      "summary_chars": 430,
+      "compression_ratio": 5.119047619047619
+    },
+    {
+      "chunk_id": 6,
+      "summary_file": "summary_006.txt",
+      "source_chunk": "chunk_006.txt",
+      "original_chars": 1813,
+      "summary_chars": 587,
+      "compression_ratio": 0.3237727523441809
+    },
+    {
+      "chunk_id": 7,
+      "summary_file": "summary_007.txt",
+      "source_chunk": "chunk_007.txt",
+      "original_chars": 575,
+      "summary_chars": 479,
+      "compression_ratio": 0.8330434782608696
+    },
+    {
+      "chunk_id": 8,
+      "summary_file": "summary_008.txt",
+      "source_chunk": "chunk_008.txt",
+      "original_chars": 1968,
+      "summary_chars": 569,
+      "compression_ratio": 0.2891260162601626
+    },
+    {
+      "chunk_id": 9,
+      "summary_file": "summary_009.txt",
+      "source_chunk": "chunk_009.txt",
+      "original_chars": 111,
+      "summary_chars": 269,
+      "compression_ratio": 2.4234234234234235
+    },
+    {
+      "chunk_id": 10,
+      "summary_file": "summary_010.txt",
+      "source_chunk": "chunk_010.txt",
+      "original_chars": 294,
+      "summary_chars": 246,
+      "compression_ratio": 0.8367346938775511
+    }
+  ],
+  "timestamp": "2025-09-19T01:22:28.235796"
+}

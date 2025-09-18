@@ -1,0 +1,1 @@
+Remember - premature optimization is the root of all evil, but so is ignoring scalability until it's too late. 

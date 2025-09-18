@@ -1,0 +1,1 @@
+Service discovery, monitoring complexity, and the dreaded distributed transactions. 
