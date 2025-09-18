@@ -1,24 +1,24 @@
 # Top 5 High-Leverage Questions
 
-*Generated: 2025-09-19T02:57:07.168343*
+*Generated: 2025-09-19T02:14:37.818250*
 
-## 1. What concise framework (latency, consistency, cost, complexity) would you use to decide between caching, queues, and read replicas, and what practical metrics matter?
+## 1. How would you design a hybrid model that preserves statelessness but still guarantees strong consistency for critical data?
 
-**Why this creates leverage:** Highest practical impact; provides an actionable, repeatable decision framework the audience can apply immediately and invites follow-up on concrete metrics across latency, consistency, cost, and complexity.
+**Why this creates leverage:** High asymmetry: challenges the default stateless approach by forcing a deep dive into patterns like CQRS/Sagas and hybrid read/write designs; connects data consistency, latency, and governance across architectures.
 
-## 2. For operations needing strict ordering or transactions, how do you replace or augment asynchronous queues without sacrificing correctness?
+## 2. When does TTL-based caching become a correctness risk, and what signals would you monitor to detect it?
 
-**Why this creates leverage:** Elicits deep thinking about correctness vs throughput and opens paths to concrete patterns like sagas, compensating actions, or idempotent designs that apply across systems.
+**Why this creates leverage:** Targets a concrete, actionable correctness risk with observable signals; yields guardrails, monitoring strategies, and testable assumptions.
 
-## 3. Is there a domain where synchronous, server-side stateful design outperforms stateless APIs for UX, and what are the concrete patterns?
+## 3. Could external dependencies be the true bottlenecks, making internal observability less effective?
 
-**Why this creates leverage:** Contrarian hook that challenges stateless dogma, prompts domain-specific justification, and broad architectural re-evaluation across UX-centric domains.
+**Why this creates leverage:** Shifts focus from internal systems to vendor reliability and integration risk; creates asymmetry by challenging assumptions about controllability and connected SLAs.
 
-## 4. If data freshness is non-negotiable, can caching strategies ever be safe and coherent across clients, and what tradeoffs must be acknowledged?
+## 4. If tracing is noisy and causes alert fatigue, what practical heuristics separate signal from noise in production?
 
-**Why this creates leverage:** Targets a core design tension, driving exploration of invalidation strategies, coherence guarantees, and safety risks with real-world implications.
+**Why this creates leverage:** Transforms observability into actionable, repeatable practices; directly improves MTTR and decision quality, with cross-cutting impact on tooling and process.
 
-## 5. How can observability signals be tied to business outcomes, and what experiments would validate the link beyond uptime?
+## 5. With AI-assisted observability auto-triage, will teams over-rely on automation and overlook fundamental design issues or data security?
 
-**Why this creates leverage:** Bridges technical metrics to business value, enabling cross-functional relevance and actionable experimentation for product, engineering, and leadership audiences.
+**Why this creates leverage:** Probes governance and potential failure modes of automation; connects design quality, security, and operational practices in a future-facing context.
 

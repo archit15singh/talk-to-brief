@@ -1,10 +1,15 @@
-/* Custom animations and styles for the modernized voice recorder */
+/* Simple Voice Recorder Styles */
 
+/* Smooth transitions for all elements */
+* {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Recording indicator animations */
 .recording-indicator {
     transition: all 0.3s ease;
 }
 
-/* Custom pulse animation for recording button */
 @keyframes custom-pulse {
     0%, 100% {
         transform: scale(1);
@@ -20,28 +25,65 @@
     animation: custom-pulse 2s infinite;
 }
 
-/* Smooth transitions for all interactive elements */
-.btn, .card, .alert {
-    transition: all 0.2s ease-in-out;
-}
-
-/* Custom hover effects */
+/* Enhanced hover effects */
 .btn:hover:not(:disabled) {
     transform: translateY(-1px);
+    box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.2);
 }
 
-/* Recording list item hover effect */
-.recording-item:hover {
-    transform: translateX(4px);
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
 }
 
 /* Audio player styling */
 audio {
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
 }
 
-/* Theme transition */
+/* Theme transitions */
 html {
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Recording list items */
+.recording-item {
+    transition: all 0.3s ease;
+}
+
+.recording-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .btn-circle {
+        width: 4rem;
+        height: 4rem;
+    }
+    
+    .btn-circle i {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] audio {
+    background: linear-gradient(135deg, #1e293b, #334155);
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

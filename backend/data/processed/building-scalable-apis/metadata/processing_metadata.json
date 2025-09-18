@@ -1,7 +1,7 @@
 {
-  "timestamp": "2025-09-19T02:57:07.171008",
+  "timestamp": "2025-09-19T02:14:37.820313",
   "config": {
-    "input_file": "../data/transcripts/building-scalable-apis.txt",
+    "input_file": "data/transcripts/building-scalable-apis.txt",
     "buffer_size": 3,
     "breakpoint_threshold": 92,
     "model": "gpt-5-nano",
@@ -16,10 +16,10 @@
       "raw_char_count": 2625,
       "cleaned_char_count": 2608,
       "reduction_ratio": 0.006476190476190524,
-      "timestamp": "2025-09-19T02:53:22.347724"
+      "timestamp": "2025-09-19T02:10:49.339638"
     },
     "avg_chunk_size": 953.3333333333334,
-    "total_processing_time": 224.82476329803467
+    "total_processing_time": 228.48173689842224
   },
   "pipeline_version": "1.0"
 }

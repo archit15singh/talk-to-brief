@@ -13,59 +13,76 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen">
     <!-- Header -->
-    <div class="navbar bg-base-100 shadow-lg">
-        <div class="navbar-center">
-            <h1 class="text-2xl font-bold">Voice Recorder</h1>
+    <div class="navbar bg-base-100/90 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+        <div class="navbar-start">
+            <div class="flex items-center gap-3">
+                <div class="text-3xl">🎤</div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                        Voice Recorder
+                    </h1>
+                    <p class="text-xs text-base-content/60">Simple Audio Recording</p>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
     </div>
 
+    <!-- Main Content -->
     <div class="container mx-auto px-4 py-8 max-w-2xl">
-        <!-- Main Card -->
+        <!-- Voice Recording Section -->
         <div class="card bg-base-100 shadow-xl">
-            <div class="card-body">
-                <!-- Recording Section -->
-                <div class="text-center mb-8">
+            <div class="card-body text-center">
+                <h2 class="card-title text-3xl mb-6 justify-center">
+                    <i class="fas fa-microphone text-secondary"></i>
+                    Voice Recorder
+                </h2>
+                
+                <!-- Recording Interface -->
+                <div class="mb-8">
                     <button id="recordBtn"
-                        class="btn btn-circle btn-lg btn-error hover:btn-error/80 transition-all duration-300 mb-6 relative">
-                        <i class="fas fa-microphone text-2xl btn-text-icon"></i>
-                        <span class="btn-text sr-only">Start Recording</span>
-                        <div class="recording-indicator absolute inset-0 rounded-full border-4 border-white opacity-0">
-                        </div>
+                        class="btn btn-circle btn-lg btn-secondary hover:btn-secondary/80 transition-all duration-300 mb-6 relative">
+                        <i class="fas fa-microphone text-3xl"></i>
+                        <div class="recording-indicator absolute inset-0 rounded-full border-4 border-white opacity-0"></div>
                     </button>
-
-                    <div class="flex justify-center gap-3">
-                        <button id="stopBtn" class="btn btn-outline btn-sm" disabled>
+                    
+                    <div class="flex justify-center gap-3 mb-6">
+                        <button id="stopBtn" class="btn btn-outline" disabled>
                             <i class="fas fa-stop"></i>
                             Stop
                         </button>
-                        <button id="playBtn" class="btn btn-outline btn-sm" disabled>
+                        <button id="playBtn" class="btn btn-outline" disabled>
                             <i class="fas fa-play"></i>
                             Play
                         </button>
-                        <button id="saveBtn" class="btn btn-primary btn-sm" disabled>
+                        <button id="saveBtn" class="btn btn-primary" disabled>
                             <i class="fas fa-save"></i>
-                            Save
+                            Save Recording
                         </button>
                     </div>
                 </div>
 
                 <!-- Audio Playback -->
-                <div class="mb-6">
-                    <audio id="audioPlayback" controls class="w-full hidden"></audio>
-                </div>
+                <audio id="audioPlayback" controls class="w-full hidden mb-6"></audio>
 
-                <!-- Status Alert -->
-                <div class="alert alert-info mb-6">
+                <!-- Status -->
+                <div class="alert alert-info">
                     <i class="fas fa-info-circle"></i>
                     <span id="statusText">Ready to record</span>
                 </div>
 
-                <!-- Recordings List -->
-                <div class="divider">Saved Recordings</div>
-                <div id="recordingsList" class="space-y-2">
-                    <!-- Recordings will be added here -->
+                <!-- Recording List -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4">Saved Recordings</h3>
+                    <div id="recordingsList" class="space-y-2">
+                        <!-- Saved recordings will appear here -->
+                    </div>
                 </div>
             </div>
         </div>

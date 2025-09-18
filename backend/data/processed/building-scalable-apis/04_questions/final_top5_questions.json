@@ -2,28 +2,28 @@
   "top_questions": [
     {
       "rank": 1,
-      "question": "What concise framework (latency, consistency, cost, complexity) would you use to decide between caching, queues, and read replicas, and what practical metrics matter?",
-      "leverage_reason": "Highest practical impact; provides an actionable, repeatable decision framework the audience can apply immediately and invites follow-up on concrete metrics across latency, consistency, cost, and complexity."
+      "question": "How would you design a hybrid model that preserves statelessness but still guarantees strong consistency for critical data?",
+      "leverage_reason": "High asymmetry: challenges the default stateless approach by forcing a deep dive into patterns like CQRS/Sagas and hybrid read/write designs; connects data consistency, latency, and governance across architectures."
     },
     {
       "rank": 2,
-      "question": "For operations needing strict ordering or transactions, how do you replace or augment asynchronous queues without sacrificing correctness?",
-      "leverage_reason": "Elicits deep thinking about correctness vs throughput and opens paths to concrete patterns like sagas, compensating actions, or idempotent designs that apply across systems."
+      "question": "When does TTL-based caching become a correctness risk, and what signals would you monitor to detect it?",
+      "leverage_reason": "Targets a concrete, actionable correctness risk with observable signals; yields guardrails, monitoring strategies, and testable assumptions."
     },
     {
       "rank": 3,
-      "question": "Is there a domain where synchronous, server-side stateful design outperforms stateless APIs for UX, and what are the concrete patterns?",
-      "leverage_reason": "Contrarian hook that challenges stateless dogma, prompts domain-specific justification, and broad architectural re-evaluation across UX-centric domains."
+      "question": "Could external dependencies be the true bottlenecks, making internal observability less effective?",
+      "leverage_reason": "Shifts focus from internal systems to vendor reliability and integration risk; creates asymmetry by challenging assumptions about controllability and connected SLAs."
     },
     {
       "rank": 4,
-      "question": "If data freshness is non-negotiable, can caching strategies ever be safe and coherent across clients, and what tradeoffs must be acknowledged?",
-      "leverage_reason": "Targets a core design tension, driving exploration of invalidation strategies, coherence guarantees, and safety risks with real-world implications."
+      "question": "If tracing is noisy and causes alert fatigue, what practical heuristics separate signal from noise in production?",
+      "leverage_reason": "Transforms observability into actionable, repeatable practices; directly improves MTTR and decision quality, with cross-cutting impact on tooling and process."
     },
     {
       "rank": 5,
-      "question": "How can observability signals be tied to business outcomes, and what experiments would validate the link beyond uptime?",
-      "leverage_reason": "Bridges technical metrics to business value, enabling cross-functional relevance and actionable experimentation for product, engineering, and leadership audiences."
+      "question": "With AI-assisted observability auto-triage, will teams over-rely on automation and overlook fundamental design issues or data security?",
+      "leverage_reason": "Probes governance and potential failure modes of automation; connects design quality, security, and operational practices in a future-facing context."
     }
   ]
 }
