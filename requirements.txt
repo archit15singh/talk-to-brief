@@ -2,6 +2,7 @@
 llama-index>=0.10.0                    # LLM application framework with data connectors
 llama-index-embeddings-openai>=0.1.0   # OpenAI embeddings for semantic chunking
 openai>=1.0.0                          # OpenAI API client
+python-dotenv>=1.0.0                   # Environment variable management
 
 # Future dependencies might include:
 # pandas>=1.5.0          # For data processing

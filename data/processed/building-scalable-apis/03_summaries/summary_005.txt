@@ -1,7 +1,0 @@
-# Summary for Chunk 5
-Source: chunk_005.txt
-Generated: 2025-09-19T01:22:28.233875
-Original Length: 84 characters
-
-## Summary
-Service discovery involves identifying and locating services within a network, which can be complex due to the dynamic nature of distributed systems. Monitoring adds another layer of complexity, as it requires tracking the performance and health of various services. Additionally, managing distributed transactions poses challenges, as they require coordination across multiple services to ensure data consistency and reliability.
